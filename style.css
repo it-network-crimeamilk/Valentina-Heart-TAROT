@@ -1,0 +1,963 @@
+/* style.css */
+:root {
+    --bg-dark: #1a0f14;
+    --bg-darker: #0f0810;
+    --bg-card: rgba(30, 18, 24, 0.75);
+    --bg-card-solid: #1e1218;
+    --accent: #c08081;
+    --accent-light: #d9a3a4;
+    --accent-dark: #8a5556;
+    --text: #f0e6e7;
+    --text-muted: #b8a5a6;
+    --border: rgba(192, 128, 129, 0.25);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    --radius: 14px;
+    --font-main: 'Montserrat', system-ui, sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text);
+    background: var(--bg-darker);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============ ФОН С ЛУНОЙ (FIXED) ============ */
+.moon-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 30%, rgba(60, 30, 50, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at center, #1a0f1a 0%, #0a0508 100%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* CHANGED: Удалено старое правило .moon-bg::before с moon-bg.png */
+
+.moon-rays {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192, 128, 129, 0.35) 0%, rgba(192, 128, 129, 0.1) 30%, transparent 70%);
+    filter: blur(30px);
+    animation: pulseRays 6s ease-in-out infinite;
+    transition: all 1.5s ease;
+}
+
+@keyframes pulseRays {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 1;
+    }
+}
+
+/* CHANGED: Новые элементы лунного свечения */
+.moon-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192, 128, 129, 0.4) 0%, transparent 70%);
+    filter: blur(60px);
+    animation: moonGlowPulse 6s ease-in-out infinite;
+    transition: all 1.5s ease;
+}
+
+@keyframes moonGlowPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+}
+
+.moon-image {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: url('moon.webp') center/contain no-repeat;
+    filter: drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+    animation: moonFloat 8s ease-in-out infinite;
+    transition: all 1.5s ease;
+}
+
+@keyframes moonFloat {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+    }
+}
+
+/* CHANGED: Адаптация фаз луны для новых элементов */
+.moon-bg.phase-new .moon-glow {
+    background: radial-gradient(circle, rgba(80, 60, 100, 0.3) 0%, transparent 60%);
+    filter: blur(40px);
+    animation-duration: 10s;
+}
+
+.moon-bg.phase-new .moon-image {
+    opacity: 0.25;
+    filter: brightness(0.5) contrast(0.8) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+}
+
+.moon-bg.phase-waxing-crescent .moon-glow {
+    background: radial-gradient(circle, rgba(180, 140, 160, 0.3) 0%, transparent 60%);
+    filter: blur(35px);
+}
+
+.moon-bg.phase-waxing-crescent .moon-image {
+    opacity: 0.4;
+    filter: brightness(0.7) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+}
+
+.moon-bg.phase-first-quarter .moon-glow {
+    background: radial-gradient(circle, rgba(200, 160, 170, 0.4) 0%, transparent 65%);
+    filter: blur(30px);
+}
+
+.moon-bg.phase-first-quarter .moon-image {
+    opacity: 0.5;
+}
+
+.moon-bg.phase-waxing-gibbous .moon-glow {
+    background: radial-gradient(circle, rgba(220, 170, 180, 0.45) 0%, transparent 70%);
+    filter: blur(25px);
+}
+
+.moon-bg.phase-waxing-gibbous .moon-image {
+    opacity: 0.6;
+    filter: brightness(0.9) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+}
+
+.moon-bg.phase-full .moon-glow {
+    background: radial-gradient(circle, rgba(255, 220, 220, 0.6) 0%, rgba(192, 128, 129, 0.3) 40%, transparent 75%);
+    filter: blur(20px);
+    animation-duration: 4s;
+}
+
+.moon-bg.phase-full .moon-image {
+    opacity: 0.8;
+    filter: brightness(1.1) saturate(1.1) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+}
+
+.moon-bg.phase-waning-gibbous .moon-glow {
+    background: radial-gradient(circle, rgba(210, 160, 170, 0.45) 0%, transparent 70%);
+    filter: blur(25px);
+}
+
+.moon-bg.phase-waning-gibbous .moon-image {
+    opacity: 0.6;
+    filter: brightness(0.9) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+}
+
+.moon-bg.phase-last-quarter .moon-glow {
+    background: radial-gradient(circle, rgba(180, 140, 160, 0.35) 0%, transparent 65%);
+    filter: blur(30px);
+}
+
+.moon-bg.phase-last-quarter .moon-image {
+    opacity: 0.45;
+}
+
+.moon-bg.phase-waning-crescent .moon-glow {
+    background: radial-gradient(circle, rgba(120, 80, 120, 0.35) 0%, transparent 60%);
+    filter: blur(35px);
+    animation-duration: 8s;
+}
+
+.moon-bg.phase-waning-crescent .moon-image {
+    opacity: 0.35;
+    filter: brightness(0.6) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+}
+
+/* ============ КОНТЕЙНЕР ============ */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* ============ ШАПКА ============ */
+.site-header {
+    padding: 24px 0;
+    background: rgba(15, 8, 16, 0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ============ ЛОГОТИП В ШАПКЕ ============ */
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo-wrap:hover {
+    transform: translateY(-1px);
+}
+
+.logo-img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 8px rgba(192, 128, 129, 0.5));
+    transition: all 0.4s ease;
+    background: radial-gradient(circle, rgba(192, 128, 129, 0.15) 0%, transparent 70%);
+    padding: 4px;
+    animation: logoGlow 4s ease-in-out infinite;
+}
+
+.logo-wrap:hover .logo-img {
+    animation: none;
+    filter: drop-shadow(0 0 14px rgba(217, 163, 164, 0.8));
+    transform: rotate(-3deg) scale(1.05);
+}
+
+@keyframes logoGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(192, 128, 129, 0.5));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 16px rgba(217, 163, 164, 0.85));
+    }
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent-light);
+    letter-spacing: 1px;
+}
+
+.admin-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    color: var(--accent-light);
+    border-color: var(--accent);
+    background: rgba(192, 128, 129, 0.1);
+}
+
+/* ============ HERO ============ */
+.hero {
+    padding: 80px 0 40px;
+    text-align: center;
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-bottom: 16px;
+    text-shadow: 0 2px 20px rgba(192, 128, 129, 0.3);
+}
+
+.hero-subtitle {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 32px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ============ КНОПКИ ============ */
+.btn {
+    display: inline-block;
+    padding: 14px 32px;
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(192, 128, 129, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(192, 128, 129, 0.5);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--accent-light);
+    border: 1px solid var(--accent);
+}
+
+.btn-secondary:hover {
+    background: rgba(192, 128, 129, 0.1);
+}
+
+/* ============ ВИДЖЕТ ФАЗЫ ЛУНЫ ============ */
+.moon-widget-section {
+    padding: 20px 0 40px;
+}
+
+.moon-widget {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+    background: rgba(30, 18, 24, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+    animation: fadeInUp 0.8s ease;
+}
+
+.moon-widget-icon {
+    font-size: 48px;
+    line-height: 1;
+    filter: drop-shadow(0 0 12px rgba(192, 128, 129, 0.6));
+    animation: floatIcon 4s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.moon-widget-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-bottom: 4px;
+}
+
+.moon-widget-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============ СЕКЦИИ ============ */
+section {
+    padding: 30px 0;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 600;
+    color: var(--accent-light);
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+/* ============ РЕКВИЗИТЫ ============ */
+.requisites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.req-card {
+    padding: 22px;
+    background: rgba(30, 18, 24, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+}
+
+.req-card.clickable {
+    cursor: pointer;
+}
+
+.req-card.clickable:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(192, 128, 129, 0.25);
+    background: rgba(40, 24, 32, 0.85);
+}
+
+.req-card.clickable:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.req-card-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-bottom: 8px;
+}
+
+.req-card-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.req-card-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0.8;
+    margin-top: 8px;
+}
+
+.req-card-link {
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dashed var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+}
+
+.req-card-link:hover {
+    color: #fff;
+}
+
+/* ============ КОНТАКТЫ ============ */
+.contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-link {
+    display: block;
+    padding: 16px 20px;
+    background: rgba(30, 18, 24, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    background: rgba(192, 128, 129, 0.15);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* CHANGED: Исправлены дубли в .contact-phone */
+.contact-phone {
+    padding: 16px 20px;
+    background: rgba(30, 18, 24, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* ============ МОДАЛЬНЫЕ ОКНА (БАЗА) ============ */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 5, 8, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #241620 0%, #1a0f18 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    font-family: var(--font-serif);
+    color: var(--accent-light);
+    margin-bottom: 20px;
+    font-size: 26px;
+    text-align: center;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 30px;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--accent-light);
+}
+
+/* ============ МОДАЛКИ QR-КОДОВ ============ */
+.qr-modal .modal-content {
+    max-width: 420px;
+    text-align: center;
+}
+
+.qr-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.qr-image-wrap {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.qr-image-wrap img {
+    display: block;
+    width: 260px;
+    height: 260px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.qr-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: 1.5px;
+    margin-top: 8px;
+    font-family: var(--font-main);
+}
+
+.qr-fallback {
+    padding: 40px 20px;
+    color: #555;
+    font-size: 14px;
+    text-align: center;
+}
+
+.qr-fallback b {
+    color: #222;
+    font-size: 16px;
+}
+
+/* ============ ФОРМА ЗАКАЗА ============ */
+#orderForm label {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+#orderForm input[type="text"],
+#orderForm textarea,
+#orderForm input[type="file"] {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 6px;
+    background: rgba(15, 8, 16, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--font-main);
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+#orderForm input:focus,
+#orderForm textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+#orderForm textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+#orderForm button {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.file-hint {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.form-status {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+/* CHANGED: Стили для блока инструкции в модалке заказа */
+.order-info-block {
+    background: rgba(192, 128, 129, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.order-info-block strong {
+    color: var(--accent-light);
+}
+
+.order-qr-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.order-qr-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.order-qr-item:hover {
+    border-color: var(--accent);
+    background: rgba(192, 128, 129, 0.12);
+    transform: translateY(-2px);
+}
+
+.order-qr-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.order-qr-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+    padding: 4px;
+}
+
+.order-qr-item span {
+    font-size: 12px;
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+/* ============ ИНФО-МОДАЛКА ============ */
+.info-list {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.info-list li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(192, 128, 129, 0.1);
+}
+
+.info-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* ============ КНОПКА ПРОКРУТКИ ============ */
+.scroll-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(192, 128, 129, 0.4);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.scroll-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.scroll-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 28px rgba(192, 128, 129, 0.6);
+}
+
+.scroll-btn:active {
+    transform: scale(0.95);
+}
+
+#scrollBtnIcon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* ============ ФУТЕР ============ */
+.site-footer {
+    padding: 30px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    background: rgba(15, 8, 16, 0.5);
+    backdrop-filter: blur(6px);
+}
+
+/* ============ АДАПТИВ ============ */
+@media (max-width: 600px) {
+    .hero {
+        padding: 50px 0 20px;
+    }
+
+    .moon-widget {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .modal-content {
+        padding: 24px 18px;
+    }
+
+    .qr-image-wrap img {
+        width: 220px;
+        height: 220px;
+    }
+
+    .scroll-btn {
+        width: 46px;
+        height: 46px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 18px;
+    }
+
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-wrap {
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .moon-glow {
+        width: 350px;
+        height: 350px;
+    }
+
+    .moon-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .order-qr-row {
+        gap: 12px;
+    }
+
+    .order-qr-thumb {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 380px) {
+    .logo {
+        display: none;
+    }
+}

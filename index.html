@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentina Heart TAROT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/fontsource/css/montserrat@latest/cyrillic.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/fontsource/css/cormorant-garamond@latest/cyrillic.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- CHANGED: Фоновая луна с новыми элементами -->
+    <div id="moonBg" class="moon-bg">
+        <div class="moon-rays"></div>
+        <div class="moon-glow"></div>
+        <div class="moon-image"></div>
+    </div>
+
+    <!-- ШАПКА -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo-wrap">
+                    <!-- CHANGED: Логотип -->
+                    <img src="logo.png" alt="Valentina Heart TAROT" class="logo-img">
+                    <span class="logo">Valentina Heart TAROT</span>
+                </a>
+                <a href="admin.html" class="admin-link">Вход</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Открой тайны своей судьбы</h1>
+            <p class="hero-subtitle">
+                Меня зовут Валентина! Профессиональные расклады Таро. Мы будем
+                исцелять наши сердца 💔❤️‍🩹❤️‍🔥
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="openModal('orderModal')">✨ Заказать расклад</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВИДЖЕТ ФАЗЫ ЛУНЫ -->
+    <section class="moon-widget-section">
+        <div class="container">
+            <div class="moon-widget">
+                <div class="moon-widget-icon" id="moonWidgetIcon">🌕</div>
+                <div>
+                    <div class="moon-widget-title" id="moonPhaseName">Определение фазы...</div>
+                    <div class="moon-widget-desc" id="moonPhaseDesc">Загрузка лунного календаря</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Связь со мной</h2>
+            <div class="contacts-grid">
+                <a href="https://t.me/Valintina_moon_89" class="contact-link" target="_blank">Telegram
+                    (предпочтительно)</a>
+                <a href="https://www.youtube.com/@ВалентинаСердцеТАРО" class="contact-link" target="_blank">YouTube</a>
+                <a href="https://t.me/ValentinaSerdceTarot" class="contact-link" target="_blank">Telegram-канал</a>
+                <a href="https://vk.ru/id851128139" class="contact-link" target="_blank">ВКонтакте</a>
+                <a href="https://vkvideo.ru/@club240360498" class="contact-link" target="_blank">VkVideo</a>
+                <a href="tel:+79784550616" class="contact-link">Mobile/Max: +7(978)455-06-16</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- РЕКВИЗИТЫ -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Реквизиты для поддержки</h2>
+            <div class="requisites-grid">
+                <div class="req-card clickable" onclick="openQrModal('qrTbankModal')" tabindex="0" role="button"
+                    aria-label="Показать QR-код карты Т-Банк">
+                    <div class="req-card-title">Карта Т-Банк</div>
+                    <div class="req-card-value">2200 3961 1672 3228</div>
+                    <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
+                </div>
+                <div class="req-card clickable" onclick="openQrModal('qrSbpModal')" tabindex="0" role="button"
+                    aria-label="Показать QR-код СБП">
+                    <div class="req-card-title">ВТБ (СБП)</div>
+                    <div class="req-card-value">+7 978 455 06 16</div>
+                    <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
+                </div>
+                <div class="req-card">
+                    <div class="req-card-title">DonationAlerts</div>
+                    <a href="https://www.donationalerts.com/r/valentina_heart" class="req-card-link"
+                        target="_blank">Поддержать через DA ↗</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- МОДАЛКА ЗАКАЗА РАСКЛАДА (CHANGED: полная переработка) -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('orderModal')">×</span>
+            <h2>Заказать расклад</h2>
+
+            <!-- CHANGED: Блок инструкции по оплате -->
+            <div class="order-info-block">
+                <p>Здравствуйте! Для бронирования/заказа необходимо внести оплату.</p>
+                <p><strong>Реквизиты для перевода по СБП:</strong><br>
+                    +7 978 455 06 16 (Получатель: Валентина)</p>
+                <p>Пожалуйста, сделайте перевод и пришлите скриншот чека прямо сюда этим обращением. После этого я
+                    подтвержу заявку!</p>
+                <div class="order-qr-row">
+                    <div class="order-qr-item" onclick="openModal('qrSbpModal')" tabindex="0" role="button"
+                        aria-label="Показать QR-код СБП">
+                        <img src="qr-code-sbp.png" alt="QR-код СБП" class="order-qr-thumb">
+                        <span>QR для СБП</span>
+                    </div>
+                    <div class="order-qr-item" onclick="openModal('qrTbankModal')" tabindex="0" role="button"
+                        aria-label="Показать QR-код Т-Банк">
+                        <img src="qr-code-t.png" alt="QR-код Т-Банк" class="order-qr-thumb">
+                        <span>QR для Т-Банк</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHANGED: Новая структура формы -->
+            <form id="orderForm" enctype="multipart/form-data">
+                <input type="hidden" name="_subject" value="Новая заявка на расклад Таро">
+
+                <label>
+                    Имя Фамилия
+                    <input type="text" name="name" placeholder="Например: Анна Иванова" required>
+                </label>
+
+                <label>
+                    Контакт для связи
+                    <input type="text" name="contact" placeholder="Телефон, Telegram, VK или ссылка на контакт с вами" required>
+                </label>
+
+                <label>
+                    Описание обращения
+                    <textarea name="message" placeholder="Опишите ваш вопрос или ситуацию для расклада..." required
+                        minlength="10"></textarea>
+                </label>
+
+                <label>
+                    📎 Прикрепите скриншот оплаты. И фото человека, на кого гадать, если потребуется. (JPG, PNG, PDF — до 10 МБ)
+                    <input type="file" name="attachment" accept="image/*,.pdf" required>
+                </label>
+
+                <button type="submit" class="btn btn-primary">✨ Отправить заявку</button>
+                <div id="formStatus" class="form-status"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QR МОДАЛКА Т-БАНК -->
+    <div id="qrTbankModal" class="modal qr-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('qrTbankModal')">×</span>
+            <h2>💳 Карта Т-Банк</h2>
+            <p class="qr-subtitle">Отсканируйте QR-код для перевода</p>
+            <div class="qr-image-wrap">
+                <img src="qr-code-t.png" alt="QR-код Т-Банк">
+            </div>
+            <div class="qr-number">2200 3961 1672 3228</div>
+        </div>
+    </div>
+
+    <!-- QR МОДАЛКА СБП -->
+    <div id="qrSbpModal" class="modal qr-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('qrSbpModal')">×</span>
+            <h2>💳 ВТБ (СБП)</h2>
+            <p class="qr-subtitle">Отсканируйте QR-код для перевода через СБП</p>
+            <div class="qr-image-wrap">
+                <img src="qr-code-sbp.png" alt="QR-код СБП">
+            </div>
+            <div class="qr-number">+7 978 455 06 16</div>
+        </div>
+    </div>
+
+    <!-- ИНФО-МОДАЛКА -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('infoModal')">×</span>
+            <h2>Как задать запрос на расклад</h2>
+            <ul class="info-list">
+                <li>Сформулируйте вопрос четко и конкретно. Избегайте вопросов "Да/Нет".</li>
+                <li>Опишите текущую ситуацию: что происходит, кто участвует, какие есть вводные данные.</li>
+                <li>Укажите, какой аспект вас волнует больше всего (совет, перспективы, причины).</li>
+                <li>Приложите скриншот оплаты для ускорения обработки заявки.</li>
+            </ul>
+            <button class="btn btn-primary" onclick="closeModal('infoModal')">Понятно, спасибо</button>
+        </div>
+    </div>
+
+    <!-- КНОПКА ПРОКРУТКИ -->
+    <button id="scrollBtn" class="scroll-btn" aria-label="Прокрутка страницы">
+        <span id="scrollBtnIcon">↓</span>
+    </button>
+
+    <!-- ФУТЕР -->
+    <footer class="site-footer">
+        <div class="container">
+            © Valentina Heart TAROT · Все права защищены
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
