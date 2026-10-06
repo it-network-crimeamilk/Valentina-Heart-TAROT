@@ -1,5 +1,7 @@
 /* ========== ВИДЖЕТ ЛУНЫ ========== */
-.moon-widget-section { padding: 20px 0 40px; }
+.moon-widget-section {
+    padding: 20px 0 40px;
+}
 
 .moon-widget {
     display: flex;
@@ -24,8 +26,15 @@
 }
 
 @keyframes floatIcon {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
 }
 
 .moon-widget-title {

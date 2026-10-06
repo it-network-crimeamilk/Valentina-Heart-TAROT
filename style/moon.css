@@ -57,26 +57,99 @@
 
 /* FIX: анимация не должна двигать по X — используем translate с сохранением центрирования */
 @keyframes pulseRays {
-    0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.7; }
-    50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 1;
+    }
 }
 
 @keyframes moonGlowPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.6; }
-    50%      { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
 }
 
 @keyframes moonFloat {
-    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-    50%      { transform: translate(-50%, -50%) translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+    }
 }
 
 /* Фазы луны: меняем только переменные */
-.moon-bg.phase-new             { --glow-opacity: 0.3;  --glow-blur: 40px; --img-opacity: 0.25; --img-brightness: 0.5; --anim-duration: 10s; }
-.moon-bg.phase-waxing-crescent { --glow-opacity: 0.3;  --glow-blur: 35px; --img-opacity: 0.4;  --img-brightness: 0.7; }
-.moon-bg.phase-first-quarter   { --glow-opacity: 0.4;  --glow-blur: 30px; --img-opacity: 0.5; }
-.moon-bg.phase-waxing-gibbous  { --glow-opacity: 0.45; --glow-blur: 25px; --img-opacity: 0.6;  --img-brightness: 0.9; }
-.moon-bg.phase-full            { --glow-opacity: 0.6;  --glow-blur: 20px; --img-opacity: 0.8;  --img-brightness: 1.1; --anim-duration: 4s; }
-.moon-bg.phase-waning-gibbous  { --glow-opacity: 0.45; --glow-blur: 25px; --img-opacity: 0.6;  --img-brightness: 0.9; }
-.moon-bg.phase-last-quarter    { --glow-opacity: 0.35; --glow-blur: 30px; --img-opacity: 0.45; }
-.moon-bg.phase-waning-crescent { --glow-opacity: 0.35; --glow-blur: 35px; --img-opacity: 0.35; --img-brightness: 0.6; --anim-duration: 8s; }
+.moon-bg.phase-new {
+    --glow-opacity: 0.3;
+    --glow-blur: 40px;
+    --img-opacity: 0.25;
+    --img-brightness: 0.5;
+    --anim-duration: 10s;
+}
+
+.moon-bg.phase-waxing-crescent {
+    --glow-opacity: 0.3;
+    --glow-blur: 35px;
+    --img-opacity: 0.4;
+    --img-brightness: 0.7;
+}
+
+.moon-bg.phase-first-quarter {
+    --glow-opacity: 0.4;
+    --glow-blur: 30px;
+    --img-opacity: 0.5;
+}
+
+.moon-bg.phase-waxing-gibbous {
+    --glow-opacity: 0.45;
+    --glow-blur: 25px;
+    --img-opacity: 0.6;
+    --img-brightness: 0.9;
+}
+
+.moon-bg.phase-full {
+    --glow-opacity: 0.6;
+    --glow-blur: 20px;
+    --img-opacity: 0.8;
+    --img-brightness: 1.1;
+    --anim-duration: 4s;
+}
+
+.moon-bg.phase-waning-gibbous {
+    --glow-opacity: 0.45;
+    --glow-blur: 25px;
+    --img-opacity: 0.6;
+    --img-brightness: 0.9;
+}
+
+.moon-bg.phase-last-quarter {
+    --glow-opacity: 0.35;
+    --glow-blur: 30px;
+    --img-opacity: 0.45;
+}
+
+.moon-bg.phase-waning-crescent {
+    --glow-opacity: 0.35;
+    --glow-blur: 35px;
+    --img-opacity: 0.35;
+    --img-brightness: 0.6;
+    --anim-duration: 8s;
+}

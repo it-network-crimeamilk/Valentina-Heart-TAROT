@@ -22,7 +22,7 @@ function openCoverEditor() {
     const modal = document.getElementById('coverEditorModal');
     if (!modal) return;
 
-    const titleInput  = document.getElementById('postTitle');
+    const titleInput = document.getElementById('postTitle');
     const editorTitle = document.getElementById('editorTitleInput');
     if (titleInput && editorTitle) {
         editorTitle.value = editorState.title = titleInput.value.trim();
@@ -91,9 +91,9 @@ function initEditorCanvas() {
     const maxW = 800;
     editorState.scale = img.width > maxW ? maxW / img.width : 1;
 
-    canvas.width  = img.width;
+    canvas.width = img.width;
     canvas.height = img.height;
-    canvas.style.width  = Math.round(img.width  * editorState.scale) + 'px';
+    canvas.style.width = Math.round(img.width * editorState.scale) + 'px';
     canvas.style.height = Math.round(img.height * editorState.scale) + 'px';
 
     editorState.x = img.width / 2;
@@ -134,8 +134,8 @@ function redrawEditor() {
         const y = startY + i * lineH;
         if (editorState.strokeWidth > 0) {
             ctx.strokeStyle = editorState.strokeColor;
-            ctx.lineWidth   = editorState.strokeWidth;
-            ctx.lineJoin    = 'round';
+            ctx.lineWidth = editorState.strokeWidth;
+            ctx.lineJoin = 'round';
             ctx.strokeText(line, editorState.x, y);
         }
         ctx.fillStyle = editorState.textColor;
@@ -172,7 +172,7 @@ function setupEditorDrag(canvas) {
         const cy = e.touches ? e.touches[0].clientY : e.clientY;
         return {
             x: (cx - rect.left) / editorState.scale,
-            y: (cy - rect.top)  / editorState.scale
+            y: (cy - rect.top) / editorState.scale
         };
     };
 
@@ -252,11 +252,11 @@ function initEditorControls() {
         });
     };
 
-    bind('fontSizeSlider',    'fontSize',    true);
-    bind('textColorPicker',   'textColor');
+    bind('fontSizeSlider', 'fontSize', true);
+    bind('textColorPicker', 'textColor');
     bind('strokeColorPicker', 'strokeColor');
     bind('strokeWidthSlider', 'strokeWidth', true);
-    bind('fontFamilySelect',  'fontFamily');
+    bind('fontFamilySelect', 'fontFamily');
 
     const titleInput = document.getElementById('editorTitleInput');
     if (titleInput) {

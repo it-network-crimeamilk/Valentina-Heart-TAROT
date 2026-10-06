@@ -23,7 +23,9 @@
     transition: transform 0.3s ease;
 }
 
-.logo-wrap:hover { transform: translateY(-1px); }
+.logo-wrap:hover {
+    transform: translateY(-1px);
+}
 
 .logo-img {
     width: 52px;
@@ -41,8 +43,15 @@
 }
 
 @keyframes logoGlow {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(192, 128, 129, 0.5)); }
-    50%      { filter: drop-shadow(0 0 16px rgba(217, 163, 164, 0.85)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(192, 128, 129, 0.5));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 16px rgba(217, 163, 164, 0.85));
+    }
 }
 
 .logo {

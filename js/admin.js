@@ -1,7 +1,3 @@
-/* Инициализация админ-панели:
-   - авто-вход, если сессия уже активна
-   - единый обработчик Escape (модалки редактора и просмотра) */
-
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('isAdmin') === 'true') {
         showAdminPanel();

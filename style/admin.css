@@ -1,7 +1,9 @@
 /* ============================================
    АДМИН-ПАНЕЛЬ
    ============================================ */
-.admin-body { padding: 20px 0; }
+.admin-body {
+    padding: 20px 0;
+}
 
 .admin-container {
     max-width: 900px;
@@ -34,7 +36,9 @@
     animation: fadeInUp 0.6s ease;
 }
 
-.admin-block { margin-bottom: 24px; }
+.admin-block {
+    margin-bottom: 24px;
+}
 
 .admin-title {
     font-family: var(--font-serif);
@@ -75,7 +79,9 @@
     font-size: 14px;
 }
 
-.admin-back:hover { color: var(--accent-light); }
+.admin-back:hover {
+    color: var(--accent-light);
+}
 
 /* Поля ввода админки */
 .admin-label {
@@ -187,7 +193,9 @@
     transition: all 0.2s ease;
 }
 
-.checklist-item:hover { border-color: var(--accent); }
+.checklist-item:hover {
+    border-color: var(--accent);
+}
 
 .checklist-item.checked {
     background: rgba(192, 128, 129, 0.12);
@@ -208,7 +216,9 @@
     border-bottom: 1px dashed var(--accent);
 }
 
-.checklist-item a:hover { color: #fff; }
+.checklist-item a:hover {
+    color: #fff;
+}
 
 .checklist-item strong {
     color: var(--accent-light);
@@ -232,7 +242,9 @@
     gap: 6px;
 }
 
-.editor-controls input[type="range"] { accent-color: var(--accent); }
+.editor-controls input[type="range"] {
+    accent-color: var(--accent);
+}
 
 .editor-controls input[type="color"] {
     width: 100%;
@@ -267,10 +279,13 @@
     height: auto;
     cursor: grab;
     border-radius: 6px;
-    touch-action: none; /* FIX: чтобы touch-drag не скроллил страницу */
+    touch-action: none;
+    /* FIX: чтобы touch-drag не скроллил страницу */
 }
 
-#coverEditorCanvas:active { cursor: grabbing; }
+#coverEditorCanvas:active {
+    cursor: grabbing;
+}
 
 .editor-actions {
     display: flex;

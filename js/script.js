@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        const name     = (form.elements.name?.value || '').trim();
-        const contact  = (form.elements.contact?.value || '').trim();
-        const message  = (form.elements.message?.value || '').trim();
+        const name = (form.elements.name?.value || '').trim();
+        const contact = (form.elements.contact?.value || '').trim();
+        const message = (form.elements.message?.value || '').trim();
         const fileInput = form.elements.attachment;
         const file = fileInput?.files?.[0];
 
@@ -116,14 +116,14 @@ function getMoonPhase(date = new Date()) {
 }
 
 const PHASES = [
-    { key: 'new',              name: 'Новолуние 🌑',        icon: '🌑', range: [0, 0.0625],        css: 'phase-new',              tarot: 'Время новых начинаний, посева намерений. Карты Таро открывают путь — доверьтесь интуиции и загадывайте самое сокровенное.' },
-    { key: 'waxing-crescent',  name: 'Растущая Луна 🌒',    icon: '🌒', range: [0.0625, 0.1875],   css: 'phase-waxing-crescent',  tarot: 'Энергия набирает силу. Идеальное время для вопросов о развитии, отношениях и воплощении желаний. Таро укажет направление.' },
-    { key: 'first-quarter',    name: 'Первая четверть 🌓',  icon: '🌓', range: [0.1875, 0.3125],   css: 'phase-first-quarter',    tarot: 'Время решений и действий. Таро помогает преодолеть сомнения, увидеть препятствия и найти внутренний стержень.' },
-    { key: 'waxing-gibbous',   name: 'Прибывающая Луна 🌔', icon: '🌔', range: [0.3125, 0.4375],   css: 'phase-waxing-gibbous',   tarot: 'Период уточнений и подготовки. Расклады Таро раскрывают детали, помогают скорректировать путь перед кульминацией.' },
-    { key: 'full',             name: 'Полнолуние 🌕',       icon: '🌕', range: [0.4375, 0.5625],   css: 'phase-full',             tarot: 'Время подведения итогов, пик энергии, раскрытие тайн. Таро говорит правду — самое мощное время для глубоких вопросов судьбы.' },
-    { key: 'waning-gibbous',   name: 'Убывающая Луна 🌖',   icon: '🌖', range: [0.5625, 0.6875],   css: 'phase-waning-gibbous',   tarot: 'Время мудрости и благодарности. Таро делится опытом, помогает извлечь уроки и поделиться знаниями с близкими.' },
-    { key: 'last-quarter',     name: 'Последняя четверть 🌗', icon: '🌗', range: [0.6875, 0.8125], css: 'phase-last-quarter',     tarot: 'Время отпускания старого. Таро показывает, от чего стоит избавиться — привычек, страхов, отношений, изживших себя.' },
-    { key: 'waning-crescent',  name: 'Старая Луна 🌘',      icon: '🌘', range: [0.8125, 0.9375],   css: 'phase-waning-crescent',  tarot: 'Период отдыха и созерцания. Таро шепчет ответы из подсознания — прислушайтесь к снам и знакам перед новым циклом.' }
+    { key: 'new', name: 'Новолуние 🌑', icon: '🌑', range: [0, 0.0625], css: 'phase-new', tarot: 'Время новых начинаний, посева намерений. Карты Таро открывают путь — доверьтесь интуиции и загадывайте самое сокровенное.' },
+    { key: 'waxing-crescent', name: 'Растущая Луна 🌒', icon: '🌒', range: [0.0625, 0.1875], css: 'phase-waxing-crescent', tarot: 'Энергия набирает силу. Идеальное время для вопросов о развитии, отношениях и воплощении желаний. Таро укажет направление.' },
+    { key: 'first-quarter', name: 'Первая четверть 🌓', icon: '🌓', range: [0.1875, 0.3125], css: 'phase-first-quarter', tarot: 'Время решений и действий. Таро помогает преодолеть сомнения, увидеть препятствия и найти внутренний стержень.' },
+    { key: 'waxing-gibbous', name: 'Прибывающая Луна 🌔', icon: '🌔', range: [0.3125, 0.4375], css: 'phase-waxing-gibbous', tarot: 'Период уточнений и подготовки. Расклады Таро раскрывают детали, помогают скорректировать путь перед кульминацией.' },
+    { key: 'full', name: 'Полнолуние 🌕', icon: '🌕', range: [0.4375, 0.5625], css: 'phase-full', tarot: 'Время подведения итогов, пик энергии, раскрытие тайн. Таро говорит правду — самое мощное время для глубоких вопросов судьбы.' },
+    { key: 'waning-gibbous', name: 'Убывающая Луна 🌖', icon: '🌖', range: [0.5625, 0.6875], css: 'phase-waning-gibbous', tarot: 'Время мудрости и благодарности. Таро делится опытом, помогает извлечь уроки и поделиться знаниями с близкими.' },
+    { key: 'last-quarter', name: 'Последняя четверть 🌗', icon: '🌗', range: [0.6875, 0.8125], css: 'phase-last-quarter', tarot: 'Время отпускания старого. Таро показывает, от чего стоит избавиться — привычек, страхов, отношений, изживших себя.' },
+    { key: 'waning-crescent', name: 'Старая Луна 🌘', icon: '🌘', range: [0.8125, 0.9375], css: 'phase-waning-crescent', tarot: 'Период отдыха и созерцания. Таро шепчет ответы из подсознания — прислушайтесь к снам и знакам перед новым циклом.' }
 ];
 
 function getMoonPhaseInfo(date = new Date()) {
@@ -152,9 +152,9 @@ function initScrollButton() {
     if (!btn || !icon) return;
 
     const update = () => {
-        const top    = window.pageYOffset || document.documentElement.scrollTop;
-        const docH   = document.documentElement.scrollHeight;
-        const winH   = window.innerHeight;
+        const top = window.pageYOffset || document.documentElement.scrollTop;
+        const docH = document.documentElement.scrollHeight;
+        const winH = window.innerHeight;
         const atBottom = top + winH >= docH - 50;
 
         if (docH <= winH + 100) {
@@ -166,7 +166,7 @@ function initScrollButton() {
     };
 
     btn.addEventListener('click', () => {
-        const top  = window.pageYOffset || document.documentElement.scrollTop;
+        const top = window.pageYOffset || document.documentElement.scrollTop;
         const docH = document.documentElement.scrollHeight;
         const winH = window.innerHeight;
         const atBottom = top + winH >= docH - 50;

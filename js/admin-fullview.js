@@ -1,7 +1,3 @@
-/* Полноэкранный просмотр обложки.
-   Escape обрабатывается в admin.js.
-   REFACTOR: используем общий openModal/closeModal, если доступны, иначе — прямой класс. */
-
 function openCoverFullview() {
     const fv = document.getElementById('coverFullview');
     if (!fv) return;

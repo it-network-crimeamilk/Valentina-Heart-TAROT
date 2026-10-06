@@ -1,4 +1,4 @@
-const _AUTH_HASH = "SGVzb3lhbTE2MDcr";
+const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // иди в жопу!
 
 function utf8ToBase64(str) {
     const bytes = new TextEncoder().encode(str);

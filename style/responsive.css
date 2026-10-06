@@ -1,14 +1,19 @@
 @media (max-width: 600px) {
-    .hero { padding: 50px 0 20px; }
+    .hero {
+        padding: 50px 0 20px;
+    }
 
     .moon-widget {
         flex-direction: column;
         text-align: center;
         padding: 20px;
-        align-items: center; /* FIX: центрируем иконку при column */
+        align-items: center;
+        /* FIX: центрируем иконку при column */
     }
 
-    .modal-content { padding: 24px 18px; }
+    .modal-content {
+        padding: 24px 18px;
+    }
 
     .qr-image-wrap img {
         width: 220px;
@@ -23,20 +28,44 @@
         font-size: 18px;
     }
 
-    .logo-img { width: 40px; height: 40px; }
-    .logo-wrap { gap: 10px; }
-    .logo { font-size: 22px; }
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-wrap {
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
 
     .moon-glow,
-    .moon-rays { width: 350px; height: 350px; }
-    .moon-image { width: 200px; height: 200px; }
+    .moon-rays {
+        width: 350px;
+        height: 350px;
+    }
 
-    .order-qr-row { gap: 12px; }
-    .order-qr-thumb { width: 70px; height: 70px; }
+    .moon-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .order-qr-row {
+        gap: 12px;
+    }
+
+    .order-qr-thumb {
+        width: 70px;
+        height: 70px;
+    }
 
     .admin-card,
     .admin-panel,
-    .admin-block { padding: 22px 18px; }
+    .admin-block {
+        padding: 22px 18px;
+    }
 
     .admin-header {
         flex-direction: column;
@@ -48,9 +77,13 @@
         width: 100%;
     }
 
-    .editor-controls { grid-template-columns: 1fr; }
+    .editor-controls {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 380px) {
-    .logo { display: none; }
+    .logo {
+        display: none;
+    }
 }

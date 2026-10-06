@@ -16,7 +16,9 @@
     gap: 18px;
 }
 
-.req-card.clickable { cursor: pointer; }
+.req-card.clickable {
+    cursor: pointer;
+}
 
 .req-card.clickable:hover,
 .req-card.clickable:focus-visible {
@@ -63,7 +65,9 @@
     transition: color 0.2s;
 }
 
-.req-card-link:hover { color: #fff; }
+.req-card-link:hover {
+    color: #fff;
+}
 
 /* Контакты */
 .contacts-grid {

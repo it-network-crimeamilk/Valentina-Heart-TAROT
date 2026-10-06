@@ -64,7 +64,9 @@
     line-height: 1.6;
 }
 
-.order-info-block strong { color: var(--accent-light); }
+.order-info-block strong {
+    color: var(--accent-light);
+}
 
 .order-qr-row {
     display: flex;

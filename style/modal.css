@@ -11,7 +11,9 @@
     animation: fadeIn 0.3s ease;
 }
 
-.modal.active { display: flex; }
+.modal.active {
+    display: flex;
+}
 
 .modal-content {
     background: linear-gradient(145deg, #241620 0%, #1a0f18 100%);
@@ -27,11 +29,20 @@
     animation: slideUp 0.4s ease;
 }
 
-.modal-wide { max-width: 900px; }
+.modal-wide {
+    max-width: 900px;
+}
 
 @keyframes slideUp {
-    from { transform: translateY(30px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-content h2 {
@@ -56,7 +67,9 @@
     padding: 0;
 }
 
-.modal-close:hover { color: var(--accent-light); }
+.modal-close:hover {
+    color: var(--accent-light);
+}
 
 /* QR-модалки */
 .qr-modal .modal-content {
