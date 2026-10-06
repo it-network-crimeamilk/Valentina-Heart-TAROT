@@ -31,7 +31,7 @@ function openCoverEditor() {
         editorState.blobUrl = null;
     }
 
-    fetch('imag_post.jpg?t=' + Date.now())
+    fetch('./images/imag_post.jpg?t=' + Date.now())
         .then(r => { if (!r.ok) throw new Error('Файл не найден'); return r.blob(); })
         .then(blob => {
             const url = URL.createObjectURL(blob);

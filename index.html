@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentina Heart TAROT</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -24,7 +24,7 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="#" class="logo-wrap">
-                <img src="logo.webp" alt="Логотип" class="logo-img" onerror="this.style.display='none'">
+                <img src="./images/logo.png" alt="Логотип" class="logo-img" onerror="this.style.display='none'">
                 <span class="logo">Valentina Heart TAROT</span>
             </a>
             <a href="admin.html" class="admin-link">Вход</a>
@@ -37,7 +37,7 @@
             <p class="hero-subtitle">Меня зовут Валентина! Профессиональные расклады Таро. Мы будем исцелять наши сердца
                 💔❤️‍🩹❤️‍🔥</p>
             <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="openModal('orderModal')">✨ Заказать расклад</button>
+                <button class="btn btn-primary" onclick="openModal('orderModal')">Заказать расклад</button>
                 <a href="#contacts" class="btn btn-secondary">Связаться</a>
             </div>
         </section>
@@ -100,11 +100,11 @@
                 Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я подтвержу заявку!
                 <div class="order-qr-row">
                     <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrVtbModal')" role="button">
-                        <img src="qr_sbp.png" alt="QR СБП" class="order-qr-thumb">
+                        <img src="./images/qr_sbp.png" alt="QR СБП" class="order-qr-thumb">
                         <span>QR для СБП</span>
                     </div>
                     <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrTbankModal')" role="button">
-                        <img src="qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb">
+                        <img src="./images/qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb">
                         <span>QR для Т-Банк</span>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
             <span class="modal-close" onclick="closeModal('qrTbankModal')">&times;</span>
             <h2>💳 Карта Т-Банк</h2>
             <p class="qr-subtitle">Отсканируйте QR-код для перевода</p>
-            <div class="qr-image-wrap"><img src="qr_tbank.png" alt="QR Т-Банк"></div>
+            <div class="qr-image-wrap"><img src="./images/qr_tbank.png" alt="QR Т-Банк"></div>
             <div class="qr-number">2200 3961 1672 3228</div>
         </div>
     </div>
@@ -147,7 +147,7 @@
             <span class="modal-close" onclick="closeModal('qrVtbModal')">&times;</span>
             <h2>💳 ВТБ (СБП)</h2>
             <p class="qr-subtitle">Отсканируйте QR-код для перевода через СБП</p>
-            <div class="qr-image-wrap"><img src="qr_sbp.png" alt="QR СБП"></div>
+            <div class="qr-image-wrap"><img src="./images/qr_sbp.png" alt="QR СБП"></div>
             <div class="qr-number">+7 978 455 06 16</div>
         </div>
     </div>
@@ -173,7 +173,7 @@
         <div class="container">© Valentina Heart TAROT · Все права защищены</div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
