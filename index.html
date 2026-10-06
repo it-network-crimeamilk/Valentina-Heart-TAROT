@@ -37,7 +37,7 @@
             <p class="hero-subtitle">Меня зовут Валентина! Профессиональные расклады Таро. Мы будем исцелять наши сердца
                 💔❤️‍🩹❤️‍🔥</p>
             <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="openModal('orderModal')">✨ Заказать расклад</button>
+                <button class="btn btn-primary" onclick="openModal('orderModal')">Заказать расклад</button>
                 <a href="#contacts" class="btn btn-secondary">Связаться</a>
             </div>
         </section>
@@ -75,8 +75,8 @@
                     <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
                 </div>
                 <div class="req-card clickable" tabindex="0" onclick="openQrModal('qrVtbModal')" role="button"
-                    aria-label="ВТБ СБП">
-                    <div class="req-card-title">💳 ВТБ (СБП)</div>
+                    aria-label="ВТБ">
+                    <div class="req-card-title">💳 ВТБ</div>
                     <div class="req-card-value">+7 978 455 06 16</div>
                     <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
                 </div>
@@ -95,16 +95,16 @@
             <span class="modal-close" onclick="closeModal('orderModal')">&times;</span>
             <h2>Заказать расклад</h2>
             <div class="order-info-block">
-                <strong>Здравствуйте!</strong> Для бронирования/заказа необходимо внести оплату.<br>
-                Реквизиты для перевода по СБП: <strong>+7 978 455 06 16</strong> (Получатель: Валентина).<br>
-                Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я подтвержу заявку!
+                <strong>Здравствуйте!</strong> Для поддержки меня:<br>
+                Реквизиты для перевода по СБП: <strong>+7 978 455 06 16</strong> (получатель: Валентина).
+                Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я вам отпишусь по указанному контакту связи с вами!!
                 <div class="order-qr-row">
                     <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrVtbModal')" role="button">
                         <img src="qr_sbp.png" alt="QR СБП" class="order-qr-thumb">
-                        <span>QR для СБП</span>
+                        <span>QR для ВТБ</span>
                     </div>
                     <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrTbankModal')" role="button">
-                        <img src="qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb">
+                        <img src="" alt="QR Т-Банк" class="order-qr-thumb">
                         <span>QR для Т-Банк</span>
                     </div>
                 </div>
@@ -145,9 +145,9 @@
     <div class="modal qr-modal" id="qrVtbModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('qrVtbModal')">&times;</span>
-            <h2>💳 ВТБ (СБП)</h2>
-            <p class="qr-subtitle">Отсканируйте QR-код для перевода через СБП</p>
-            <div class="qr-image-wrap"><img src="qr_sbp.png" alt="QR СБП"></div>
+            <h2>💳 ВТБ</h2>
+            <p class="qr-subtitle">Отсканируйте QR-код для перевода</p>
+            <div class="qr-image-wrap"><img src="qr_sbp.png" alt="QR"></div>
             <div class="qr-number">+7 978 455 06 16</div>
         </div>
     </div>
