@@ -5,167 +5,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админка | Valentina Heart TAROT</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@5.0.0/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cormorant-garamond@5.0.0/index.css">
     <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
-<body>
-    <div class="moon-bg" id="moonBg">
+<body class="admin-body">
+
+    <div class="moon-bg">
+        <div class="moon-glow"></div>
         <div class="moon-rays"></div>
+        <div class="moon-image"></div>
     </div>
 
-    <div class="container" style="padding: 40px 20px; position: relative; z-index: 2;">
+    <div class="admin-container">
 
-        <!-- Форма логина -->
-        <div id="loginForm" class="modal-content" style="max-width: 420px; margin: 60px auto;">
-            <h2>🔐 Admin Panel</h2>
-            <a href="index.html" class="btn btn-secondary"style="display:block; text-align:center; margin-bottom:20px;">← На главную</a>
-            <label style="display:block; margin-bottom:16px; color: var(--text-muted);">Введите пароль:<input type="password" id="adminPass" style="width:100%; padding:12px; margin-top:6px; background: rgba(15,8,16,0.6); border:1px solid var(--border); border-radius:8px; color: var(--text);"></label>
-            <div id="loginError" style="display:none; color:#ef5350; margin-bottom:12px; text-align:center;">❌ Неверный пароль!</div>
-            <button class="btn btn-primary" style="width:100%;" onclick="login()">Войти</button>
-        </div>
+        <!-- Форма входа -->
+        <section class="admin-card" id="loginForm">
+            <h1 class="admin-title">🔐 Admin Panel</h1>
+            <a href="index.html" class="admin-back">← На главную</a>
+            <label class="admin-label">Введите пароль:
+                <input type="password" id="adminPass" onkeydown="if(event.key==='Enter')login()">
+            </label>
+            <div class="admin-error" id="loginError">❌ Неверный пароль!</div>
+            <button class="btn btn-primary" onclick="login()">Войти</button>
+        </section>
 
         <!-- Админ-панель -->
-        <div id="adminPanel" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
-                <h1 style="font-family: var(--font-serif); color: var(--accent-light);">Admin Panel</h1>
-                <div style="display:flex; gap:10px;">
+        <section class="admin-panel" id="adminPanel" style="display:none">
+            <header class="admin-header">
+                <h1 class="admin-title">Admin Panel</h1>
+                <div class="admin-actions">
                     <a href="index.html" class="btn btn-secondary">На главную</a>
                     <button class="btn btn-secondary" onclick="logout()">Выйти</button>
                 </div>
-            </div>
+            </header>
 
             <!-- Генератор постов -->
-            <div class="cover-section">
-                <h3>📝 Генератор постов для видео</h3>
-                <label style="display:block; margin-bottom:12px; color: var(--text-muted); font-size:14px;">
-                    Тема видео (заголовок):
-                    <input type="text" id="postTitle"
-                        style="width:100%; padding:10px; margin-top:6px; background: rgba(15,8,16,0.6); border:1px solid var(--border); border-radius:8px; color: var(--text);">
+            <div class="admin-block">
+                <h2 class="admin-block-title">📝 Генератор постов для видео</h2>
+                <label class="admin-label">Тема видео (заголовок):
+                    <input type="text" id="postTitle" placeholder="Например: Расклад на любовь">
                 </label>
-                <label style="display:block; margin-bottom:12px; color: var(--text-muted); font-size:14px;">
-                    Ссылка на YouTube:
-                    <input type="text" id="ytUrl"
-                        style="width:100%; padding:10px; margin-top:6px; background: rgba(15,8,16,0.6); border:1px solid var(--border); border-radius:8px; color: var(--text);">
+                <label class="admin-label">Ссылка на YouTube:
+                    <input type="text" id="ytUrl" placeholder="https://youtube.com/...">
                 </label>
-                <label style="display:block; margin-bottom:12px; color: var(--text-muted); font-size:14px;">
-                    Ссылка на VkVideo:
-                    <input type="text" id="vkUrl"
-                        style="width:100%; padding:10px; margin-top:6px; background: rgba(15,8,16,0.6); border:1px solid var(--border); border-radius:8px; color: var(--text);">
+                <label class="admin-label">Ссылка на VkVideo:
+                    <input type="text" id="vkUrl" placeholder="https://vkvideo.ru/...">
                 </label>
                 <button class="btn btn-primary" onclick="generatePosts()">Сгенерировать посты</button>
-            </div>
 
-            <!-- Результаты генерации -->
-            <div id="resultsArea" style="display:none;">
-                <div class="cover-section">
-                    <h3>📱 Для Telegram:</h3>
-                    <pre id="tgPost"
-                        style="white-space:pre-wrap; background: rgba(15,8,16,0.6); padding:14px; border-radius:8px; color: var(--text); font-size:13px; max-height:300px; overflow:auto;"></pre>
-                    <button class="btn btn-secondary" style="margin-top:10px;"
-                        onclick="copyToClipboard('tgPost')">Копировать для Telegram</button>
-                </div>
-                <div class="cover-section">
-                    <h3>🌐 Для ВКонтакте (Текст поста):</h3>
-                    <p style="color:#ef5350; font-size:13px; margin-bottom:10px;">⚠️ Сначала вставьте ссылку на видео в
-                        ВК вручную, дождитесь обработки, затем вставьте этот текст ниже.</p>
-                    <pre id="vkPost"
-                        style="white-space:pre-wrap; background: rgba(15,8,16,0.6); padding:14px; border-radius:8px; color: var(--text); font-size:13px; max-height:300px; overflow:auto;"></pre>
-                    <button class="btn btn-secondary" style="margin-top:10px;"
-                        onclick="copyToClipboard('vkPost')">Копировать текст для ВК</button>
+                <div class="admin-results" id="resultsArea" style="display:none">
+                    <div class="admin-result-block">
+                        <h3>📱 Для Telegram:</h3>
+                        <pre id="tgPost"></pre>
+                        <button class="btn btn-secondary" onclick="copyToClipboard('tgPost')">Копировать для
+                            Telegram</button>
+                    </div>
+                    <div class="admin-result-block">
+                        <h3>🌐 Для ВКонтакте:</h3>
+                        <p class="admin-hint">⚠️ Сначала вставьте ссылку на видео в ВК вручную, дождитесь обработки,
+                            затем вставьте этот текст ниже.</p>
+                        <pre id="vkPost"></pre>
+                        <button class="btn btn-secondary" onclick="copyToClipboard('vkPost')">Копировать текст для
+                            ВК</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Обложка -->
-            <div class="cover-section">
-                <h3>🖼️ Обложка для постов и роликов</h3>
-                <p class="cover-hint">Универсальная обложка. Нажмите «Открыть редактор», чтобы добавить текст,
+            <div class="admin-block">
+                <h2 class="admin-block-title">🖼️ Обложка для постов и роликов</h2>
+                <p class="admin-hint">Универсальная обложка. Нажмите «Открыть редактор», чтобы добавить текст,
                     перетащить его в нужное место и скачать готовую картинку.</p>
-                <img src="imag_post.jpg" alt="Обложка" class="cover-thumb" onclick="openCoverEditor()"
-                    onerror="this.style.display='none'">
-                <div class="cover-actions">
+                <div class="admin-actions">
                     <button class="btn btn-primary" onclick="openCoverEditor()">✏️ Открыть редактор</button>
                     <button class="btn btn-secondary" onclick="openCoverFullview()">🔍 На весь экран</button>
                 </div>
             </div>
 
             <!-- Чек-лист -->
-            <div class="cover-section">
-                <h3>📚 Инструкция для администратора по публикации</h3>
-                <p class="cover-hint">Отмечайте выполненные шаги — состояние сохраняется автоматически.</p>
-                <div id="publishChecklist">
-                    <div class="checklist-item">
-                        <label>
-                            <input type="checkbox" data-key="prep">
-                            <div><strong>Подготовка</strong>Подготовить ролик или ролики для загрузки в vkVideo и
-                                YouTube.</div>
-                        </label>
-                    </div>
-                    <div class="checklist-item">
-                        <label>
-                            <input type="checkbox" data-key="step1">
-                            <div><strong>Шаг 1: ВКвидео</strong>Перейти в <a href="https://vkvideo.ru/@club240360498"
-                                    target="_blank">канал</a> и добавить ролик.</div>
-                        </label>
-                    </div>
-                    <div class="checklist-item">
-                        <label>
-                            <input type="checkbox" data-key="step2">
-                            <div><strong>Шаг 2: Пост ВКонтакте</strong>Перейти на <a href="https://vk.ru/id851128139"
-                                    target="_blank">стену</a>, создать пост.</div>
-                        </label>
-                    </div>
-                    <div class="checklist-item">
-                        <label>
-                            <input type="checkbox" data-key="step3">
-                            <div><strong>Шаг 3: YouTube</strong>Перейти на <a href="https://www.youtube.com/"
-                                    target="_blank">YouTube</a> → Добавить видео.</div>
-                        </label>
-                    </div>
-                    <div class="checklist-item">
-                        <label>
-                            <input type="checkbox" data-key="step4">
-                            <div><strong>Шаг 4: Telegram</strong>Сгенерировать пост и выложить с отложенной публикацией
-                                в группу <a href="https://t.me/ValentinaSerdceTarot" target="_blank">Сердце Таро 🌹</a>.
-                            </div>
-                        </label>
-                    </div>
+            <div class="admin-block">
+                <h2 class="admin-block-title">📚 Инструкция по публикации</h2>
+                <p class="admin-hint">Отмечайте выполненные шаги — состояние сохраняется автоматически.</p>
+                <div class="checklist" id="publishChecklist">
+                    <div class="checklist-item"><strong>Подготовка</strong></div>
+                    <label class="checklist-item"><input type="checkbox" data-key="prep"> Подготовить ролик для загрузки
+                        в vkVideo и YouTube.</label>
+                    <div class="checklist-item"><strong>Шаг 1: ВКвидео</strong></div>
+                    <label class="checklist-item"><input type="checkbox" data-key="vk"> Перейти в <a
+                            href="https://vkvideo.ru/@club240360498" target="_blank">канал</a> и добавить ролик.</label>
+                    <div class="checklist-item"><strong>Шаг 2: Пост ВКонтакте</strong></div>
+                    <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Перейти на <a
+                            href="https://vk.ru/id851128139" target="_blank">стену</a>, создать пост.</label>
+                    <div class="checklist-item"><strong>Шаг 3: YouTube</strong></div>
+                    <label class="checklist-item"><input type="checkbox" data-key="yt"> Перейти на <a
+                            href="https://www.youtube.com/" target="_blank">YouTube</a> → Добавить видео.</label>
+                    <div class="checklist-item"><strong>Шаг 4: Telegram</strong></div>
+                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Сгенерировать пост и выложить с
+                        отложенной публикацией в группу <a href="https://t.me/ValentinaSerdceTarot"
+                            target="_blank">Сердце Таро 🌹</a>.</label>
                 </div>
-                <button class="btn btn-secondary" style="margin-top:14px;" onclick="resetChecklist()">🔄 Сбросить все
-                    отметки</button>
+                <button class="btn btn-secondary" onclick="resetChecklist()">🔄 Сбросить все отметки</button>
             </div>
-        </div>
+        </section>
     </div>
 
     <!-- Модалка редактора обложки -->
     <div class="modal" id="coverEditorModal">
-        <div class="editor-content">
+        <div class="modal-content modal-wide">
             <span class="modal-close" onclick="closeCoverEditor()">&times;</span>
             <h2>✏️ Редактор обложки</h2>
-            <p class="editor-hint">Перетаскивайте текст мышкой. Настройте размер, цвет и шрифт. Нажмите «Скачать».</p>
-            <div class="editor-canvas-wrap">
-                <canvas id="coverEditorCanvas"></canvas>
-            </div>
+            <p class="admin-hint">Перетаскивайте текст мышкой. Настройте размер, цвет и шрифт. Нажмите «Скачать».</p>
+            <label class="admin-label">Текст заголовка:
+                <input type="text" id="editorTitleInput" placeholder="Введите текст...">
+            </label>
             <div class="editor-controls">
-                <div class="editor-row">
-                    <label>Размер шрифта: <span id="fontSizeValue">60</span> px</label>
-                    <input type="range" id="fontSizeSlider" min="20" max="140" value="60">
-                </div>
-                <div class="editor-row">
-                    <label>Цвет текста</label>
-                    <input type="color" id="textColorPicker" value="#f0e6e7">
-                </div>
-                <div class="editor-row">
-                    <label>Цвет обводки</label>
-                    <input type="color" id="strokeColorPicker" value="#000000">
-                </div>
-                <div class="editor-row">
-                    <label>Толщина обводки: <span id="strokeWidthValue">3</span></label>
+                <label>Размер шрифта: <span id="fontSizeValue">60</span> px
+                    <input type="range" id="fontSizeSlider" min="20" max="120" value="60">
+                </label>
+                <label>Цвет текста <input type="color" id="textColorPicker" value="#f0e6e7"></label>
+                <label>Цвет обводки <input type="color" id="strokeColorPicker" value="#000000"></label>
+                <label>Толщина обводки: <span id="strokeWidthValue">3</span>
                     <input type="range" id="strokeWidthSlider" min="0" max="10" value="3">
-                </div>
-                <div class="editor-row" style="grid-column: 1 / -1;">
-                    <label>Шрифт</label>
+                </label>
+                <label>Шрифт
                     <select id="fontFamilySelect">
                         <option value="'Cormorant Garamond', Georgia, serif">Cormorant Garamond (Таро)</option>
                         <option value="Georgia, serif">Georgia</option>
@@ -173,13 +138,12 @@
                         <option value="Impact, sans-serif">Impact</option>
                         <option value="Arial, sans-serif">Arial</option>
                     </select>
-                </div>
-                <div class="editor-row" style="grid-column: 1 / -1;">
-                    <label>Текст заголовка</label>
-                    <textarea id="editorTitleInput" placeholder="Введите текст..."></textarea>
-                </div>
+                </label>
             </div>
-            <div class="editor-buttons">
+            <div class="editor-canvas-wrap">
+                <canvas id="coverEditorCanvas"></canvas>
+            </div>
+            <div class="editor-actions">
                 <button class="btn btn-secondary" onclick="resetEditorPosition()">🎯 По центру</button>
                 <button class="btn btn-primary" onclick="downloadEditedCover()">⬇️ Скачать обложку</button>
             </div>
@@ -188,10 +152,8 @@
 
     <!-- Полноэкранный просмотр -->
     <div class="modal" id="coverFullview">
-        <span class="modal-close" onclick="closeCoverFullview()"
-            style="top:20px; right:30px; font-size:40px;">&times;</span>
-        <img src="imag_post.jpg" alt="Обложка" style="max-width:95vw; max-height:95vh; object-fit:contain;"
-            onerror="this.outerHTML='<p style=\'color:#fff;\'>Файл imag_post.jpg не найден</p>'">
+        <span class="modal-close" onclick="closeCoverFullview()">&times;</span>
+        <img src="imag_post.jpg" alt="Обложка" class="fullview-img">
     </div>
 
     <script src="admin.js"></script>
