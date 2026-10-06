@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* FIX: единый Escape-обработчик для админки (закрывает все модалки) */
+/* Единый Escape-обработчик для админки (закрывает все модалки) */
 document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     document.querySelectorAll('.modal.active').forEach(m => {

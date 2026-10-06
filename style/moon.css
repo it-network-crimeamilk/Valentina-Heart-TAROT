@@ -16,7 +16,6 @@
     --anim-duration: 6s;
 }
 
-/* FIX: используем transform вместо translate, чтобы не конфликтовать с анимацией */
 .moon-rays,
 .moon-glow,
 .moon-image {
@@ -55,7 +54,6 @@
     animation: moonFloat 8s ease-in-out infinite;
 }
 
-/* FIX: анимация не должна двигать по X — используем translate с сохранением центрирования */
 @keyframes pulseRays {
 
     0%,
@@ -96,7 +94,6 @@
     }
 }
 
-/* Фазы луны: меняем только переменные */
 .moon-bg.phase-new {
     --glow-opacity: 0.3;
     --glow-blur: 40px;

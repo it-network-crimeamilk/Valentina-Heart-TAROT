@@ -1,7 +1,6 @@
 const CHECKLIST_KEY = 'valentina_admin_checklist';
 
-/* Навешиваем обработчик один раз через делегирование.
-   initChecklist вызывается из showAdminPanel при входе в админку. */
+/* Инициализация чек-листа. Вызывается из showAdminPanel при входе в админку. */
 function initChecklist() {
     const container = document.getElementById('publishChecklist');
     if (!container) return;
@@ -44,7 +43,7 @@ function resetChecklist() {
     localStorage.removeItem(CHECKLIST_KEY);
 }
 
-/* FIX: обработчик кнопки сброса */
+/* Обработчик кнопки сброса */
 document.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('resetChecklistBtn');
     if (resetBtn) resetBtn.addEventListener('click', resetChecklist);

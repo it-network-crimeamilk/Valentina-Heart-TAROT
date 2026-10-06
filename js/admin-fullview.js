@@ -12,7 +12,7 @@ function closeCoverFullview() {
     else fv.classList.remove('active');
 }
 
-/* FIX: кнопка открытия fullview */
+/* Кнопка открытия fullview */
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('openFullviewBtn');
     if (btn) btn.addEventListener('click', openCoverFullview);

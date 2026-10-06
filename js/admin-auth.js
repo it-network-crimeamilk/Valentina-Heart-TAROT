@@ -1,4 +1,4 @@
-const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // иди в жопу!
+const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // пошли в жопу!
 
 function utf8ToBase64(str) {
     const bytes = new TextEncoder().encode(str);
@@ -46,7 +46,7 @@ function showAdminPanel() {
     if (typeof initChecklist === 'function') initChecklist();
 }
 
-/* FIX: навешиваем обработчики кнопок и Enter на поле пароля */
+/* Навешиваем обработчики кнопок и Enter на поле пароля */
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');

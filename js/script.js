@@ -12,7 +12,7 @@ function closeModal(id) {
     m.setAttribute('aria-hidden', 'true');
 }
 
-/* Единственный глобальный клик по оверлею — закрывает модалку */
+/* Клик по оверлею — закрывает модалку */
 window.addEventListener('click', e => {
     if (e.target.classList && e.target.classList.contains('modal')) {
         e.target.classList.remove('active');
@@ -20,7 +20,7 @@ window.addEventListener('click', e => {
     }
 });
 
-/* Единственный глобальный Escape — закрывает все активные модалки */
+/* Escape — закрывает все активные модалки (единый обработчик для публичной страницы) */
 document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     document.querySelectorAll('.modal.active').forEach(m => {
@@ -29,7 +29,7 @@ document.addEventListener('keydown', e => {
     });
 });
 
-/* ========== 2. КЛАВИАТУРНАЯ ДОСТУПНОСТЬ ========== */
+/* ========== КЛАВИАТУРНАЯ ДОСТУПНОСТЬ ========== */
 document.addEventListener('DOMContentLoaded', () => {
     const keyboardActivables = document.querySelectorAll('.req-card.clickable, .order-qr-item');
     keyboardActivables.forEach(el => {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* ========== 3. ОТПРАВКА ФОРМЫ ЗАКАЗА ========== */
+/* ========== ОТПРАВКА ФОРМЫ ЗАКАЗА ========== */
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('orderForm');
     if (!form) return;
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* ========== 4. ФАЗА ЛУНЫ ========== */
+/* ========== ФАЗА ЛУНЫ ========== */
 const LUNAR = {
     KNOWN_NEW_MOON: new Date('2000-01-06T18:14:00Z').getTime(),
     SYNODIC_MONTH_MS: 29.530588853 * 24 * 60 * 60 * 1000
@@ -145,7 +145,7 @@ function applyMoonPhase() {
     if (desc) desc.textContent = info.tarot;
 }
 
-/* ========== 5. КНОПКА ПРОКРУТКИ ========== */
+/* ========== КНОПКА ПРОКРУТКИ ========== */
 function initScrollButton() {
     const btn = document.getElementById('scrollBtn');
     const icon = document.getElementById('scrollBtnIcon');
@@ -178,10 +178,10 @@ function initScrollButton() {
     update();
 }
 
-/* ========== 6. ИНИЦИАЛИЗАЦИЯ ========== */
+/* ========== ИНИЦИАЛИЗАЦИЯ ========== */
 document.addEventListener('DOMContentLoaded', () => {
     applyMoonPhase();
     initScrollButton();
-    // REFACTOR: раз в час избыточно — фаза меняется ~раз в 7 дней. Ставим раз в 6 часов.
+    // Фаза меняется ~раз в 7 дней — обновляем раз в 6 часов
     setInterval(applyMoonPhase, 6 * 60 * 60 * 1000);
 });

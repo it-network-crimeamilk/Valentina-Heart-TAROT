@@ -15,7 +15,7 @@ const editorState = {
     scale: 1,
     canvas: null,
     dragBound: false,
-    loadToken: 0 // FIX: защита от гонки при быстром закрытии/открытии
+    loadToken: 0 // защита от гонки при быстром закрытии/открытии
 };
 
 function openCoverEditor() {
@@ -43,11 +43,9 @@ function openCoverEditor() {
             return r.blob();
         })
         .then(blob => {
-            // FIX: если за время загрузки открыли заново/закрыли — игнорируем
-            if (token !== editorState.loadToken) {
-                URL.revokeObjectURL(URL.createObjectURL(blob)); // освобождаем
-                return;
-            }
+            // Если за время загрузки открыли заново/закрыли — игнорируем
+            if (token !== editorState.loadToken) return;
+
             const url = URL.createObjectURL(blob);
             const img = new Image();
             img.onload = () => {
@@ -63,6 +61,7 @@ function openCoverEditor() {
             img.onerror = () => {
                 alert('Не удалось загрузить обложку.');
                 URL.revokeObjectURL(url);
+                editorState.image = null;
             };
             img.src = url;
         })
@@ -80,7 +79,7 @@ function closeCoverEditor() {
         editorState.blobUrl = null;
     }
     editorState.image = null;
-    editorState.loadToken++; // FIX: инвалидируем незавершённую загрузку
+    editorState.loadToken++; // инвалидируем незавершённую загрузку
 }
 
 function initEditorCanvas() {
@@ -217,7 +216,7 @@ function downloadEditedCover() {
 
     redrawEditor();
 
-    // FIX: подложка — тёмная (соответствует комментарию), чтобы избежать артефактов JPEG
+    // Тёмная подложка, чтобы избежать артефактов JPEG
     const tmp = document.createElement('canvas');
     tmp.width = canvas.width;
     tmp.height = canvas.height;
@@ -239,7 +238,7 @@ function downloadEditedCover() {
     }, 'image/jpeg', 0.95);
 }
 
-/* FIX: навешиваем все обработчики контролов и кнопок один раз */
+/* Навешиваем все обработчики контролов и кнопок один раз */
 function initEditorControls() {
     const bind = (id, prop, isInt = false) => {
         const el = document.getElementById(id);

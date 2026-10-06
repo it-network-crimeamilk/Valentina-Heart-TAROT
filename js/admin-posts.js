@@ -67,7 +67,7 @@ function copyToClipboard(id) {
     }
 }
 
-/* FIX: обработчики кнопок вместо inline onclick */
+/* Обработчики кнопок */
 document.addEventListener('DOMContentLoaded', () => {
     const genBtn = document.getElementById('generatePostsBtn');
     if (genBtn) genBtn.addEventListener('click', generatePosts);
