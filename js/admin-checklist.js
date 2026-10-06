@@ -1,29 +1,37 @@
 const CHECKLIST_KEY = 'valentina_admin_checklist';
 
+/* Навешиваем обработчик один раз через делегирование */
 function initChecklist() {
+    const container = document.getElementById('publishChecklist');
+    if (!container) return;
+
     let saved = {};
-    try { saved = JSON.parse(localStorage.getItem(CHECKLIST_KEY)) || {}; } catch (e) { }
+    try { saved = JSON.parse(localStorage.getItem(CHECKLIST_KEY)) || {}; } catch (e) { /* ignore */ }
 
-    document.querySelectorAll('#publishChecklist input[type="checkbox"]').forEach(cb => {
+    // Проставляем состояние из localStorage
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         const key = cb.dataset.key;
-        if (saved[key]) {
-            cb.checked = true;
-            cb.closest('.checklist-item').classList.add('checked');
-        }
-        // Защита от повторного навешивания обработчика
-        if (cb.dataset.bound === '1') return;
-        cb.dataset.bound = '1';
-        cb.addEventListener('change', handleChecklistChange);
-    });
-}
-
-function handleChecklistChange() {
-    const state = {};
-    document.querySelectorAll('#publishChecklist input[type="checkbox"]').forEach(cb => {
-        state[cb.dataset.key] = cb.checked;
+        cb.checked = !!saved[key];
         cb.closest('.checklist-item').classList.toggle('checked', cb.checked);
     });
-    try { localStorage.setItem(CHECKLIST_KEY, JSON.stringify(state)); } catch (e) { console.error(e); }
+
+    // Один обработчик на контейнер (change всплывает от чекбоксов)
+    if (container.dataset.bound === '1') return;
+    container.dataset.bound = '1';
+    container.addEventListener('change', handleChecklistChange);
+}
+
+function handleChecklistChange(e) {
+    const cb = e.target.closest('input[type="checkbox"]');
+    if (!cb) return;
+
+    cb.closest('.checklist-item').classList.toggle('checked', cb.checked);
+
+    const state = {};
+    document.querySelectorAll('#publishChecklist input[type="checkbox"]').forEach(x => {
+        state[x.dataset.key] = x.checked;
+    });
+    try { localStorage.setItem(CHECKLIST_KEY, JSON.stringify(state)); } catch (err) { console.error(err); }
 }
 
 function resetChecklist() {

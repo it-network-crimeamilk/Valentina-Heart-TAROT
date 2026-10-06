@@ -1,0 +1,83 @@
+/* ========== ФОН С ЛУНОЙ ========== */
+.moon-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 30%, rgba(60, 30, 50, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at center, #1a0f1a 0%, #0a0508 100%);
+    background-attachment: fixed;
+    pointer-events: none;
+    overflow: hidden;
+
+    /* Значения по умолчанию (фаза не задана) */
+    --glow-opacity: 0.4;
+    --glow-blur: 60px;
+    --img-opacity: 0.8;
+    --img-brightness: 1;
+    --anim-duration: 6s;
+}
+
+/* Общие параметры для всех слоёв луны */
+.moon-rays,
+.moon-glow,
+.moon-image {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    translate: -50% -50%;      /* центрирование без конфликта с transform */
+    border-radius: 50%;
+    transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease;
+}
+
+.moon-rays {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(192, 128, 129, 0.35) 0%, transparent 70%);
+    filter: blur(30px);
+    animation: pulseRays var(--anim-duration) ease-in-out infinite;
+}
+
+.moon-glow {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(192, 128, 129, 0.4) 0%, transparent 70%);
+    filter: blur(var(--glow-blur));
+    opacity: var(--glow-opacity);
+    animation: moonGlowPulse var(--anim-duration) ease-in-out infinite;
+}
+
+.moon-image {
+    width: 300px;
+    height: 300px;
+    background: url('../images/moon.webp') center/contain no-repeat;
+    opacity: var(--img-opacity);
+    filter: brightness(var(--img-brightness)) drop-shadow(0 0 40px rgba(192, 128, 129, 0.6));
+    animation: moonFloat 8s ease-in-out infinite;
+}
+
+/* Анимации: используем translate + transform отдельно */
+@keyframes pulseRays {
+    0%, 100% { transform: scale(1);    opacity: 0.7; }
+    50%      { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes moonGlowPulse {
+    0%, 100% { transform: scale(1);   opacity: 0.6; }
+    50%      { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes moonFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* ---- Фазы луны: меняем только переменные ---- */
+.moon-bg.phase-new             { --glow-opacity: 0.3;  --glow-blur: 40px; --img-opacity: 0.25; --img-brightness: 0.5; --anim-duration: 10s; }
+.moon-bg.phase-waxing-crescent { --glow-opacity: 0.3;  --glow-blur: 35px; --img-opacity: 0.4;  --img-brightness: 0.7; }
+.moon-bg.phase-first-quarter   { --glow-opacity: 0.4;  --glow-blur: 30px; --img-opacity: 0.5; }
+.moon-bg.phase-waxing-gibbous  { --glow-opacity: 0.45; --glow-blur: 25px; --img-opacity: 0.6;  --img-brightness: 0.9; }
+.moon-bg.phase-full            { --glow-opacity: 0.6;  --glow-blur: 20px; --img-opacity: 0.8;  --img-brightness: 1.1; --anim-duration: 4s; }
+.moon-bg.phase-waning-gibbous  { --glow-opacity: 0.45; --glow-blur: 25px; --img-opacity: 0.6;  --img-brightness: 0.9; }
+.moon-bg.phase-last-quarter    { --glow-opacity: 0.35; --glow-blur: 30px; --img-opacity: 0.45; }
+.moon-bg.phase-waning-crescent { --glow-opacity: 0.35; --glow-blur: 35px; --img-opacity: 0.35; --img-brightness: 0.6; --anim-duration: 8s; }

@@ -1,3 +1,5 @@
+/* Генератор постов для соцсетей */
+
 const CONTACT_BLOCK = `❤️ ПОБЛАГОДАРИТЬ
 💳 Карта Т-Банк: 
 2200 3961 1672 3228
@@ -28,7 +30,7 @@ https://t.me/ValentinaSerdceTarot
 https://vk.ru/id851128139
 
 🎬 VK Video:
-https://vkvideo.ru/@club2403604988`;
+https://vkvideo.ru/@club240360498`;
 
 function generatePosts() {
     const title = document.getElementById('postTitle').value.trim() || 'Новое видео';
@@ -36,7 +38,6 @@ function generatePosts() {
     const vk = document.getElementById('vkUrl').value.trim() || 'Ссылка на VkVideo';
 
     const tgText = `🔮 На канале новое видео!\n\nТема:\n"${title} 🌹"\n\n📺 YouTube:\n${yt}\n\n🎬 VkVideo:\n${vk}\n\n🌏 Сайт Valentina Heart TAROT:\nhttp://valentina-tarot.ru`;
-
     const vkText = `${title} 🌹\n\n${CONTACT_BLOCK}`;
 
     document.getElementById('tgPost').textContent = tgText;

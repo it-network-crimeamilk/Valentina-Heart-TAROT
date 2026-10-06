@@ -1,8 +1,15 @@
-/* admin.js — главный файл инициализации админ-панели */
-/* Подключает модули: admin-posts.js, admin-checklist.js, admin-editor.js, admin-fullview.js, admin-auth.js */
+/* Инициализация админ-панели:
+   - авто-вход, если сессия уже активна
+   - единый обработчик Escape (модалки редактора и просмотра) */
 
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('isAdmin') === 'true') {
         showAdminPanel();
     }
+});
+
+document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (typeof closeCoverFullview === 'function') closeCoverFullview();
+    if (typeof closeCoverEditor    === 'function') closeCoverEditor();
 });

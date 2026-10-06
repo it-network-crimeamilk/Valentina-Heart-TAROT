@@ -1,0 +1,43 @@
+/* ========== ВИДЖЕТ ЛУНЫ ========== */
+.moon-widget-section { padding: 20px 0 40px; }
+
+.moon-widget {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+    background: rgba(30, 18, 24, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+    animation: fadeInUp 0.8s ease;
+}
+
+.moon-widget-icon {
+    font-size: 48px;
+    line-height: 1;
+    filter: drop-shadow(0 0 12px rgba(192, 128, 129, 0.6));
+    animation: floatIcon 4s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+.moon-widget-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-bottom: 4px;
+}
+
+.moon-widget-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}

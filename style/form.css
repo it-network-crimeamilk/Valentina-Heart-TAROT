@@ -1,0 +1,114 @@
+/* ========== ФОРМА ЗАКАЗА ========== */
+#orderForm label {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+#orderForm input[type="text"],
+#orderForm textarea,
+#orderForm input[type="file"] {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 6px;
+    background: rgba(15, 8, 16, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--font-main);
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+#orderForm input:focus,
+#orderForm textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+#orderForm textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+#orderForm button {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.file-hint {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.form-status {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+/* Инфо-блок в модалке заказа */
+.order-info-block {
+    background: rgba(192, 128, 129, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.order-info-block strong { color: var(--accent-light); }
+
+.order-qr-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.order-qr-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.order-qr-item:hover,
+.order-qr-item:focus-visible {
+    border-color: var(--accent);
+    background: rgba(192, 128, 129, 0.12);
+    transform: translateY(-2px);
+}
+
+.order-qr-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.order-qr-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+    padding: 4px;
+}
+
+.order-qr-item span {
+    font-size: 12px;
+    color: var(--accent-light);
+    font-weight: 600;
+}

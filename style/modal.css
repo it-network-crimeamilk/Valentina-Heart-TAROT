@@ -1,0 +1,114 @@
+/* ========== МОДАЛЬНЫЕ ОКНА ========== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 5, 8, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active { display: flex; }
+
+.modal-content {
+    background: linear-gradient(145deg, #241620 0%, #1a0f18 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow);
+    animation: slideUp 0.4s ease;
+}
+
+.modal-wide { max-width: 900px; }
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-content h2 {
+    font-family: var(--font-serif);
+    color: var(--accent-light);
+    margin-bottom: 20px;
+    font-size: 26px;
+    text-align: center;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 30px;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover { color: var(--accent-light); }
+
+/* QR-модалки */
+.qr-modal .modal-content {
+    max-width: 420px;
+    text-align: center;
+}
+
+.qr-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.qr-image-wrap {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.qr-image-wrap img {
+    display: block;
+    width: 260px;
+    height: 260px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.qr-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: 1.5px;
+    margin-top: 8px;
+}
+
+/* Инфо-модалка */
+.info-list {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.info-list li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(192, 128, 129, 0.1);
+}
+
+.info-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}

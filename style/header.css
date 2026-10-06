@@ -1,0 +1,71 @@
+/* ========== ШАПКА ========== */
+.site-header {
+    padding: 24px 0;
+    background: rgba(15, 8, 16, 0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo-wrap:hover { transform: translateY(-1px); }
+
+.logo-img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 8px rgba(192, 128, 129, 0.5));
+    padding: 4px;
+    animation: logoGlow 4s ease-in-out infinite;
+}
+
+.logo-wrap:hover .logo-img {
+    animation: none;
+    transform: rotate(-3deg) scale(1.05);
+}
+
+@keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(192, 128, 129, 0.5)); }
+    50%      { filter: drop-shadow(0 0 16px rgba(217, 163, 164, 0.85)); }
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent-light);
+    letter-spacing: 1px;
+}
+
+.admin-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    color: var(--accent-light);
+    border-color: var(--accent);
+    background: rgba(192, 128, 129, 0.1);
+}

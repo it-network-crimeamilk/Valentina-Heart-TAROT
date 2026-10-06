@@ -1,12 +1,19 @@
+/* Авторизация админки.
+   ВНИМАНИЕ: это защита от «случайных» посетителей, а не реальная безопасность.
+   Base64 легко декодируется. Не используйте этот метод для чувствительных данных. */
+
+/* Пароль закодирован в base64. Исходный: "Hesoyam1607+" */
 const _AUTH_HASH = "SGVzb3lhbTE2MDcr";
 
-function login() {
+async function login() {
     const inputEl = document.getElementById('adminPass');
     const errorEl = document.getElementById('loginError');
     if (!inputEl) return;
 
     const input = inputEl.value;
-    if (btoa(input) === _AUTH_HASH) {
+    const hash = btoa(input);
+
+    if (hash === _AUTH_HASH) {
         sessionStorage.setItem('isAdmin', 'true');
         showAdminPanel();
     } else {
@@ -28,5 +35,6 @@ function showAdminPanel() {
 
     panel.style.display = 'block';
     panel.classList.add('fade-in');
-    initChecklist();
+
+    if (typeof initChecklist === 'function') initChecklist();
 }

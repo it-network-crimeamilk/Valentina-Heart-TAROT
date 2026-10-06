@@ -1,3 +1,4 @@
+/* Редактор обложки */
 const editorState = {
     image: null,
     blobUrl: null,
@@ -21,18 +22,24 @@ function openCoverEditor() {
     const modal = document.getElementById('coverEditorModal');
     if (!modal) return;
 
-    const titleInput = document.getElementById('postTitle');
+    const titleInput  = document.getElementById('postTitle');
     const editorTitle = document.getElementById('editorTitleInput');
-    if (titleInput && editorTitle) editorTitle.value = editorState.title = titleInput.value.trim();
+    if (titleInput && editorTitle) {
+        editorTitle.value = editorState.title = titleInput.value.trim();
+    }
 
-    // Освобождаем предыдущий blobUrl, если он был
+    // Освобождаем прошлый blob
     if (editorState.blobUrl) {
         URL.revokeObjectURL(editorState.blobUrl);
         editorState.blobUrl = null;
     }
+    editorState.image = null;
 
     fetch('./images/imag_post.jpg?t=' + Date.now())
-        .then(r => { if (!r.ok) throw new Error('Файл не найден'); return r.blob(); })
+        .then(r => {
+            if (!r.ok) throw new Error('Файл не найден');
+            return r.blob();
+        })
         .then(blob => {
             const url = URL.createObjectURL(blob);
             const img = new Image();
@@ -42,16 +49,26 @@ function openCoverEditor() {
                 initEditorCanvas();
                 modal.classList.add('active');
             };
-            img.onerror = () => { alert('Не удалось загрузить обложку.'); URL.revokeObjectURL(url); };
+            img.onerror = () => {
+                alert('Не удалось загрузить обложку.');
+                URL.revokeObjectURL(url);
+            };
             img.src = url;
         })
-        .catch(err => { console.error(err); alert('Не удалось загрузить обложку. Проверьте, что imag_post.jpg существует.'); });
+        .catch(err => {
+            console.error(err);
+            alert('Не удалось загрузить обложку. Проверьте, что imag_post.jpg существует.');
+        });
 }
 
 function closeCoverEditor() {
     const modal = document.getElementById('coverEditorModal');
     if (modal) modal.classList.remove('active');
-    if (editorState.blobUrl) { URL.revokeObjectURL(editorState.blobUrl); editorState.blobUrl = null; }
+    if (editorState.blobUrl) {
+        URL.revokeObjectURL(editorState.blobUrl);
+        editorState.blobUrl = null;
+    }
+    editorState.image = null;
 }
 
 function initEditorCanvas() {
@@ -62,9 +79,9 @@ function initEditorCanvas() {
     const maxW = 800;
     editorState.scale = img.width > maxW ? maxW / img.width : 1;
 
-    canvas.width = img.width;
+    canvas.width  = img.width;
     canvas.height = img.height;
-    canvas.style.width = Math.round(img.width * editorState.scale) + 'px';
+    canvas.style.width  = Math.round(img.width  * editorState.scale) + 'px';
     canvas.style.height = Math.round(img.height * editorState.scale) + 'px';
 
     editorState.x = img.width / 2;
@@ -85,7 +102,9 @@ function redrawEditor() {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (editorState.image) ctx.drawImage(editorState.image, 0, 0, canvas.width, canvas.height);
+    if (editorState.image) {
+        ctx.drawImage(editorState.image, 0, 0, canvas.width, canvas.height);
+    }
     if (!editorState.title) return;
 
     ctx.font = `${editorState.fontSize}px ${editorState.fontFamily}`;
@@ -103,8 +122,8 @@ function redrawEditor() {
         const y = startY + i * lineH;
         if (editorState.strokeWidth > 0) {
             ctx.strokeStyle = editorState.strokeColor;
-            ctx.lineWidth = editorState.strokeWidth;
-            ctx.lineJoin = 'round';
+            ctx.lineWidth   = editorState.strokeWidth;
+            ctx.lineJoin    = 'round';
             ctx.strokeText(line, editorState.x, y);
         }
         ctx.fillStyle = editorState.textColor;
@@ -139,7 +158,10 @@ function setupEditorDrag(canvas) {
         const rect = canvas.getBoundingClientRect();
         const cx = e.touches ? e.touches[0].clientX : e.clientX;
         const cy = e.touches ? e.touches[0].clientY : e.clientY;
-        return { x: (cx - rect.left) / editorState.scale, y: (cy - rect.top) / editorState.scale };
+        return {
+            x: (cx - rect.left) / editorState.scale,
+            y: (cy - rect.top)  / editorState.scale
+        };
     };
 
     const onStart = e => {
@@ -165,8 +187,8 @@ function setupEditorDrag(canvas) {
     canvas.onmousemove = onMove;
     canvas.onmouseup = canvas.onmouseleave = onEnd;
     canvas.ontouchstart = onStart;
-    canvas.ontouchmove = onMove;
-    canvas.ontouchend = onEnd;
+    canvas.ontouchmove  = onMove;
+    canvas.ontouchend   = onEnd;
 }
 
 function resetEditorPosition() {
@@ -181,7 +203,17 @@ function downloadEditedCover() {
     if (!canvas) return;
 
     redrawEditor();
-    canvas.toBlob(blob => {
+
+    // Заливаем белым, чтобы JPEG не имел артефактов на прозрачности
+    const tmp = document.createElement('canvas');
+    tmp.width = canvas.width;
+    tmp.height = canvas.height;
+    const tctx = tmp.getContext('2d');
+    tctx.fillStyle = '#000';
+    tctx.fillRect(0, 0, tmp.width, tmp.height);
+    tctx.drawImage(canvas, 0, 0);
+
+    tmp.toBlob(blob => {
         if (!blob) return alert('Не удалось создать изображение.');
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -206,14 +238,19 @@ function initEditorControls() {
         });
     };
 
-    bind('fontSizeSlider', 'fontSize', true);
-    bind('textColorPicker', 'textColor');
+    bind('fontSizeSlider',    'fontSize',    true);
+    bind('textColorPicker',   'textColor');
     bind('strokeColorPicker', 'strokeColor');
     bind('strokeWidthSlider', 'strokeWidth', true);
-    bind('fontFamilySelect', 'fontFamily');
+    bind('fontFamilySelect',  'fontFamily');
 
     const titleInput = document.getElementById('editorTitleInput');
-    if (titleInput) titleInput.addEventListener('input', () => { editorState.title = titleInput.value; redrawEditor(); });
+    if (titleInput) {
+        titleInput.addEventListener('input', () => {
+            editorState.title = titleInput.value;
+            redrawEditor();
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initEditorControls);
