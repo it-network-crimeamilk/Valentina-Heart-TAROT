@@ -7,7 +7,6 @@ function closeModal(id) {
     const m = document.getElementById(id);
     if (m) m.classList.remove('active');
 }
-// Закрытие по клику вне окна и по Escape
 window.addEventListener('click', e => {
     if (e.target.classList.contains('modal')) e.target.classList.remove('active');
 });
@@ -19,7 +18,6 @@ document.addEventListener('keydown', e => {
 function openQrModal(id) { openModal(id); }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Единый обработчик для всех кликабельных элементов с поддержкой Enter/Space
     const keyboardActivables = document.querySelectorAll('.req-card.clickable, .order-qr-item');
     keyboardActivables.forEach(el => {
         el.addEventListener('keydown', e => {
@@ -37,12 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const statusMsg = document.getElementById('formStatus');
         const submitBtn = form.querySelector('button[type="submit"]');
-        const setStatus = (text, color) => { statusMsg.textContent = text; statusMsg.style.color = color; };
+        const setStatus = (text, color) => {
+            if (statusMsg) { statusMsg.textContent = text; statusMsg.style.color = color; }
+        };
 
-        const name = form.name.value.trim();
-        const contact = form.contact.value.trim();
-        const message = form.message.value.trim();
-        const file = form.attachment.files[0];
+        // ИСПРАВЛЕНО: form.elements.name вместо form.name (конфликт с HTMLFormElement.name)
+        const name = (form.elements.name?.value || '').trim();
+        const contact = (form.elements.contact?.value || '').trim();
+        const message = (form.elements.message?.value || '').trim();
+        const fileInput = form.elements.attachment;
+        const file = fileInput?.files?.[0];
 
         if (!name || !contact || !message || !file) {
             setStatus('⚠️ Пожалуйста, заполните все поля и прикрепите файл.', '#ef5350');
@@ -50,10 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         setStatus('✨ Отправка заявки...', '#c08081');
-        submitBtn.disabled = true;
+        if (submitBtn) submitBtn.disabled = true;
 
         try {
-            const response = await fetch('https://formsubmit.co/bin.b@bk.ru', {
+            // ИСПРАВЛЕНО: правильный AJAX-эндпоинт FormSubmit
+            const response = await fetch('https://formsubmit.co/ajax/bin.b@bk.ru', {
                 method: 'POST',
                 headers: { 'Accept': 'application/json' },
                 body: new FormData(form)
@@ -66,14 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.success) {
                 setStatus('✅ Заявка успешно отправлена! Я свяжусь с вами в ближайшее время.', '#66bb6a');
                 form.reset();
-                setTimeout(() => { closeModal('orderModal'); setStatus('', ''); submitBtn.disabled = false; }, 3000);
+                setTimeout(() => {
+                    closeModal('orderModal');
+                    setStatus('', '');
+                    if (submitBtn) submitBtn.disabled = false;
+                }, 3000);
             } else {
                 throw new Error('Ошибка сервера');
             }
         } catch (err) {
             console.error(err);
             setStatus('❌ Ошибка отправки. Напишите мне напрямую в Telegram @GeekLS (https://t.me/GeekLS)', '#ef5350');
-            submitBtn.disabled = false;
+            if (submitBtn) submitBtn.disabled = false;
         }
     });
 });
