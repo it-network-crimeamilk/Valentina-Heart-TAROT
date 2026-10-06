@@ -1245,3 +1245,144 @@ section {
         display: none;
     }
 }
+
+/* ========== ЮРИДИЧЕСКИЕ ССЫЛКИ В ФУТЕРЕ ========== */
+.footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 14px;
+    margin-bottom: 12px;
+}
+.footer-legal-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    font-family: var(--font-main);
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.25s ease;
+    border-bottom: 1px dashed transparent;
+}
+.footer-legal-link:hover,
+.footer-legal-link:focus-visible {
+    color: var(--accent-light);
+    border-bottom-color: var(--accent);
+    outline: none;
+}
+.footer-legal-sep {
+    color: var(--border);
+    user-select: none;
+}
+
+/* ========== ССЫЛКИ ВНУТРИ ФОРМЫ ЗАКАЗА ========== */
+.order-legal {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(192, 128, 129, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    text-align: center;
+}
+.order-legal .inline-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--accent-light);
+    font-family: var(--font-main);
+    font-size: 12.5px;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+    transition: color 0.2s ease;
+}
+.order-legal .inline-link:hover,
+.order-legal .inline-link:focus-visible {
+    color: #fff;
+    outline: none;
+}
+
+/* ========== ТЕКСТ ЮРИДИЧЕСКИХ МОДАЛОК ========== */
+.legal-text {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+.legal-text h3 {
+    font-family: var(--font-serif);
+    color: var(--accent-light);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 18px 0 8px;
+}
+.legal-text h3:first-child {
+    margin-top: 0;
+}
+.legal-text p {
+    margin-bottom: 10px;
+}
+.legal-text ul {
+    margin: 6px 0 12px 20px;
+    padding: 0;
+}
+.legal-text ul li {
+    margin-bottom: 6px;
+    position: relative;
+    list-style: none;
+    padding-left: 16px;
+}
+.legal-text ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 2px;
+}
+.legal-text strong {
+    color: var(--accent-light);
+}
+.legal-text em {
+    color: var(--text);
+    font-style: italic;
+}
+
+/* Скроллбар для модалок с длинным текстом */
+.legal-text::-webkit-scrollbar {
+    width: 6px;
+}
+.legal-text::-webkit-scrollbar-track {
+    background: rgba(15, 8, 16, 0.4);
+    border-radius: 3px;
+}
+.legal-text::-webkit-scrollbar-thumb {
+    background: var(--accent-dark);
+    border-radius: 3px;
+}
+.legal-text::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Адаптив для футера */
+@media (max-width: 600px) {
+    .footer-legal {
+        gap: 6px 10px;
+        margin-bottom: 10px;
+    }
+    .footer-legal-link {
+        font-size: 12px;
+    }
+    .order-legal {
+        font-size: 11.5px;
+        padding: 12px;
+    }
+}
