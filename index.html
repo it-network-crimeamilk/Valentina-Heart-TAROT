@@ -1,7 +1,8 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentina Heart TAROT</title>
@@ -12,16 +13,39 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet">
+=======
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Valentina Heart TAROT</title>
+<link rel="icon" href="logo.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/cyrillic-400-normal.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/cyrillic-600-normal.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/fontsource/fonts/cormorant-garamond@latest/cyrillic-600-normal.css" rel="stylesheet" />
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
 </head>
-
 <body>
 
-    <div class="moon-bg" id="moonBg">
-        <div class="moon-glow"></div>
-        <div class="moon-rays"></div>
-        <div class="moon-image"></div>
-    </div>
+<!-- Фон с луной -->
+<div class="moon-bg" id="moonBg">
+    <div class="moon-rays"></div>
+    <div class="moon-glow"></div>
+    <div class="moon-image"></div>
+</div>
 
+<!-- Шапка -->
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo-wrap">
+            <img src="logo.png" alt="Логотип" class="logo-img" onerror="this.style.display='none'" />
+            <span class="logo">Valentina Heart TAROT</span>
+        </a>
+        <a href="admin.html" class="admin-link">Вход</a>
+    </div>
+</header>
+
+<<<<<<< HEAD
     <header class="site-header">
         <div class="container header-inner">
             <a href="#" class="logo-wrap">
@@ -35,16 +59,27 @@
 
     <main class="container">
         <section class="hero">
+=======
+<main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
             <h1 class="hero-title">Открой тайны своей судьбы</h1>
-            <p class="hero-subtitle">Меня зовут Валентина! Профессиональные расклады Таро. Мы будем исцелять наши сердца
-                💔❤️‍🩹❤️‍🔥</p>
+            <p class="hero-subtitle">
+                Меня зовут Валентина! Профессиональные расклады Таро. Мы будем исцелять наши сердца
+                💔❤️‍🩹❤️‍🔥
+            </p>
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="openModal('orderModal')">Заказать расклад</button>
                 <a href="#contacts" class="btn btn-secondary">Связаться</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="moon-widget-section">
+    <!-- Виджет луны -->
+    <section class="moon-widget-section">
+        <div class="container">
             <div class="moon-widget">
                 <div class="moon-widget-icon" id="moonWidgetIcon">🌕</div>
                 <div>
@@ -52,45 +87,60 @@
                     <div class="moon-widget-desc" id="moonPhaseDesc">Загрузка лунного календаря</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contacts">
+    <!-- Контакты -->
+    <section id="contacts">
+        <div class="container">
             <h2 class="section-title">Связь со мной</h2>
             <div class="contacts-grid">
-                <a class="contact-link" href="https://t.me/Valintina_moon_89" target="_blank">Telegram
-                    (предпочтительно)</a>
-                <a class="contact-link" href="https://www.youtube.com/@ВалентинаСердцеТАРО" target="_blank">YouTube</a>
-                <a class="contact-link" href="https://t.me/ValentinaSerdceTarot" target="_blank">Telegram-канал</a>
-                <a class="contact-link" href="https://vk.ru/id851128139" target="_blank">ВКонтакте</a>
-                <a class="contact-link" href="https://vkvideo.ru/@club240360498" target="_blank">VkVideo</a>
-                <a class="contact-phone" href="tel:+79784550616">Mobile/Max: +7(978)455-06-16</a>
+                <a href="https://t.me/Valintina_moon_89" target="_blank" class="contact-link">Telegram (предпочтительно)</a>
+                <a href="https://www.youtube.com/@ВалентинаСердцеТАРО" target="_blank" class="contact-link">YouTube</a>
+                <a href="https://t.me/ValentinaSerdceTarot" target="_blank" class="contact-link">Telegram-канал</a>
+                <a href="https://vk.ru/id851128139" target="_blank" class="contact-link">ВКонтакте</a>
+                <a href="https://vkvideo.ru/@club240360498" target="_blank" class="contact-link">VkVideo</a>
+                <a href="tel:+79784550616" class="contact-phone">Mobile/Max: +7(978)455-06-16</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section>
+    <!-- Реквизиты -->
+    <section>
+        <div class="container">
             <h2 class="section-title">Реквизиты для поддержки</h2>
             <div class="requisites-grid">
+<<<<<<< HEAD
                 <div class="req-card clickable" tabindex="0" onclick="openModal('qrTbankModal')" role="button"
                     aria-label="Карта Т-Банк">
+=======
+                <div class="req-card clickable" tabindex="0" role="button" onclick="openQrModal('qrTBankModal')">
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
                     <div class="req-card-title">💳 Карта Т-Банк</div>
                     <div class="req-card-value">2200 3961 1672 3228</div>
                     <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
                 </div>
+<<<<<<< HEAD
                 <div class="req-card clickable" tabindex="0" onclick="openModal('qrVtbModal')" role="button"
                     aria-label="ВТБ СБП">
                     <div class="req-card-title">💳 ВТБ (СБП)</div>
+=======
+                <div class="req-card clickable" tabindex="0" role="button" onclick="openQrModal('qrVTBModal')">
+                    <div class="req-card-title">💳 ВТБ</div>
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
                     <div class="req-card-value">+7 978 455 06 16</div>
                     <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
                 </div>
                 <div class="req-card">
                     <div class="req-card-title">🎁 DonationAlerts</div>
-                    <a class="req-card-link" href="https://www.donationalerts.com/r/valentina_heart"
-                        target="_blank">Поддержать через DA ↗</a>
+                    <a href="https://www.donationalerts.com/r/valentina_heart" target="_blank" class="req-card-link">Поддержать через DA ↗</a>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 
+<<<<<<< HEAD
     <!-- Модалка заказа -->
     <div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
         <div class="modal-content">
@@ -132,9 +182,149 @@
                 <button type="submit" class="btn btn-primary">✨ Отправить заявку</button>
                 <div class="form-status" id="formStatus"></div>
             </form>
+=======
+<!-- Футер -->
+<footer class="site-footer">
+    <div class="container">
+        <nav class="footer-legal">
+            <button class="footer-legal-link" onclick="openModal('termsModal')">Пользовательское соглашение</button>
+            <span class="footer-legal-sep">·</span>
+            <button class="footer-legal-link" onclick="openModal('rulesModal')">Правила на сайте</button>
+            <span class="footer-legal-sep">·</span>
+            <button class="footer-legal-link" onclick="openModal('privacyModal')">Политика конфиденциальности</button>
+        </nav>
+        <p>© Valentina Heart TAROT · Все права защищены</p>
+    </div>
+</footer>
+
+<!-- Кнопка прокрутки -->
+<button class="scroll-btn" id="scrollBtn" aria-label="Прокрутка">
+    <span id="scrollBtnIcon">↓</span>
+</button>
+
+<!-- QR Т-Банк -->
+<div class="modal qr-modal" id="qrTBankModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('qrTBankModal')">&times;</span>
+        <h2>💳 Карта Т-Банк</h2>
+        <p class="qr-subtitle">Отсканируйте QR-код для перевода</p>
+        <div class="qr-image-wrap">
+            <img src="qr_tbank.png" alt="QR Т-Банк" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22><rect width=%22260%22 height=%22260%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2216%22>QR</text></svg>'" />
+        </div>
+        <div class="qr-number">2200 3961 1672 3228</div>
+    </div>
+</div>
+
+<!-- QR ВТБ -->
+<div class="modal qr-modal" id="qrVTBModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('qrVTBModal')">&times;</span>
+        <h2>💳 ВТБ</h2>
+        <p class="qr-subtitle">Отсканируйте QR-код для перевода</p>
+        <div class="qr-image-wrap">
+            <img src="qr_sbp.png" alt="QR ВТБ" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22><rect width=%22260%22 height=%22260%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2216%22>QR</text></svg>'" />
+        </div>
+        <div class="qr-number">+7 978 455 06 16</div>
+    </div>
+</div>
+
+<!-- Модалка заказа -->
+<div class="modal" id="orderModal">
+    <div class="modal-content modal-wide">
+        <span class="modal-close" onclick="closeModal('orderModal')">&times;</span>
+
+        <div class="modal-header-row">
+            <img src="logo.png" alt="Логотип" class="modal-logo" onerror="this.style.display='none'" />
+            <h2>Заказать расклад</h2>
+        </div>
+
+        <div class="order-info-block">
+            <strong>Здравствуйте!</strong> Для поддержки меня:<br />
+            Реквизиты для перевода по СБП: <strong>+7 978 455 06 16</strong> (получатель: Валентина).<br />
+            Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я вам отпишусь по указанному контакту связи с вами!!
+        </div>
+
+        <div class="order-qr-row">
+            <div class="order-qr-item" tabindex="0" role="button" onclick="openQrModal('qrVTBModal')">
+                <img src="qr_sbp.png" alt="QR ВТБ" class="order-qr-thumb" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2212%22>QR</text></svg>'" />
+                <span>QR для ВТБ</span>
+            </div>
+            <div class="order-qr-item" tabindex="0" role="button" onclick="openQrModal('qrTBankModal')">
+                <img src="qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2212%22>QR</text></svg>'" />
+                <span>QR для Т-Банк</span>
+            </div>
+        </div>
+
+        <form id="orderForm" enctype="multipart/form-data">
+            <label>Имя Фамилия
+                <input type="text" name="name" required />
+            </label>
+            <label>Контакт для связи
+                <input type="text" name="contact" required />
+            </label>
+            <label>Описание обращения
+                <textarea name="message" required></textarea>
+            </label>
+            <label>📎 Прикрепите скриншот оплаты и фото человека (JPG, PNG, PDF — до 10 МБ)
+                <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf" required />
+                <span class="file-hint">Максимум 10 МБ</span>
+            </label>
+            <button type="submit" class="btn btn-primary">✨ Отправить заявку</button>
+            <div class="form-status" id="formStatus"></div>
+
+            <div class="order-legal">
+                Нажимая «Отправить заявку», вы подтверждаете согласие с
+                <button type="button" class="inline-link" onclick="openModal('termsModal')">Пользовательским соглашением</button>,
+                <button type="button" class="inline-link" onclick="openModal('rulesModal')">Правилами сайта</button> и
+                <button type="button" class="inline-link" onclick="openModal('privacyModal')">Политикой конфиденциальности</button>.
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Модалка: Как задать запрос -->
+<div class="modal" id="infoModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
+        <h2>Как задать запрос на расклад</h2>
+        <ul class="info-list">
+            <li>Сформулируйте вопрос четко и конкретно. Избегайте вопросов «Да/Нет».</li>
+            <li>Опишите текущую ситуацию: что происходит, кто участвует, какие есть вводные данные.</li>
+            <li>Укажите, какой аспект вас волнует больше всего (совет, перспективы, причины).</li>
+            <li>Приложите скриншот оплаты для ускорения обработки заявки.</li>
+        </ul>
+        <button class="btn btn-secondary" onclick="closeModal('infoModal')">Понятно, спасибо ↓</button>
+    </div>
+</div>
+
+<!-- Модалка: Пользовательское соглашение -->
+<div class="modal" id="termsModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
+        <h2>Пользовательское соглашение</h2>
+        <div class="legal-text">
+            <p>Настоящее Пользовательское соглашение регулирует отношения между владельцами сайта <strong>Valentina Heart TAROT</strong> (далее — «Администрация сайта») и физическим лицом (далее — «Пользователь»), возникающие при использовании сайта <em>valentina-tarot.ru</em>.</p>
+
+            <h3>1. Предмет соглашения</h3>
+            <p>Администрация сайта предоставляет Пользователю доступ к информации, размещённой на сайте, а также к услугам по заказу консультаций и раскладов Таро.</p>
+
+            <h3>2. Условия оказания услуг</h3>
+            <p>Услуги оказываются на возмездной основе. Расклады Таро носят информационно-консультационный характер и не являются медицинской, психологической, юридической или финансовой консультацией.</p>
+
+            <h3>3. Права и обязанности сторон</h3>
+            <p>Пользователь обязуется предоставлять достоверные данные при оформлении заказа. Администрация сайта обязуется оказать услугу в согласованные сроки и сохранить конфиденциальность персональных данных Пользователя.</p>
+
+            <h3>4. Ответственность</h3>
+            <p>Администрация сайта не несёт ответственности за решения, принятые Пользователем на основании полученных консультаций. Пользователь самостоятельно несёт ответственность за достоверность предоставленной информации.</p>
+
+            <h3>5. Изменение соглашения</h3>
+            <p>Администрация сайта оставляет за собой право в любое время изменять условия настоящего соглашения без предварительного уведомления Пользователя. Актуальная версия всегда доступна на сайте.</p>
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
         </div>
     </div>
+</div>
 
+<<<<<<< HEAD
     <!-- Модалки QR -->
     <div class="modal qr-modal" id="qrTbankModal" role="dialog" aria-modal="true">
         <div class="modal-content">
@@ -159,12 +349,83 @@
     </div>
 
     <button class="scroll-btn" id="scrollBtn" aria-label="Прокрутка"><span id="scrollBtnIcon">↓</span></button>
+=======
+<!-- Модалка: Правила на сайте -->
+<div class="modal" id="rulesModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('rulesModal')">&times;</span>
+        <h2>Правила на сайте</h2>
+        <div class="legal-text">
+            <p>Используя сайт <strong>Valentina Heart TAROT</strong>, вы соглашаетесь соблюдать следующие правила:</p>
 
-    <footer class="site-footer">
-        <div class="container">© Valentina Heart TAROT · Все права защищены</div>
-    </footer>
+            <h3>1. Общие положения</h3>
+            <p>Сайт предназначен для ознакомления. Все материалы сайта защищены авторским правом.</p>
 
+            <h3>2. Оформление заказа</h3>
+            <ul>
+                <li>Перед отправкой заявки можно произвести оплату согласно указанным реквизитам.</li>
+                <li>К заявке обязательно прилагается скриншот чека об оплате.</li>
+                <li>В описании обращения чётко формулируйте вопрос и указывайте контактные данные для связи.</li>
+                <li>Избегайте вопросов, на которые возможен однозначный ответ «Да/Нет».</li>
+            </ul>
+
+            <h3>3. Поведение и коммуникация</h3>
+            <ul>
+                <li>Запрещены оскорбления, угрозы, нецензурная лексика и любые формы дискриминации.</li>
+                <li>Запрещена рассылка спама, рекламных материалов и вредоносного кода.</li>
+                <li>Уважайте труд таролога — задавайте вопросы по существу обращения.</li>
+            </ul>
+
+            <h3>4. Интеллектуальная собственность</h3>
+            <p>Все тексты, изображения, логотипы и иные материалы сайта являются собственностью Администрации. Копирование и распространение без письменного согласия запрещено.</p>
+
+            <h3>5. Нарушение правил</h3>
+            <p>В случае нарушения правил Администрация сайта вправе отказать в оказании услуг.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка: Политика конфиденциальности -->
+<div class="modal" id="privacyModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
+        <h2>Политика конфиденциальности</h2>
+        <div class="legal-text">
+            <p>Настоящая Политика конфиденциальности описывает, как <strong>Valentina Heart TAROT</strong> собирает, использует и защищает информацию Пользователей.</p>
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
+
+            <h3>1. Какие данные мы собираем</h3>
+            <ul>
+                <li>Имя и контактные данные, указанные при оформлении заявки;</li>
+                <li>Описание обращения и приложенные файлы (скриншоты, фото);</li>
+            </ul>
+
+<<<<<<< HEAD
     <script src="./js/script.js"></script>
-</body>
+=======
+            <h3>2. Цели сбора данных</h3>
+            <ul>
+                <li>Обработка заявок и оказание услуг;</li>
+                <li>Связь с Пользователем по вопросам заказа;</li>
+                <li>Улучшение качества сервиса.</li>
+            </ul>
 
+            <h3>3. Хранение и защита</h3>
+            <p>Персональные данные удаляются после завершения консультации, не передаются третьим лицам и не хранятся ни в каком виде, за исключением случаев, предусмотренных законодательством РФ.</p>
+
+            <h3>4. Права Пользователя</h3>
+            <p>Пользователь вправе в любой момент запросить информацию о своих данных, потребовать их уточнения или удаления, обратившись к Администрации через контактные формы сайта.</p>
+
+            <h3>5. Cookies</h3>
+            <p>Сайт может использовать cookies для обеспечения корректной работы. Продолжая использовать сайт, вы соглашаетесь с их применением.</p>
+
+            <h3>6. Изменения политики</h3>
+            <p>Администрация оставляет за собой право изменять настоящую Политику. Актуальная версия всегда доступна на сайте.</p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+>>>>>>> ab1fa7bebec920e7bff95328e028ee47b96f23a7
+</body>
 </html>
