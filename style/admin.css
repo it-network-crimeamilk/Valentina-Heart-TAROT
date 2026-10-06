@@ -85,6 +85,7 @@
     font-size: 14px;
 }
 
+/* REFACTOR: используем общий .field-input из base.css */
 .admin-label input[type="text"],
 .admin-label input[type="password"],
 .admin-label select,
@@ -266,6 +267,7 @@
     height: auto;
     cursor: grab;
     border-radius: 6px;
+    touch-action: none; /* FIX: чтобы touch-drag не скроллил страницу */
 }
 
 #coverEditorCanvas:active { cursor: grabbing; }

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentina Heart TAROT</title>
+    <link rel="icon" href="logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,8 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="#" class="logo-wrap">
-                <img src="./images/logo.png" alt="Логотип" class="logo-img" onerror="this.style.display='none'">
+                <img src="./images/logo.png" alt="Логотип Valentina Heart TAROT" class="logo-img"
+                    onerror="this.style.display='none'">
                 <span class="logo">Valentina Heart TAROT</span>
             </a>
             <a href="admin.html" class="admin-link">Вход</a>
@@ -68,13 +70,13 @@
         <section>
             <h2 class="section-title">Реквизиты для поддержки</h2>
             <div class="requisites-grid">
-                <div class="req-card clickable" tabindex="0" onclick="openQrModal('qrTbankModal')" role="button"
+                <div class="req-card clickable" tabindex="0" onclick="openModal('qrTbankModal')" role="button"
                     aria-label="Карта Т-Банк">
                     <div class="req-card-title">💳 Карта Т-Банк</div>
                     <div class="req-card-value">2200 3961 1672 3228</div>
                     <div class="req-card-hint">📱 Нажмите, чтобы показать QR-код</div>
                 </div>
-                <div class="req-card clickable" tabindex="0" onclick="openQrModal('qrVtbModal')" role="button"
+                <div class="req-card clickable" tabindex="0" onclick="openModal('qrVtbModal')" role="button"
                     aria-label="ВТБ СБП">
                     <div class="req-card-title">💳 ВТБ (СБП)</div>
                     <div class="req-card-value">+7 978 455 06 16</div>
@@ -90,26 +92,28 @@
     </main>
 
     <!-- Модалка заказа -->
-    <div class="modal" id="orderModal">
+    <div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('orderModal')">&times;</span>
-            <h2>Заказать расклад</h2>
+            <button type="button" class="modal-close" onclick="closeModal('orderModal')"
+                aria-label="Закрыть">&times;</button>
+            <h2 id="orderModalTitle">Заказать расклад</h2>
             <div class="order-info-block">
                 <strong>Здравствуйте!</strong> Для бронирования/заказа необходимо внести оплату.<br>
                 Реквизиты для перевода по СБП: <strong>+7 978 455 06 16</strong> (Получатель: Валентина).<br>
                 Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я подтвержу заявку!
                 <div class="order-qr-row">
-                    <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrVtbModal')" role="button">
-                        <img src="./images/qr_sbp.png" alt="QR СБП" class="order-qr-thumb">
+                    <div class="order-qr-item" tabindex="0" onclick="openModal('qrVtbModal')" role="button">
+                        <img src="./images/qr_sbp.png" alt="QR СБП" class="order-qr-thumb" loading="lazy">
                         <span>QR для СБП</span>
                     </div>
-                    <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrTbankModal')" role="button">
-                        <img src="./images/qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb">
+                    <div class="order-qr-item" tabindex="0" onclick="openModal('qrTbankModal')" role="button">
+                        <img src="./images/qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb" loading="lazy">
                         <span>QR для Т-Банк</span>
                     </div>
                 </div>
             </div>
-            <form id="orderForm" action="https://formsubmit.co/bin.b@bk.ru" method="POST" enctype="multipart/form-data" novalidate>
+            <form id="orderForm" action="https://formsubmit.co/bin.b@bk.ru" method="POST"
+                enctype="multipart/form-data" novalidate>
                 <input type="hidden" name="_subject" value="Новая заявка на расклад">
                 <input type="hidden" name="_captcha" value="false">
                 <label>Имя Фамилия
@@ -132,9 +136,10 @@
     </div>
 
     <!-- Модалки QR -->
-    <div class="modal qr-modal" id="qrTbankModal">
+    <div class="modal qr-modal" id="qrTbankModal" role="dialog" aria-modal="true">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('qrTbankModal')">&times;</span>
+            <button type="button" class="modal-close" onclick="closeModal('qrTbankModal')"
+                aria-label="Закрыть">&times;</button>
             <h2>💳 Карта Т-Банк</h2>
             <p class="qr-subtitle">Отсканируйте QR-код для перевода</p>
             <div class="qr-image-wrap"><img src="./images/qr_tbank.png" alt="QR Т-Банк"></div>
@@ -142,28 +147,14 @@
         </div>
     </div>
 
-    <div class="modal qr-modal" id="qrVtbModal">
+    <div class="modal qr-modal" id="qrVtbModal" role="dialog" aria-modal="true">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('qrVtbModal')">&times;</span>
+            <button type="button" class="modal-close" onclick="closeModal('qrVtbModal')"
+                aria-label="Закрыть">&times;</button>
             <h2>💳 ВТБ (СБП)</h2>
             <p class="qr-subtitle">Отсканируйте QR-код для перевода через СБП</p>
             <div class="qr-image-wrap"><img src="./images/qr_sbp.png" alt="QR СБП"></div>
             <div class="qr-number">+7 978 455 06 16</div>
-        </div>
-    </div>
-
-    <!-- Модалка "Как задать запрос" -->
-    <div class="modal" id="infoModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
-            <h2>Как задать запрос на расклад</h2>
-            <ul class="info-list">
-                <li>Сформулируйте вопрос четко и конкретно. Избегайте вопросов «Да/Нет».</li>
-                <li>Опишите текущую ситуацию: что происходит, кто участвует, какие есть вводные данные.</li>
-                <li>Укажите, какой аспект вас волнует больше всего (совет, перспективы, причины).</li>
-                <li>Приложите скриншот оплаты для ускорения обработки заявки.</li>
-            </ul>
-            <button class="btn btn-primary" onclick="closeModal('infoModal')">Понятно, спасибо</button>
         </div>
     </div>
 

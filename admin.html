@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админка | Valentina Heart TAROT</title>
+    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <!-- FIX: Google Fonts вместо битого Fontsource-CDN (jsDelivr отдавал 400 + text/plain) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/cormorant-garamond@latest/cyrillic-600-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/cyrillic-400-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/cyrillic-600-normal.css">
+    <!-- FIX: favicon, чтобы не было 404 в консоли -->
+    <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
 
     <link rel="stylesheet" href="./style/base.css">
     <link rel="stylesheet" href="./style/moon.css">
@@ -16,6 +24,7 @@
     <link rel="stylesheet" href="./style/admin.css">
     <link rel="stylesheet" href="./style/responsive.css">
 </head>
+
 <body>
     <div class="moon-bg" id="moonBg">
         <div class="moon-rays"></div>
@@ -31,10 +40,10 @@
             <h1 class="admin-title">🔐 Admin Panel</h1>
             <label class="admin-label">
                 Введите пароль:
-                <input type="password" id="adminPass" placeholder="Пароль">
+                <input type="password" id="adminPass" placeholder="Пароль" autocomplete="current-password">
             </label>
             <p class="admin-error" id="loginError">❌ Неверный пароль!</p>
-            <button class="btn btn-primary" onclick="login()">Войти</button>
+            <button class="btn btn-primary" id="loginBtn">Войти</button>
         </div>
 
         <!-- Админ-панель -->
@@ -43,7 +52,7 @@
                 <h1 class="admin-title">Admin Panel</h1>
                 <div class="admin-actions">
                     <a href="index.html" class="btn btn-secondary">На главную</a>
-                    <button class="btn btn-secondary" onclick="logout()">Выйти</button>
+                    <button class="btn btn-secondary" id="logoutBtn">Выйти</button>
                 </div>
             </div>
 
@@ -62,19 +71,20 @@
                     Ссылка на VkVideo:
                     <input type="text" id="vkUrl" placeholder="https://vkvideo.ru/...">
                 </label>
-                <button class="btn btn-primary" onclick="generatePosts()">Сгенерировать посты</button>
+                <button class="btn btn-primary" id="generatePostsBtn">Сгенерировать посты</button>
 
                 <div class="admin-results" id="resultsArea" style="display:none;">
                     <div class="admin-result-block">
                         <h3>📱 Для Telegram:</h3>
                         <pre id="tgPost"></pre>
-                        <button class="btn btn-secondary" onclick="copyToClipboard('tgPost')">Копировать для Telegram</button>
+                        <button class="btn btn-secondary" data-copy-target="tgPost">Копировать для Telegram</button>
                     </div>
                     <div class="admin-result-block">
                         <h3>🌐 Для ВКонтакте:</h3>
-                        <p class="admin-hint">⚠️ Сначала вставьте ссылку на видео в ВК вручную, дождитесь обработки, затем вставьте этот текст ниже.</p>
+                        <p class="admin-hint">⚠️ Сначала вставьте ссылку на видео в ВК вручную, дождитесь обработки,
+                            затем вставьте этот текст ниже.</p>
                         <pre id="vkPost"></pre>
-                        <button class="btn btn-secondary" onclick="copyToClipboard('vkPost')">Копировать текст для ВК</button>
+                        <button class="btn btn-secondary" data-copy-target="vkPost">Копировать текст для ВК</button>
                     </div>
                 </div>
             </div>
@@ -82,10 +92,11 @@
             <!-- Обложка -->
             <div class="admin-block">
                 <h2 class="admin-block-title">🖼️ Обложка для постов и роликов</h2>
-                <p class="admin-hint">Универсальная обложка. Нажмите «Открыть редактор», чтобы добавить текст, перетащить его в нужное место и скачать готовую картинку.</p>
+                <p class="admin-hint">Универсальная обложка. Нажмите «Открыть редактор», чтобы добавить текст,
+                    перетащить его в нужное место и скачать готовую картинку.</p>
                 <div class="editor-actions">
-                    <button class="btn btn-primary" onclick="openCoverEditor()">✏️ Открыть редактор</button>
-                    <button class="btn btn-secondary" onclick="openCoverFullview()">🔍 На весь экран</button>
+                    <button class="btn btn-primary" id="openEditorBtn">✏️ Открыть редактор</button>
+                    <button class="btn btn-secondary" id="openFullviewBtn">🔍 На весь экран</button>
                 </div>
             </div>
 
@@ -100,30 +111,35 @@
                     </label>
                     <label class="checklist-item">
                         <input type="checkbox" data-key="vkvideo">
-                        <strong>Шаг 1: ВКвидео</strong> Перейти в <a href="https://vkvideo.ru/@club240360498" target="_blank">канал</a> и добавить ролик.
+                        <strong>Шаг 1: ВКвидео</strong> Перейти в <a href="https://vkvideo.ru/@club240360498"
+                            target="_blank" rel="noopener">канал</a> и добавить ролик.
                     </label>
                     <label class="checklist-item">
                         <input type="checkbox" data-key="vkpost">
-                        <strong>Шаг 2: Пост ВКонтакте</strong> Перейти на <a href="https://vk.ru/id851128139" target="_blank">стену</a>, создать пост.
+                        <strong>Шаг 2: Пост ВКонтакте</strong> Перейти на <a href="https://vk.ru/id851128139"
+                            target="_blank" rel="noopener">стену</a>, создать пост.
                     </label>
                     <label class="checklist-item">
                         <input type="checkbox" data-key="youtube">
-                        <strong>Шаг 3: YouTube</strong> Перейти на <a href="https://www.youtube.com/" target="_blank">YouTube</a> → Добавить видео.
+                        <strong>Шаг 3: YouTube</strong> Перейти на <a href="https://www.youtube.com/" target="_blank"
+                            rel="noopener">YouTube</a> → Добавить видео.
                     </label>
                     <label class="checklist-item">
                         <input type="checkbox" data-key="telegram">
-                        <strong>Шаг 4: Telegram</strong> Сгенерировать пост и выложить с отложенной публикацией в группу <a href="https://t.me/ValentinaSerdceTarot" target="_blank">Сердце Таро 🌹</a>.
+                        <strong>Шаг 4: Telegram</strong> Сгенерировать пост и выложить с отложенной публикацией в
+                        группу <a href="https://t.me/ValentinaSerdceTarot" target="_blank" rel="noopener">Сердце Таро
+                            🌹</a>.
                     </label>
                 </div>
-                <button class="btn btn-secondary" onclick="resetChecklist()">🔄 Сбросить все отметки</button>
+                <button class="btn btn-secondary" id="resetChecklistBtn">🔄 Сбросить все отметки</button>
             </div>
         </div>
     </div>
 
     <!-- Модалка редактора обложки -->
-    <div class="modal" id="coverEditorModal">
+    <div class="modal" id="coverEditorModal" role="dialog" aria-modal="true">
         <div class="modal-content modal-wide">
-            <span class="modal-close" onclick="closeCoverEditor()">&times;</span>
+            <button type="button" class="modal-close" onclick="closeCoverEditor()" aria-label="Закрыть">&times;</button>
             <h2>✏️ Редактор обложки</h2>
             <p class="admin-hint">Перетаскивайте текст мышкой. Настройте размер, цвет и шрифт. Нажмите «Скачать».</p>
 
@@ -165,19 +181,19 @@
             </div>
 
             <div class="editor-actions">
-                <button class="btn btn-secondary" onclick="resetEditorPosition()">🎯 По центру</button>
-                <button class="btn btn-primary" onclick="downloadEditedCover()">⬇️ Скачать обложку</button>
+                <button class="btn btn-secondary" id="resetEditorPosBtn">🎯 По центру</button>
+                <button class="btn btn-primary" id="downloadCoverBtn">⬇️ Скачать обложку</button>
             </div>
         </div>
     </div>
 
     <!-- Полноэкранный просмотр -->
-    <div class="modal" id="coverFullview">
-        <span class="modal-close" onclick="closeCoverFullview()">&times;</span>
+    <div class="modal" id="coverFullview" role="dialog" aria-modal="true">
+        <button type="button" class="modal-close" onclick="closeCoverFullview()" aria-label="Закрыть">&times;</button>
         <img src="./images/imag_post.jpg" alt="Обложка" class="fullview-img" onclick="closeCoverFullview()">
     </div>
 
-    <!-- Скрипты: порядок важен! -->
+    <!-- Скрипты: порядок важен -->
     <script src="./js/admin-posts.js"></script>
     <script src="./js/admin-checklist.js"></script>
     <script src="./js/admin-editor.js"></script>
@@ -185,4 +201,5 @@
     <script src="./js/admin-auth.js"></script>
     <script src="./js/admin.js"></script>
 </body>
+
 </html>

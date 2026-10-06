@@ -1,27 +1,35 @@
-/* ========== 1. МОДАЛЬНЫЕ ОКНА (единый обработчик Escape) ========== */
 function openModal(id) {
     const m = document.getElementById(id);
-    if (m) m.classList.add('active');
+    if (!m) return;
+    m.classList.add('active');
+    m.setAttribute('aria-hidden', 'false');
 }
+
 function closeModal(id) {
     const m = document.getElementById(id);
-    if (m) m.classList.remove('active');
+    if (!m) return;
+    m.classList.remove('active');
+    m.setAttribute('aria-hidden', 'true');
 }
 
+/* Единственный глобальный клик по оверлею — закрывает модалку */
 window.addEventListener('click', e => {
-    if (e.target.classList.contains('modal')) e.target.classList.remove('active');
-});
-
-/* Единственный глобальный обработчик Escape — закрывает все активные модалки */
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+    if (e.target.classList && e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+        e.target.setAttribute('aria-hidden', 'true');
     }
 });
 
-/* ========== 2. QR-КОДЫ + поддержка клавиатуры ========== */
-function openQrModal(id) { openModal(id); }
+/* Единственный глобальный Escape — закрывает все активные модалки */
+document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.modal.active').forEach(m => {
+        m.classList.remove('active');
+        m.setAttribute('aria-hidden', 'true');
+    });
+});
 
+/* ========== 2. КЛАВИАТУРНАЯ ДОСТУПНОСТЬ ========== */
 document.addEventListener('DOMContentLoaded', () => {
     const keyboardActivables = document.querySelectorAll('.req-card.clickable, .order-qr-item');
     keyboardActivables.forEach(el => {
@@ -120,7 +128,7 @@ const PHASES = [
 
 function getMoonPhaseInfo(date = new Date()) {
     const phase = getMoonPhase(date);
-    if (phase >= 0.9375) return PHASES[0];
+    if (phase >= 0.9375) return PHASES[0]; // [0.9375, 1) — та же "new"
     return PHASES.find(p => phase >= p.range[0] && phase < p.range[1]) || PHASES[0];
 }
 
@@ -154,7 +162,6 @@ function initScrollButton() {
             return;
         }
         btn.classList.add('visible');
-        // Стрелка: внизу — вверх, иначе — вниз
         icon.textContent = atBottom ? '↑' : '↓';
     };
 
@@ -175,5 +182,6 @@ function initScrollButton() {
 document.addEventListener('DOMContentLoaded', () => {
     applyMoonPhase();
     initScrollButton();
-    setInterval(applyMoonPhase, 60 * 60 * 1000);
+    // REFACTOR: раз в час избыточно — фаза меняется ~раз в 7 дней. Ставим раз в 6 часов.
+    setInterval(applyMoonPhase, 6 * 60 * 60 * 1000);
 });

@@ -1,4 +1,3 @@
-/* ========== ФОРМА ЗАКАЗА ========== */
 #orderForm label {
     display: block;
     margin-bottom: 16px;
@@ -6,9 +5,11 @@
     font-size: 14px;
 }
 
+/* REFACTOR: используем общий .field-input из base.css */
 #orderForm input[type="text"],
 #orderForm textarea,
 #orderForm input[type="file"] {
+    display: block;
     width: 100%;
     padding: 12px 14px;
     margin-top: 6px;

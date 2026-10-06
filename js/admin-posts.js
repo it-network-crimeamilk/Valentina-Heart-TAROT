@@ -1,5 +1,3 @@
-/* Генератор постов для соцсетей */
-
 const CONTACT_BLOCK = `❤️ ПОБЛАГОДАРИТЬ
 💳 Карта Т-Банк: 
 2200 3961 1672 3228
@@ -37,7 +35,7 @@ function generatePosts() {
     const yt = document.getElementById('ytUrl').value.trim() || 'Ссылка на YouTube';
     const vk = document.getElementById('vkUrl').value.trim() || 'Ссылка на VkVideo';
 
-    const tgText = `🔮 На канале новое видео!\n\nТема:\n"${title} 🌹"\n\n📺 YouTube:\n${yt}\n\n🎬 VkVideo:\n${vk}\n\n🌏 Сайт Valentina Heart TAROT:\nhttp://valentina-tarot.ru`;
+    const tgText = `🔮 На канале новое видео!\n\nТема: "${title} 🌹"\n\n📺 YouTube:\n${yt}\n\n🎬 VkVideo:\n${vk}\n\n🌏 Сайт Valentina Heart TAROT:\nhttp://valentina-tarot.ru`;
     const vkText = `${title} 🌹\n\n${CONTACT_BLOCK}`;
 
     document.getElementById('tgPost').textContent = tgText;
@@ -46,7 +44,35 @@ function generatePosts() {
 }
 
 function copyToClipboard(id) {
-    navigator.clipboard.writeText(document.getElementById(id).textContent)
-        .then(() => alert('✅ Текст скопирован!'))
-        .catch(err => { console.error(err); alert('❌ Не удалось скопировать'); });
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const text = el.textContent;
+    const done = () => alert('✅ Текст скопирован!');
+    const fail = err => { console.error(err); alert('❌ Не удалось скопировать'); };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fail);
+    } else {
+        // Fallback для http / старых браузеров
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); }
+        catch (e) { fail(e); }
+        document.body.removeChild(ta);
+    }
 }
+
+/* FIX: обработчики кнопок вместо inline onclick */
+document.addEventListener('DOMContentLoaded', () => {
+    const genBtn = document.getElementById('generatePostsBtn');
+    if (genBtn) genBtn.addEventListener('click', generatePosts);
+
+    document.querySelectorAll('[data-copy-target]').forEach(btn => {
+        btn.addEventListener('click', () => copyToClipboard(btn.dataset.copyTarget));
+    });
+});

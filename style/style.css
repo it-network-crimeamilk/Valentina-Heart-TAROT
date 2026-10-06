@@ -1,4 +1,3 @@
-/* Агрегатор. Подключи его вместо отдельных файлов, если удобнее. */
 @import url('./base.css');
 @import url('./moon.css');
 @import url('./header.css');

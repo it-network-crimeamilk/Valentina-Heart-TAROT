@@ -1,4 +1,3 @@
-/* Редактор обложки */
 const editorState = {
     image: null,
     blobUrl: null,
@@ -15,7 +14,8 @@ const editorState = {
     dragOffsetY: 0,
     scale: 1,
     canvas: null,
-    dragBound: false
+    dragBound: false,
+    loadToken: 0 // FIX: защита от гонки при быстром закрытии/открытии
 };
 
 function openCoverEditor() {
@@ -35,15 +35,26 @@ function openCoverEditor() {
     }
     editorState.image = null;
 
+    const token = ++editorState.loadToken;
+
     fetch('./images/imag_post.jpg?t=' + Date.now())
         .then(r => {
             if (!r.ok) throw new Error('Файл не найден');
             return r.blob();
         })
         .then(blob => {
+            // FIX: если за время загрузки открыли заново/закрыли — игнорируем
+            if (token !== editorState.loadToken) {
+                URL.revokeObjectURL(URL.createObjectURL(blob)); // освобождаем
+                return;
+            }
             const url = URL.createObjectURL(blob);
             const img = new Image();
             img.onload = () => {
+                if (token !== editorState.loadToken) {
+                    URL.revokeObjectURL(url);
+                    return;
+                }
                 editorState.image = img;
                 editorState.blobUrl = url;
                 initEditorCanvas();
@@ -69,6 +80,7 @@ function closeCoverEditor() {
         editorState.blobUrl = null;
     }
     editorState.image = null;
+    editorState.loadToken++; // FIX: инвалидируем незавершённую загрузку
 }
 
 function initEditorCanvas() {
@@ -183,12 +195,13 @@ function setupEditorDrag(canvas) {
 
     const onEnd = () => { editorState.isDragging = false; };
 
-    canvas.onmousedown = onStart;
-    canvas.onmousemove = onMove;
-    canvas.onmouseup = canvas.onmouseleave = onEnd;
-    canvas.ontouchstart = onStart;
-    canvas.ontouchmove  = onMove;
-    canvas.ontouchend   = onEnd;
+    canvas.addEventListener('mousedown', onStart);
+    canvas.addEventListener('mousemove', onMove);
+    canvas.addEventListener('mouseup', onEnd);
+    canvas.addEventListener('mouseleave', onEnd);
+    canvas.addEventListener('touchstart', onStart, { passive: false });
+    canvas.addEventListener('touchmove', onMove, { passive: false });
+    canvas.addEventListener('touchend', onEnd);
 }
 
 function resetEditorPosition() {
@@ -204,12 +217,12 @@ function downloadEditedCover() {
 
     redrawEditor();
 
-    // Заливаем белым, чтобы JPEG не имел артефактов на прозрачности
+    // FIX: подложка — тёмная (соответствует комментарию), чтобы избежать артефактов JPEG
     const tmp = document.createElement('canvas');
     tmp.width = canvas.width;
     tmp.height = canvas.height;
     const tctx = tmp.getContext('2d');
-    tctx.fillStyle = '#000';
+    tctx.fillStyle = '#0f0810';
     tctx.fillRect(0, 0, tmp.width, tmp.height);
     tctx.drawImage(canvas, 0, 0);
 
@@ -226,12 +239,13 @@ function downloadEditedCover() {
     }, 'image/jpeg', 0.95);
 }
 
+/* FIX: навешиваем все обработчики контролов и кнопок один раз */
 function initEditorControls() {
     const bind = (id, prop, isInt = false) => {
         const el = document.getElementById(id);
         if (!el) return;
         el.addEventListener('input', () => {
-            editorState[prop] = isInt ? parseInt(el.value) : el.value;
+            editorState[prop] = isInt ? parseInt(el.value, 10) : el.value;
             const valEl = document.getElementById(id.replace('Slider', 'Value'));
             if (valEl) valEl.textContent = el.value;
             redrawEditor();
@@ -251,6 +265,15 @@ function initEditorControls() {
             redrawEditor();
         });
     }
+
+    const openBtn = document.getElementById('openEditorBtn');
+    if (openBtn) openBtn.addEventListener('click', openCoverEditor);
+
+    const resetPosBtn = document.getElementById('resetEditorPosBtn');
+    if (resetPosBtn) resetPosBtn.addEventListener('click', resetEditorPosition);
+
+    const downloadBtn = document.getElementById('downloadCoverBtn');
+    if (downloadBtn) downloadBtn.addEventListener('click', downloadEditedCover);
 }
 
 document.addEventListener('DOMContentLoaded', initEditorControls);

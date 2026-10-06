@@ -1,4 +1,3 @@
-/* ========== АДАПТИВ ========== */
 @media (max-width: 600px) {
     .hero { padding: 50px 0 20px; }
 
@@ -6,6 +5,7 @@
         flex-direction: column;
         text-align: center;
         padding: 20px;
+        align-items: center; /* FIX: центрируем иконку при column */
     }
 
     .modal-content { padding: 24px 18px; }

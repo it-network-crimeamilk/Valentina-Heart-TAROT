@@ -1,4 +1,3 @@
-/* ========== ФОН С ЛУНОЙ ========== */
 .moon-bg {
     position: fixed;
     inset: 0;
@@ -10,7 +9,6 @@
     pointer-events: none;
     overflow: hidden;
 
-    /* Значения по умолчанию (фаза не задана) */
     --glow-opacity: 0.4;
     --glow-blur: 60px;
     --img-opacity: 0.8;
@@ -18,16 +16,17 @@
     --anim-duration: 6s;
 }
 
-/* Общие параметры для всех слоёв луны */
+/* FIX: используем transform вместо translate, чтобы не конфликтовать с анимацией */
 .moon-rays,
 .moon-glow,
 .moon-image {
     position: absolute;
     top: 22%;
     left: 50%;
-    translate: -50% -50%;      /* центрирование без конфликта с transform */
+    transform: translate(-50%, -50%);
     border-radius: 50%;
     transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease;
+    will-change: transform, opacity;
 }
 
 .moon-rays {
@@ -56,23 +55,23 @@
     animation: moonFloat 8s ease-in-out infinite;
 }
 
-/* Анимации: используем translate + transform отдельно */
+/* FIX: анимация не должна двигать по X — используем translate с сохранением центрирования */
 @keyframes pulseRays {
-    0%, 100% { transform: scale(1);    opacity: 0.7; }
-    50%      { transform: scale(1.15); opacity: 1; }
+    0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.7; }
+    50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
 }
 
 @keyframes moonGlowPulse {
-    0%, 100% { transform: scale(1);   opacity: 0.6; }
-    50%      { transform: scale(1.2); opacity: 1; }
+    0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.6; }
+    50%      { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
 }
 
 @keyframes moonFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-10px); }
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50%      { transform: translate(-50%, -50%) translateY(-10px); }
 }
 
-/* ---- Фазы луны: меняем только переменные ---- */
+/* Фазы луны: меняем только переменные */
 .moon-bg.phase-new             { --glow-opacity: 0.3;  --glow-blur: 40px; --img-opacity: 0.25; --img-brightness: 0.5; --anim-duration: 10s; }
 .moon-bg.phase-waxing-crescent { --glow-opacity: 0.3;  --glow-blur: 35px; --img-opacity: 0.4;  --img-brightness: 0.7; }
 .moon-bg.phase-first-quarter   { --glow-opacity: 0.4;  --glow-blur: 30px; --img-opacity: 0.5; }

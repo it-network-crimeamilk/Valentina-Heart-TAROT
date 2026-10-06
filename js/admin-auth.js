@@ -1,17 +1,24 @@
-/* Авторизация админки.
-   ВНИМАНИЕ: это защита от «случайных» посетителей, а не реальная безопасность.
-   Base64 легко декодируется. Не используйте этот метод для чувствительных данных. */
-
-/* Пароль закодирован в base64. Исходный: "Hesoyam1607+" */
 const _AUTH_HASH = "SGVzb3lhbTE2MDcr";
 
-async function login() {
+function utf8ToBase64(str) {
+    const bytes = new TextEncoder().encode(str);
+    let binary = '';
+    bytes.forEach(b => { binary += String.fromCharCode(b); });
+    return btoa(binary);
+}
+
+function login() {
     const inputEl = document.getElementById('adminPass');
     const errorEl = document.getElementById('loginError');
     if (!inputEl) return;
 
     const input = inputEl.value;
-    const hash = btoa(input);
+    let hash;
+    try {
+        hash = utf8ToBase64(input);
+    } catch (e) {
+        hash = '';
+    }
 
     if (hash === _AUTH_HASH) {
         sessionStorage.setItem('isAdmin', 'true');
@@ -38,3 +45,18 @@ function showAdminPanel() {
 
     if (typeof initChecklist === 'function') initChecklist();
 }
+
+/* FIX: навешиваем обработчики кнопок и Enter на поле пароля */
+document.addEventListener('DOMContentLoaded', () => {
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const passInput = document.getElementById('adminPass');
+
+    if (loginBtn) loginBtn.addEventListener('click', login);
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
+    if (passInput) {
+        passInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') login();
+        });
+    }
+});
