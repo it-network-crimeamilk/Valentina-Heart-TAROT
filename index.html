@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentina Heart TAROT</title>
+    <link rel="icon" href="logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,7 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="#" class="logo-wrap">
-                <img src="logo.webp" alt="Логотип" class="logo-img" onerror="this.style.display='none'">
+                <img src="logo.png" alt="Логотип" class="logo-img" onerror="this.style.display='none'">
                 <span class="logo">Valentina Heart TAROT</span>
             </a>
             <a href="admin.html" class="admin-link">Вход</a>
@@ -93,18 +94,22 @@
     <div class="modal" id="orderModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('orderModal')">&times;</span>
-            <h2>Заказать расклад</h2>
+            <div class="modal-header-row">
+                <img src="logo.png" alt="Логотип" class="modal-logo" onerror="this.style.display='none'">
+                <h2>Заказать расклад</h2>
+            </div>
             <div class="order-info-block">
                 <strong>Здравствуйте!</strong> Для поддержки меня:<br>
                 Реквизиты для перевода по СБП: <strong>+7 978 455 06 16</strong> (получатель: Валентина).
-                Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я вам отпишусь по указанному контакту связи с вами!!
+                Пожалуйста, сделайте перевод и пришлите скриншот чека. После этого я вам отпишусь по указанному контакту
+                связи с вами!!
                 <div class="order-qr-row">
                     <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrVtbModal')" role="button">
                         <img src="qr_sbp.png" alt="QR СБП" class="order-qr-thumb">
                         <span>QR для ВТБ</span>
                     </div>
                     <div class="order-qr-item" tabindex="0" onclick="openQrModal('qrTbankModal')" role="button">
-                        <img src="" alt="QR Т-Банк" class="order-qr-thumb">
+                        <img src="qr_tbank.png" alt="QR Т-Банк" class="order-qr-thumb">
                         <span>QR для Т-Банк</span>
                     </div>
                 </div>
