@@ -1,0 +1,183 @@
+/* ============================================
+   ПЕЧЕНЬЕ С ПРЕДСКАЗАНИЕМ
+   ============================================ */
+
+/* Модалка предсказания */
+.fortune-modal .modal-content {
+    max-width: 520px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Обёртка для луны */
+.fortune-moon-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Внешнее свечение */
+.fortune-moon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192, 128, 129, 0.45) 0%, transparent 65%);
+    filter: blur(20px);
+    animation: fortuneGlowPulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Сама луна */
+.fortune-moon-img {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 50%;
+    animation: fortuneMoonFloat 6s ease-in-out infinite,
+        fortuneMoonGlow 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(192, 128, 129, 0.7));
+    z-index: 1;
+}
+
+/* Анимации */
+@keyframes fortuneMoonFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+@keyframes fortuneMoonGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 20px rgba(192, 128, 129, 0.5));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 45px rgba(217, 163, 164, 0.95));
+    }
+}
+
+@keyframes fortuneGlowPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.15);
+    }
+}
+
+/* Заголовок предсказания */
+.fortune-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 20px rgba(192, 128, 129, 0.4);
+}
+
+/* Текст предсказания */
+.fortune-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 18px;
+    padding: 0 6px;
+}
+
+/* Блок с советом */
+.fortune-advice {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--accent-light);
+    font-style: italic;
+    background: rgba(192, 128, 129, 0.1);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    text-align: left;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.fortune-advice::before {
+    content: '✨ Совет:';
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-light);
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+/* Кнопка печенья в hero */
+.fortune-btn-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-btn-hero::after {
+    content: '🥠';
+    margin-left: 8px;
+    display: inline-block;
+    animation: fortuneCookieWiggle 3s ease-in-out infinite;
+}
+
+@keyframes fortuneCookieWiggle {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-12deg);
+    }
+
+    75% {
+        transform: rotate(12deg);
+    }
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+    .fortune-moon-wrap {
+        width: 170px;
+        height: 170px;
+    }
+
+    .fortune-moon-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .fortune-title {
+        font-size: 19px;
+    }
+
+    .fortune-text {
+        font-size: 14px;
+    }
+}

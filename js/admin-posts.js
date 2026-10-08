@@ -36,7 +36,7 @@ function generatePosts() {
     const vk = document.getElementById('vkUrl').value.trim() || 'Ссылка на VkVideo';
 
     const tgText = `🔮 На канале новое видео!\n\nТема: "${title} 🌹"\n\n📺 YouTube:\n${yt}\n\n🎬 VkVideo:\n${vk}\n\n🌏 Сайт Valentina Heart TAROT:\nhttps://valentina-tarot.ru`;
-    const vkText = `${title} 🌹\n\n${CONTACT_BLOCK}`;
+    const vkText = `Тема ролика: ${title} 🌹\n\n${CONTACT_BLOCK}`;
 
     document.getElementById('tgPost').textContent = tgText;
     document.getElementById('vkPost').textContent = vkText;
