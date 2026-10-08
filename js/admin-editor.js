@@ -5,10 +5,10 @@ const editorState = {
     x: 0,
     y: 0,
     fontSize: 60,
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    textColor: '#F5D76E',
-    strokeColor: '#1A0A00',
-    strokeWidth: 3,
+    fontFamily: "Impact, sans-serif",
+    textColor: '#E8D4A8',
+    strokeColor: '#B8860B',
+    strokeWidth: 10,
     isDragging: false,
     dragOffsetX: 0,
     dragOffsetY: 0,
@@ -27,7 +27,8 @@ function openCoverEditor() {
     const titleInput = document.getElementById('postTitle');
     const editorTitle = document.getElementById('editorTitleInput');
     if (titleInput && editorTitle) {
-        editorTitle.value = editorState.title = titleInput.value.trim();
+        const t = titleInput.value.trim();
+        editorTitle.value = editorState.title = t || editorState.title;
     }
 
     if (editorState.blobUrl) {
