@@ -6,7 +6,7 @@ declare(strict_types=1);
 const ORDERS_FILE      = __DIR__ . '/orders.json';
 const UPLOADS_DIR      = __DIR__ . '/uploads';
 const UPLOADS_URL      = 'orders/uploads';
-const ADMIN_HASH       = 'YWRtaW4xNjA3Kw=='; // Base64 от 'admin1607+'
+const ADMIN_HASH       = 'SGVzb3lhbTE2MDcr';
 
 // Разрешённые расширения и MIME для вложений
 const ALLOWED_EXT      = ['jpg', 'jpeg', 'png', 'pdf'];
@@ -319,15 +319,6 @@ switch ($action) {
         saveOrders($data);
 
         respond(['success' => true, 'order' => $new]);
-    }
-
-    case 'list': {
-        requireAdmin();
-        $data = loadOrders();
-        $deleted = autoCleanupOldAttachments($data);
-        if ($deleted > 0) saveOrders($data);
-        unset($data['_last_cleanup']);
-        respond(['success' => true, 'orders' => array_values($data['orders'])]);
     }
 
     case 'update': {

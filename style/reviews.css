@@ -217,6 +217,7 @@
   border-radius: 10px;
   padding: 16px;
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   align-items: flex-start;
   transition: border-color 0.2s;
@@ -304,12 +305,16 @@
 }
 
 .review-edit-form {
+  width: 100%;
+  flex: 1 1 100%;
+  min-width: 0;
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px dashed var(--border);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  box-sizing: border-box;
 }
 
 .review-edit-form input,
@@ -328,8 +333,10 @@
   resize: vertical;
 }
 
-.review-edit-form .edit-actions {
+.review-edit-form .edit-actions,
+.order-edit-form .edit-actions {
   display: flex;
+  flex-wrap: wrap;              /* ← добавлено */
   gap: 8px;
   justify-content: flex-end;
 }
@@ -430,5 +437,12 @@
   .review-admin-actions {
     width: 100%;
     justify-content: flex-end;
+  }
+
+  .review-edit-form,
+  .order-edit-form {
+    width: 100%;
+    flex: 1 1 100%;
+    min-width: 0;
   }
 }

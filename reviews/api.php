@@ -6,7 +6,7 @@ declare(strict_types=1);
 const REVIEWS_FILE = __DIR__ . '/reviews.json';
 const AVATARS_DIR  = __DIR__ . '/avatars';
 const AVATARS_URL  = 'reviews/avatars';
-const ADMIN_HASH = 'YWRtaW4xNjA3Kw==';
+const ADMIN_HASH = 'SGVzb3lhbTE2MDcr';
 
 // Разрешённые расширения и MIME для аватарок
 const ALLOWED_EXT  = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
@@ -224,7 +224,7 @@ switch ($action) {
         if ($date === '') $date = date('Y-m-d');
 
         $avatar = handleAvatarUpload();
-        if ($avatar === null) $avatar = 'reviews/avatars/avatar_comments.jpg';
+        if ($avatar === null) $avatar = '';
 
         $data = loadReviews();
         $new = [
@@ -247,6 +247,11 @@ switch ($action) {
         $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) fail('Некорректный id', 422);
 
+        // ВАЖНО: обрабатываем загрузку аватара ДО цикла, один раз.
+        // Иначе handleAvatarUpload() вызывается на каждой итерации
+        // и может конфликтовать с foreach по ссылке.
+        $newAvatar = handleAvatarUpload();
+
         $data = loadReviews();
         $found = false;
         foreach ($data['reviews'] as &$r) {
@@ -255,12 +260,16 @@ switch ($action) {
 
             if (isset($_POST['name']))    $r['name']    = sanitizeText((string)$_POST['name'], 60);
             if (isset($_POST['text']))    $r['text']    = sanitizeText((string)$_POST['text'], 1000);
-            if (isset($_POST['date']))    $r['date']    = sanitizeText((string)$_POST['date'], 10);
+
+            // Пустую дату игнорируем, чтобы не затирать существующую
+            if (isset($_POST['date']) && $_POST['date'] !== '') {
+                $r['date'] = sanitizeText((string)$_POST['date'], 10);
+            }
+
             if (isset($_POST['visible'])) {
                 $r['visible'] = ($_POST['visible'] === 'true' || $_POST['visible'] === '1');
             }
 
-            $newAvatar = handleAvatarUpload();
             if ($newAvatar !== null) $r['avatar'] = $newAvatar;
             break;
         }

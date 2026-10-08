@@ -236,12 +236,9 @@
       saveBtn.textContent = '…';
 
       try {
-        await apiSend('update', {
-          id,
-          name: newName,
-          text: newText,
-          date: newDate || ''
-        }, file);
+        const payload = { id, name: newName, text: newText };
+        if (newDate) payload.date = newDate;
+        await apiSend('update', payload, file);
         form.remove();
         await renderAdminReviews(currentPage);
       } catch (err) {
