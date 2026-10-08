@@ -1,4 +1,6 @@
-const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // пошли в жопу!
+const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // идите в жопу!
+
+window._AUTH_HASH = _AUTH_HASH;
 
 function utf8ToBase64(str) {
     const bytes = new TextEncoder().encode(str);
@@ -22,6 +24,7 @@ function login() {
 
     if (hash === _AUTH_HASH) {
         sessionStorage.setItem('isAdmin', 'true');
+        sessionStorage.setItem('adminPassHash', hash); // для API отзывов
         showAdminPanel();
     } else {
         if (errorEl) errorEl.style.display = 'block';
@@ -31,6 +34,7 @@ function login() {
 
 function logout() {
     sessionStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('adminPassHash');
     location.reload();
 }
 

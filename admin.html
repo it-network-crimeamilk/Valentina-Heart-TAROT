@@ -5,21 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админка | Valentina Heart TAROT</title>
+    <link rel="icon" href="./images/logo.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style/base.css">
     <link rel="stylesheet" href="./style/moon.css">
     <link rel="stylesheet" href="./style/header.css">
     <link rel="stylesheet" href="./style/modal.css">
     <link rel="stylesheet" href="./style/admin.css">
     <link rel="stylesheet" href="./style/responsive.css">
+    <link rel="stylesheet" href="./style/reviews.css">
 </head>
 
 <body>
@@ -95,6 +91,44 @@
                     <button class="btn btn-primary" id="openEditorBtn">✏️ Открыть редактор</button>
                     <button class="btn btn-secondary" id="openFullviewBtn">🔍 На весь экран</button>
                 </div>
+            </div>
+
+            <!-- Управление отзывами -->
+            <div class="admin-block">
+                <h2 class="admin-block-title">💬 Управление отзывами</h2>
+                <p class="admin-hint">Добавляйте, редактируйте, скрывайте и удаляйте отзывы клиентов.</p>
+
+                <form id="adminAddReviewForm" class="review-form" novalidate>
+                    <label>
+                        Имя *
+                        <input type="text" name="adminReviewName" required maxlength="60" placeholder="Имя клиента">
+                    </label>
+                    <label>
+                        Текст отзыва *
+                        <textarea name="adminReviewText" required maxlength="1000"
+                            placeholder="Текст отзыва..."></textarea>
+                    </label>
+                    <label>
+                        Дата
+                        <input type="date" name="adminReviewDate">
+                    </label>
+                    <label>
+                        Аватар (необязательно)
+                        <input type="file" name="adminReviewAvatar" accept="image/*">
+                        <span class="file-hint">JPG, PNG — до 2 МБ</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px; flex-direction:row;">
+                        <input type="checkbox" name="adminReviewVisible" checked>
+                        Показывать на сайте
+                    </label>
+                    <button type="submit" class="btn btn-primary">➕ Добавить отзыв</button>
+                    <div class="form-status" id="adminReviewStatus"></div>
+                </form>
+
+                <h3 class="admin-block-title" style="font-size:18px; margin-top:24px;">Все отзывы</h3>
+                <div class="reviews-admin-list" id="adminReviewsList"></div>
+                <div class="reviews-admin-pagination" id="adminReviewsPagination" role="navigation"
+                    aria-label="Пагинация отзывов"></div>
             </div>
 
             <!-- Чек-лист -->
@@ -240,6 +274,7 @@
     <script src="./js/admin-fullview.js"></script>
     <script src="./js/admin-auth.js"></script>
     <script src="./js/admin.js"></script>
+    <script src="./js/admin-reviews.js"></script>
 </body>
 
 </html>

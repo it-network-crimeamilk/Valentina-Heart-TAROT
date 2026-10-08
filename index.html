@@ -7,6 +7,7 @@
     <title>Valentina Heart TAROT</title>
     <link rel="icon" href="./images/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/reviews.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -91,6 +92,50 @@
         </section>
     </main>
 
+    <!-- ========== ОТЗЫВЫ КЛИЕНТОВ ========== -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Отзывы клиентов</h2>
+            <p class="reviews-subtitle">Истории тех, кто уже открыл тайны своей судьбы</p>
+
+            <div class="reviews-carousel" id="reviewsCarousel" role="region" aria-label="Отзывы клиентов"></div>
+            <div class="reviews-pagination" id="reviewsPagination" role="navigation" aria-label="Пагинация отзывов">
+            </div>
+
+            <div class="reviews-cta">
+                <button type="button" class="btn btn-secondary" onclick="openModal('reviewModal')">✍️ Оставить
+                    отзыв</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модалка "Оставить отзыв" -->
+    <div class="modal" id="reviewModal" aria-hidden="true" role="dialog" aria-labelledby="reviewModalTitle">
+        <div class="modal-content">
+            <button type="button" class="modal-close" onclick="closeModal('reviewModal')"
+                aria-label="Закрыть">×</button>
+            <h2 id="reviewModalTitle">Оставить отзыв</h2>
+            <form class="review-form" id="reviewForm" novalidate>
+                <label>
+                    Ваше имя *
+                    <input type="text" name="reviewName" required maxlength="60" placeholder="Как к вам обращаться">
+                </label>
+                <label>
+                    Текст отзыва *
+                    <textarea name="reviewText" required maxlength="1000"
+                        placeholder="Поделитесь впечатлениями о раскладе..."></textarea>
+                </label>
+                <label>
+                    Аватар (необязательно)
+                    <input type="file" name="reviewAvatar" accept="image/*">
+                    <span class="file-hint">JPG, PNG — до 2 МБ</span>
+                </label>
+                <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+                <div class="form-status" id="reviewFormStatus"></div>
+            </form>
+        </div>
+    </div>
+
     <!-- Модалка заказа -->
     <div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
         <div class="modal-content">
@@ -129,7 +174,7 @@
                     <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf" required>
                     <span class="file-hint">Максимум 10 МБ</span>
                 </label>
-                <button type="submit" class="btn btn-primary">✨ Отправить заявку</button>
+                <button type="submit" class="btn btn-primary">Отправить заявку</button>
                 <div class="form-status" id="formStatus"></div>
             </form>
 
@@ -176,7 +221,7 @@
                 aria-label="Закрыть">&times;</button>
             <h2 id="legalTermsTitle">Пользовательское соглашение</h2>
             <div class="legal-modal-body">
-                <p class="legal-date">Дата последнего обновления: 01.01.2025</p>
+                <p class="legal-date">Дата последнего обновления: 06.10.2026</p>
 
                 <h3>1. Общие положения</h3>
                 <p>Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует отношения между
@@ -198,9 +243,9 @@
                         Соглашения.</li>
                 </ul>
 
-                <h3>4. Оплата услуг</h3>
-                <p>Услуги предоставляются на условиях предварительной оплаты. Реквизиты для оплаты указаны на Сайте.
-                    Факт оплаты подтверждает согласие Пользователя с условиями оказания услуг.</p>
+                <h3>4. Финансовая помощь</h3>
+                <p>Расклад осуществляется после достижения договоренностей о взаимовыгодных условиях. Реквизиты указаны
+                    на Сайте. Факт помощи подтверждает согласие Пользователя с условиями для расклада.</p>
 
                 <h3>5. Ответственность</h3>
                 <p>Администрация не несёт ответственности за решения, принятые Пользователем на основании полученной
@@ -220,7 +265,7 @@
                 aria-label="Закрыть">&times;</button>
             <h2 id="legalRulesTitle">Правила сайта</h2>
             <div class="legal-modal-body">
-                <p class="legal-date">Дата последнего обновления: 01.01.2025</p>
+                <p class="legal-date">Дата последнего обновления: 06.10.2026</p>
 
                 <h3>1. Общие правила</h3>
                 <p>Сайт Valentina Heart TAROT создан для оказания консультационных услуг в сфере Таро. Посещая Сайт, вы
@@ -233,9 +278,11 @@
                     <li>Пытаться нарушить работу Сайта, получить несанкционированный доступ к его разделам.</li>
                 </ul>
 
-                <h3>3. Оформление заявок</h3>
+                <h3>3. Оформление обращения</h3>
                 <p>Заявки принимаются через форму на Сайте. Пользователь обязан указать корректные контактные данные и
-                    приложить подтверждение оплаты. Администрация вправе отклонить заявку без объяснения причин.</p>
+                    приложить подтверждение материальной помощи. Администрация вправе отклонить заявку без объяснения
+                    причин, с возвратом предоставленной финансовой помощи, которая была предоставлена администратору
+                    сайта, с подтверждением, что денежные средства получены.</p>
 
                 <h3>4. Сроки и порядок оказания услуг</h3>
                 <p>Сроки оказания услуг согласовываются индивидуально. Обычно расклад выполняется в течение 1–3 рабочих
@@ -260,7 +307,7 @@
                 aria-label="Закрыть">&times;</button>
             <h2 id="legalPrivacyTitle">Политика конфиденциальности</h2>
             <div class="legal-modal-body">
-                <p class="legal-date">Дата последнего обновления: 01.01.2025</p>
+                <p class="legal-date">Дата последнего обновления: 06.10.2026</p>
 
                 <h3>1. Общие положения</h3>
                 <p>Настоящая Политика конфиденциальности описывает, какие данные собирает сайт Valentina Heart TAROT и
@@ -320,7 +367,7 @@
 
     <script src="./js/script.js"></script>
     <script src="./js/legal.js"></script>
-</body>
+    <script src="./js/reviews.js"></script>
 </body>
 
 </html>

@@ -10,7 +10,7 @@ https://www.donationalerts.com/r/valentina_heart
 
 Связь со мной:
 🌏 Сайт Valentina Heart TAROT:
-http://valentina-tarot.ru
+https://valentina-tarot.ru
 
 ✈️ Telegram:
 https://t.me/Valintina_moon_89
@@ -35,7 +35,7 @@ function generatePosts() {
     const yt = document.getElementById('ytUrl').value.trim() || 'Ссылка на YouTube';
     const vk = document.getElementById('vkUrl').value.trim() || 'Ссылка на VkVideo';
 
-    const tgText = `🔮 На канале новое видео!\n\nТема: "${title} 🌹"\n\n📺 YouTube:\n${yt}\n\n🎬 VkVideo:\n${vk}\n\n🌏 Сайт Valentina Heart TAROT:\nhttp://valentina-tarot.ru`;
+    const tgText = `🔮 На канале новое видео!\n\nТема: "${title} 🌹"\n\n📺 YouTube:\n${yt}\n\n🎬 VkVideo:\n${vk}\n\n🌏 Сайт Valentina Heart TAROT:\nhttps://valentina-tarot.ru`;
     const vkText = `${title} 🌹\n\n${CONTACT_BLOCK}`;
 
     document.getElementById('tgPost').textContent = tgText;
