@@ -6,7 +6,7 @@ declare(strict_types=1);
 const REVIEWS_FILE = __DIR__ . '/reviews.json';
 const AVATARS_DIR  = __DIR__ . '/avatars';
 const AVATARS_URL  = 'reviews/avatars';
-const ADMIN_HASH = 'SGVzb3lhbTE2MDcr';
+const ADMIN_HASH = 'YWRtaW4xNjA3Kw==';
 
 // Разрешённые расширения и MIME для аватарок
 const ALLOWED_EXT  = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
@@ -82,16 +82,9 @@ function nextId(array $reviews): int {
     return $max + 1;
 }
 
-/**
- * Безопасная очистка текста.
- * Убираем управляющие символы без флага /u (чтобы не падать на невалидном UTF-8),
- * затем корректно обрезаем по mb_substr с явной кодировкой.
- */
 function sanitizeText(string $s, int $max = 1000): string {
     $s = trim($s);
-    // Удаляем управляющие символы (без /u — безопасно для любой бинарной строки)
     $s = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $s);
-    // Нормализуем кодировку, если пришёл невалидный UTF-8
     if (!mb_check_encoding($s, 'UTF-8')) {
         $s = mb_convert_encoding($s, 'UTF-8', 'UTF-8');
     }
@@ -101,12 +94,7 @@ function sanitizeText(string $s, int $max = 1000): string {
     return $s;
 }
 
-/**
- * Обработка загрузки аватарки.
- * Возвращает относительный URL сохранённого файла или null, если файл не передан.
- */
 function handleAvatarUpload(): ?string {
-    // Вариант 1: обычная загрузка файла (multipart)
     if (!empty($_FILES['avatar']) && is_array($_FILES['avatar'])) {
         $f = $_FILES['avatar'];
         $err = $f['error'] ?? UPLOAD_ERR_NO_FILE;
@@ -143,7 +131,6 @@ function handleAvatarUpload(): ?string {
         return storeAvatarFromUpload($f['tmp_name'], $ext);
     }
 
-    // Вариант 2: data URL (base64) — например, из canvas
     if (!empty($_POST['avatar_data']) && is_string($_POST['avatar_data'])) {
         $data = $_POST['avatar_data'];
         if (!preg_match('#^data:image/([a-zA-Z0-9.+-]+);base64,(.+)$#', $data, $m)) {
@@ -163,15 +150,10 @@ function handleAvatarUpload(): ?string {
     return null;
 }
 
-/**
- * Сохранение файла, полученного через обычную загрузку (move_uploaded_file).
- */
 function storeAvatarFromUpload(string $tmpPath, string $ext): string {
     ensureAvatarsDir();
     $dest = buildAvatarPath($ext);
     if (!move_uploaded_file($tmpPath, $dest)) {
-        // Fallback: если move_uploaded_file не сработал (например, файл не загружен через HTTP),
-        // пробуем обычное копирование/переименование.
         if (!@rename($tmpPath, $dest) && !@copy($tmpPath, $dest)) {
             fail('Не удалось сохранить аватарку', 500);
         }
@@ -180,9 +162,6 @@ function storeAvatarFromUpload(string $tmpPath, string $ext): string {
     return AVATARS_URL . '/' . basename($dest);
 }
 
-/**
- * Сохранение бинарных данных (из base64) — без move_uploaded_file.
- */
 function storeAvatarFromBinary(string $bin, string $ext): string {
     ensureAvatarsDir();
     $dest = buildAvatarPath($ext);
@@ -237,7 +216,7 @@ switch ($action) {
                 || $_POST['visible'] === 'true'
                 || $_POST['visible'] === '1';
         } else {
-            $visible = false; // публичный отзыв всегда уходит на модерацию
+            $visible = false;
         }
 
         if ($name === '') fail('Имя обязательно', 422);

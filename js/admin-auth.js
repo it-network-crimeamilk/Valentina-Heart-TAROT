@@ -1,4 +1,4 @@
-const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // иди в жопу!
+const _AUTH_HASH = "SGVzb3lhbTE2MDcr"; // идите в жопу!
 
 window._AUTH_HASH = _AUTH_HASH;
 

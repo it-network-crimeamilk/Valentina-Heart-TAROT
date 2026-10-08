@@ -1,0 +1,7 @@
+# Запрет исполнения PHP в папке загрузок
+php_flag engine off
+Options -ExecCGI
+AddType text/plain .php .php3 .php4 .php5 .php7 .phtml .pl .py .cgi .asp .sh
+<FilesMatch "\.(php|phtml|pl|py|cgi|asp|sh)$">
+    Require all denied
+</FilesMatch>

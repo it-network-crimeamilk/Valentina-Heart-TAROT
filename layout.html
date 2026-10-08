@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявки | Valentina Heart TAROT</title>
+    <link rel="icon" href="./images/logo.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/moon.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/modal.css">
+    <link rel="stylesheet" href="./style/admin.css">
+    <link rel="stylesheet" href="./style/responsive.css">
+    <link rel="stylesheet" href="./style/reviews.css">
+</head>
+
+<body>
+    <div class="moon-bg" id="moonBg">
+        <div class="moon-rays"></div>
+        <div class="moon-glow"></div>
+        <div class="moon-image"></div>
+    </div>
+
+    <div class="admin-container admin-body">
+        <a href="index.html" class="admin-back">← На главную</a>
+
+        <!-- Форма входа -->
+        <div class="admin-card" id="loginForm">
+            <h1 class="admin-title">🔐 Admin Panel</h1>
+            <label class="admin-label">
+                Введите пароль:
+                <input type="password" id="adminPass" placeholder="Пароль" autocomplete="current-password">
+            </label>
+            <p class="admin-error" id="loginError">❌ Неверный пароль!</p>
+            <button class="btn btn-primary" id="loginBtn">Войти</button>
+        </div>
+
+        <!-- Панель заявок -->
+        <div class="admin-panel" id="adminPanel" style="display:none;">
+            <div class="admin-header">
+                <h1 class="admin-title">📋 Заявки на расклад</h1>
+                <div class="admin-actions">
+                    <a href="admin.html" class="btn btn-secondary">← В админку</a>
+                    <button class="btn btn-secondary" id="cleanupUploadsBtn">🧹 Очистить папку с вложениями</button>
+                    <button class="btn btn-secondary" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+
+            <div class="admin-block">
+                <p class="admin-hint">
+                    Вложения заявок старше 30 дней удаляются автоматически. Кнопка «Очистить папку с вложениями»
+                    удаляет все файлы сразу — записи заявок сохранятся, но вложения станут недоступны.
+                </p>
+
+                <div class="orders-filter" role="tablist" aria-label="Фильтр заявок по статусу">
+                    <button type="button" class="admin-tab active" data-status="all">Все</button>
+                    <button type="button" class="admin-tab" data-status="new">Новые</button>
+                    <button type="button" class="admin-tab" data-status="in_progress">В работе</button>
+                    <button type="button" class="admin-tab" data-status="done">Выполненные</button>
+                    <button type="button" class="admin-tab" data-status="rejected">Отклонённые</button>
+                </div>
+
+                <div class="reviews-admin-list" id="ordersList">
+                    <div class="review-empty">Загрузка...</div>
+                </div>
+                <div class="reviews-admin-pagination" id="ordersPagination" role="navigation"
+                    aria-label="Пагинация заявок"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/admin-auth.js"></script>
+    <script src="./js/admin.js"></script>
+    <script src="./js/orders.js"></script>
+</body>
+
+</html>

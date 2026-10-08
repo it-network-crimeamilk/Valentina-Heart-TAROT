@@ -65,6 +65,10 @@
                     aria-controls="tab-reviews" id="tabBtnReviews">
                     💬 Управление отзывами
                 </button>
+                <button type="button" class="admin-tab" role="tab" data-tab="tab-orders" aria-selected="false"
+                    aria-controls="tab-orders" id="tabBtnOrders">
+                    📋 Заказы
+                </button>
                 <button type="button" class="admin-tab" role="tab" data-tab="tab-checklist" aria-selected="false"
                     aria-controls="tab-checklist" id="tabBtnChecklist">
                     📚 Инструкция
@@ -160,7 +164,25 @@
                 </div>
             </section>
 
-            <!-- ===== ТАБ 4: ИНСТРУКЦИЯ ===== -->
+            <!-- ===== ТАБ 4: ЗАКАЗЫ ===== -->
+            <section class="admin-tab-panel" id="tab-orders" role="tabpanel" aria-labelledby="tabBtnOrders" hidden>
+                <div class="admin-block">
+                    <h2 class="admin-block-title">📋 Заявки на расклад</h2>
+                    <p class="admin-hint">
+                        Управление заявками вынесено на отдельную страницу: список с фильтром по статусам, заметки
+                        админа, вложения, ручная и автоматическая очистка файлов.
+                    </p>
+                    <div class="editor-actions" style="justify-content:flex-start;">
+                        <a href="layout.html" class="btn btn-primary">📋 Перейти к заказам</a>
+                    </div>
+                    <p class="orders-cleanup-hint">
+                        Вложения заявок старше 30 дней удаляются автоматически (не чаще одного раза в сутки).
+                        На странице заявок есть кнопка ручной очистки папки со скриншотами.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ===== ТАБ 5: ИНСТРУКЦИЯ ===== -->
             <section class="admin-tab-panel" id="tab-checklist" role="tabpanel" aria-labelledby="tabBtnChecklist"
                 hidden>
                 <div class="admin-block">

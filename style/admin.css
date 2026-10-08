@@ -381,3 +381,163 @@
         line-height: 1.3;
     }
 }
+
+/* ============================================
+   ЗАЯВКИ (layout.html)
+   ============================================ */
+
+/* Фильтр по статусам */
+.orders-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.orders-filter .admin-tab {
+    flex: 1 1 auto;
+    min-width: 110px;
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+/* Карточка заявки */
+.order-admin-item {
+    align-items: flex-start;
+}
+
+.order-admin-item .order-attachment-thumb,
+.order-admin-item .order-attachment-missing {
+    flex-shrink: 0;
+}
+
+.order-attachment-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--accent-light);
+    font-size: 22px;
+}
+
+a.order-attachment-pdf {
+    font-size: 24px;
+}
+
+.order-attachment-missing {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(239, 83, 80, 0.08);
+    border: 1px dashed rgba(239, 83, 80, 0.4);
+    color: #ef5350;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.2;
+    font-style: italic;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+/* Контакт в карточке */
+.order-contact {
+    font-size: 13px;
+    color: var(--accent-light);
+    margin-bottom: 6px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Заметка админа */
+.order-note {
+    margin-top: 8px;
+    padding-left: 8px;
+    border-left: 2px solid var(--accent);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--accent-light);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Бейдж статуса */
+.order-status {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.order-status.new {
+    background: rgba(217, 163, 164, 0.15);
+    color: var(--accent-light);
+    border: 1px solid rgba(217, 163, 164, 0.4);
+}
+
+.order-status.in_progress {
+    background: rgba(100, 150, 220, 0.15);
+    color: #9ec1ff;
+    border: 1px solid rgba(100, 150, 220, 0.4);
+}
+
+.order-status.done {
+    background: rgba(102, 187, 106, 0.15);
+    color: #66bb6a;
+    border: 1px solid rgba(102, 187, 106, 0.4);
+}
+
+.order-status.rejected {
+    background: rgba(239, 83, 80, 0.12);
+    color: #ef5350;
+    border: 1px solid rgba(239, 83, 80, 0.35);
+}
+
+/* Подсказка про автоочистку */
+.orders-cleanup-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* Форма редактирования заявки */
+.order-edit-form label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.order-edit-form select,
+.order-edit-form textarea,
+.order-edit-form input[type="text"] {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px 10px;
+    background: rgba(15, 8, 16, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--font-main);
+    font-size: 13px;
+}
+
+.order-edit-form textarea {
+    min-height: 70px;
+    resize: vertical;
+}

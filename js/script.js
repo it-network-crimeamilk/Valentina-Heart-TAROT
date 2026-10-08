@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = fileInput?.files?.[0];
 
         if (!name || !contact || !message || !file) {
-            setStatus('❌ Ошибка отправки. Напишите админу сайта напрямую в Telegram @GeekLS (https://t.me/GeekLS)', '#ef5350');
+            setStatus('❌ Заполните все поля и прикрепите файл.', '#ef5350');
             return;
         }
 
@@ -73,18 +73,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (submitBtn) submitBtn.disabled = true;
 
         try {
-            const response = await fetch('https://formsubmit.co/ajax/bin.b@bk.ru', {
+            const fd = new FormData(form);
+            fd.append('action', 'create');
+
+            const response = await fetch('orders/api.php', {
                 method: 'POST',
                 headers: { 'Accept': 'application/json' },
-                body: new FormData(form)
+                body: fd
             });
 
-            const ct = response.headers.get('content-type') || '';
-            const result = ct.includes('application/json')
-                ? await response.json()
-                : { success: true };
+            const result = await response.json().catch(() => ({}));
 
-            if (result.success) {
+            if (response.ok && result.success) {
                 setStatus('✅ Заявка успешно отправлена! Я свяжусь с вами в ближайшее время.', '#66bb6a');
                 form.reset();
                 setTimeout(() => {
@@ -93,11 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (submitBtn) submitBtn.disabled = false;
                 }, 3000);
             } else {
-                throw new Error('Ошибка сервера');
+                throw new Error(result.error || 'Ошибка сервера');
             }
         } catch (err) {
             console.error(err);
-            setStatus('❌ Ошибка отправки. Напишите мне напрямую в Telegram @GeekLS (https://t.me/GeekLS)', '#ef5350');
+            setStatus('❌ Ошибка отправки. Попробуйте позже или свяжитесь через контакты на сайте.', '#ef5350');
             if (submitBtn) submitBtn.disabled = false;
         }
     });
