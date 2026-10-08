@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    if (sessionStorage.getItem('isAdmin') === 'true') {
+    let isAdmin = false;
+    try { isAdmin = sessionStorage.getItem('isAdmin') === 'true'; } catch (e) { /* private mode */ }
+    if (isAdmin && typeof showAdminPanel === 'function') {
         showAdminPanel();
     }
 });
@@ -10,5 +12,9 @@ document.addEventListener('keydown', e => {
     document.querySelectorAll('.modal.active').forEach(m => {
         m.classList.remove('active');
         m.setAttribute('aria-hidden', 'true');
+        // cleanup для редактора обложки
+        if (m.id === 'coverEditorModal' && typeof closeCoverEditor === 'function') {
+            closeCoverEditor();
+        }
     });
 });

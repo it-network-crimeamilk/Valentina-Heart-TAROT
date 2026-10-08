@@ -12,13 +12,19 @@
     let fortunesCache = null;
     let isLoading = false;
 
-    /* ---------- Утилиты ---------- */
     function getTodayKey() {
         const d = new Date();
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, '0');
         const dd = String(d.getDate()).padStart(2, '0');
         return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function safeGet(key) {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeSet(key, value) {
+        try { localStorage.setItem(key, value); } catch (e) { /* ignore */ }
     }
 
     async function loadFortunes() {
@@ -33,7 +39,6 @@
         return fortunesCache;
     }
 
-    /* ---------- Рендер ---------- */
     function renderFortune(fortune) {
         const titleEl = document.getElementById('fortuneTitle');
         const textEl = document.getElementById('fortuneText');
@@ -44,12 +49,10 @@
         if (adviceEl) adviceEl.textContent = fortune.advice || '';
     }
 
-    /* ---------- Основная логика ---------- */
     async function openFortune() {
         const modal = document.getElementById('fortuneModal');
         if (!modal) return;
 
-        // Показываем модалку сразу (с индикатором загрузки)
         const titleEl = document.getElementById('fortuneTitle');
         const textEl = document.getElementById('fortuneText');
         const adviceEl = document.getElementById('fortuneAdvice');
@@ -70,28 +73,21 @@
         try {
             const fortunes = await loadFortunes();
             const today = getTodayKey();
-            const savedDate = localStorage.getItem(STORAGE_DATE_KEY);
-            let savedId = localStorage.getItem(STORAGE_ID_KEY);
+            const savedDate = safeGet(STORAGE_DATE_KEY);
+            let savedId = safeGet(STORAGE_ID_KEY);
 
-            // Если дата не сегодня или id отсутствует — генерируем новое
             if (savedDate !== today || !savedId) {
                 const random = fortunes[Math.floor(Math.random() * fortunes.length)];
                 savedId = String(random.id);
-                try {
-                    localStorage.setItem(STORAGE_ID_KEY, savedId);
-                    localStorage.setItem(STORAGE_DATE_KEY, today);
-                } catch (e) { /* ignore quota */ }
+                safeSet(STORAGE_ID_KEY, savedId);
+                safeSet(STORAGE_DATE_KEY, today);
             }
 
-            // Ищем предсказание по id
             let fortune = fortunes.find(f => String(f.id) === String(savedId));
-            // Фолбэк, если id не найден (например, изменили JSON)
             if (!fortune) {
                 fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-                try {
-                    localStorage.setItem(STORAGE_ID_KEY, String(fortune.id));
-                    localStorage.setItem(STORAGE_DATE_KEY, today);
-                } catch (e) { /* ignore */ }
+                safeSet(STORAGE_ID_KEY, String(fortune.id));
+                safeSet(STORAGE_DATE_KEY, today);
             }
 
             renderFortune(fortune);
@@ -105,12 +101,10 @@
         }
     }
 
-    /* ---------- Инициализация ---------- */
     document.addEventListener('DOMContentLoaded', () => {
         const btn = document.getElementById('fortuneBtn');
         if (btn) btn.addEventListener('click', openFortune);
     });
 
-    // Экспорт для возможного вызова из консоли
     window.openFortune = openFortune;
 })();

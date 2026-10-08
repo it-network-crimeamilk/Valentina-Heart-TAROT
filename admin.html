@@ -123,12 +123,13 @@
             <section class="admin-tab-panel" id="tab-reviews" role="tabpanel" aria-labelledby="tabBtnReviews" hidden>
                 <div class="admin-block">
                     <h2 class="admin-block-title">💬 Управление отзывами</h2>
-                    <p class="admin-hint">Добавляйте, редактируйте, скрывайте и удаляйте отзывы клиентов.</p>
+                    <p class="admin-hint">Добавляйте, редактируйте, скрывайте и удаляйте отзывы пользователей.</p>
 
                     <form id="adminAddReviewForm" class="review-form" novalidate>
                         <label>
                             Имя *
-                            <input type="text" name="adminReviewName" required maxlength="60" placeholder="Имя клиента">
+                            <input type="text" name="adminReviewName" required maxlength="60"
+                                placeholder="Имя пользователя">
                         </label>
                         <label>
                             Текст отзыва *
@@ -205,7 +206,8 @@
                             ссылку на загруженный ролик в ВКвидео (пример:
                             https://vkvideo.ru/video-111111111_111111111).</label>
                         <label class="checklist-item"><input type="checkbox" data-key="vkpost"> После того как ссылка
-                            исчезнет и появится ролик во вложении поста, крепим постер ролика и перетаскиваем его вперед ролика, потом вставляем сгенерированный текст поста через «🌐
+                            исчезнет и появится ролик во вложении поста, крепим постер ролика и перетаскиваем его вперед
+                            ролика, потом вставляем сгенерированный текст поста через «🌐
                             Для
                             ВКонтакте:», который указан выше на этом сайте. Нажимаем «Далее»</label>
                         <label class="checklist-item"><input type="checkbox" data-key="vkpost"> В настройках поста
@@ -314,7 +316,8 @@
     <!-- Полноэкранный просмотр -->
     <div class="modal" id="coverFullview" role="dialog" aria-modal="true">
         <button type="button" class="modal-close" onclick="closeCoverFullview()" aria-label="Закрыть">&times;</button>
-        <img src="./images/imag_post.jpg" alt="Обложка" class="fullview-img" onclick="closeCoverFullview()">
+        <img src="./images/imag_post.jpg" alt="Обложка" class="fullview-img" onclick="closeCoverFullview()"
+            onerror="this.alt='Обложка не найдена'; this.style.display='none';">
     </div>
 
     <!-- Скрипты: порядок важен -->

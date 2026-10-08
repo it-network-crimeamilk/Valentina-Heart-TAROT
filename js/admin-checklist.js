@@ -8,11 +8,15 @@ function initChecklist() {
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(CHECKLIST_KEY)) || {}; } catch (e) { /* ignore */ }
 
-    // Проставляем состояние из localStorage
-    container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        const key = cb.dataset.key;
+    // Проставляем состояние из localStorage.
+    // Используем уникальный ключ: data-key + индекс, чтобы избежать коллизий.
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((cb, idx) => {
+        const key = cb.dataset.key + '_' + idx;
+        cb.dataset.uniqueKey = key;
         cb.checked = !!saved[key];
-        cb.closest('.checklist-item').classList.toggle('checked', cb.checked);
+        const item = cb.closest('.checklist-item');
+        if (item) item.classList.toggle('checked', cb.checked);
     });
 
     // Один обработчик на контейнер (change всплывает от чекбоксов)
@@ -25,22 +29,28 @@ function handleChecklistChange(e) {
     const cb = e.target.closest('input[type="checkbox"]');
     if (!cb) return;
 
-    cb.closest('.checklist-item').classList.toggle('checked', cb.checked);
+    const item = cb.closest('.checklist-item');
+    if (item) item.classList.toggle('checked', cb.checked);
 
     const state = {};
     document.querySelectorAll('#publishChecklist input[type="checkbox"]').forEach(x => {
-        state[x.dataset.key] = x.checked;
+        const key = x.dataset.uniqueKey || (x.dataset.key + '_' + Array.from(x.parentNode.parentNode.children).indexOf(x.parentNode));
+        state[key] = x.checked;
     });
     try { localStorage.setItem(CHECKLIST_KEY, JSON.stringify(state)); } catch (err) { console.error(err); }
 }
 
 function resetChecklist() {
     if (!confirm('Сбросить все отметки чек-листа?')) return;
+    const container = document.getElementById('publishChecklist');
+    if (!container) return;
+
     document.querySelectorAll('#publishChecklist input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
-        cb.closest('.checklist-item').classList.remove('checked');
+        const item = cb.closest('.checklist-item');
+        if (item) item.classList.remove('checked');
     });
-    localStorage.removeItem(CHECKLIST_KEY);
+    try { localStorage.removeItem(CHECKLIST_KEY); } catch (e) { /* ignore */ }
 }
 
 /* Обработчик кнопки сброса */

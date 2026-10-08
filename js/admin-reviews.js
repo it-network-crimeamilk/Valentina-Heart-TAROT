@@ -12,13 +12,12 @@
   /* ---------- Авторизация ---------- */
   function getAdminPass() {
     if (adminPass) return adminPass;
-    // Основной источник: sessionStorage (кладём в admin-auth.js при логине)
     try {
       const s = sessionStorage.getItem('adminPassHash');
       if (s) { adminPass = s; return adminPass; }
-    } catch (e) { }
-    // Резерв: зашитый в admin-auth.js хеш (экспортирован в window)
-    if (typeof window._AUTH_HASH === 'string') {
+    } catch (e) { /* private mode */ }
+    // Fallback: используем хеш из admin-auth.js (для случая, когда sessionStorage недоступен)
+    if (typeof window._AUTH_HASH === 'string' && window._AUTH_HASH) {
       adminPass = window._AUTH_HASH;
     }
     return adminPass;
@@ -36,16 +35,16 @@
   }
 
   async function apiSend(action, payload = {}, file = null) {
+    const p = getAdminPass();
+    if (!p) throw new Error('Нет авторизации. Войдите заново.');
+
     const fd = new FormData();
     fd.append('action', action);
     Object.keys(payload).forEach(k => {
       if (payload[k] !== undefined && payload[k] !== null) fd.append(k, payload[k]);
     });
     if (file) fd.append('avatar', file);
-
-    // multipart → заголовок X-Admin-Pass через FormData-поле _admin_pass
-    const p = getAdminPass();
-    if (p) fd.append('_admin_pass', p);
+    fd.append('_admin_pass', p);
 
     const res = await fetch(API_URL, { method: 'POST', body: fd });
     const data = await res.json().catch(() => ({}));
@@ -165,7 +164,6 @@
     const action = btn.dataset.action;
     if (!id) return;
 
-    // Защита от двойного клика
     if (btn.disabled) return;
     btn.disabled = true;
 
@@ -197,11 +195,9 @@
     const existing = item.querySelector('.review-edit-form');
     if (existing) { existing.remove(); return; }
 
-    // Берём текущие значения из DOM
     const nameText = item.querySelector('.review-admin-name')?.textContent || '';
     const textText = item.querySelector('.review-admin-text')?.textContent || '';
 
-    // Дата в формате DD.MM.YYYY → YYYY-MM-DD
     const dateText = item.querySelector('.review-admin-date')?.textContent || '';
     let isoDate = '';
     const dm = dateText.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);

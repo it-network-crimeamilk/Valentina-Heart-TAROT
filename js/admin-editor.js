@@ -15,7 +15,9 @@ const editorState = {
     scale: 1,
     canvas: null,
     dragBound: false,
-    loadToken: 0 // защита от гонки при быстром закрытии/открытии
+    controlsBound: false,
+    loadToken: 0,
+    escapeBound: false
 };
 
 function openCoverEditor() {
@@ -28,7 +30,6 @@ function openCoverEditor() {
         editorTitle.value = editorState.title = titleInput.value.trim();
     }
 
-    // Освобождаем прошлый blob
     if (editorState.blobUrl) {
         URL.revokeObjectURL(editorState.blobUrl);
         editorState.blobUrl = null;
@@ -43,7 +44,6 @@ function openCoverEditor() {
             return r.blob();
         })
         .then(blob => {
-            // Если за время загрузки открыли заново/закрыли — игнорируем
             if (token !== editorState.loadToken) return;
 
             const url = URL.createObjectURL(blob);
@@ -57,6 +57,7 @@ function openCoverEditor() {
                 editorState.blobUrl = url;
                 initEditorCanvas();
                 modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
             };
             img.onerror = () => {
                 alert('Не удалось загрузить обложку.');
@@ -73,13 +74,16 @@ function openCoverEditor() {
 
 function closeCoverEditor() {
     const modal = document.getElementById('coverEditorModal');
-    if (modal) modal.classList.remove('active');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+    }
     if (editorState.blobUrl) {
         URL.revokeObjectURL(editorState.blobUrl);
         editorState.blobUrl = null;
     }
     editorState.image = null;
-    editorState.loadToken++; // инвалидируем незавершённую загрузку
+    editorState.loadToken++;
 }
 
 function initEditorCanvas() {
@@ -111,6 +115,7 @@ function redrawEditor() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (editorState.image) {
@@ -216,11 +221,11 @@ function downloadEditedCover() {
 
     redrawEditor();
 
-    // Тёмная подложка, чтобы избежать артефактов JPEG
     const tmp = document.createElement('canvas');
     tmp.width = canvas.width;
     tmp.height = canvas.height;
     const tctx = tmp.getContext('2d');
+    if (!tctx) return;
     tctx.fillStyle = '#0f0810';
     tctx.fillRect(0, 0, tmp.width, tmp.height);
     tctx.drawImage(canvas, 0, 0);
@@ -238,8 +243,10 @@ function downloadEditedCover() {
     }, 'image/jpeg', 0.95);
 }
 
-/* Навешиваем все обработчики контролов и кнопок один раз */
 function initEditorControls() {
+    if (editorState.controlsBound) return;
+    editorState.controlsBound = true;
+
     const bind = (id, prop, isInt = false) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -273,6 +280,22 @@ function initEditorControls() {
 
     const downloadBtn = document.getElementById('downloadCoverBtn');
     if (downloadBtn) downloadBtn.addEventListener('click', downloadEditedCover);
+
+    // Глобальный Escape — гарантирует вызов closeCoverEditor и cleanup blob URL
+    if (!editorState.escapeBound) {
+        editorState.escapeBound = true;
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            const modal = document.getElementById('coverEditorModal');
+            if (modal && modal.classList.contains('active')) {
+                closeCoverEditor();
+            }
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initEditorControls);
+
+// Экспорт для использования в других модулях (например, в admin.js при Escape)
+window.closeCoverEditor = closeCoverEditor;
+window.openCoverEditor = openCoverEditor;

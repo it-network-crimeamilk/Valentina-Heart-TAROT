@@ -20,7 +20,7 @@ window.addEventListener('click', e => {
     }
 });
 
-/* Escape — закрывает все активные модалки (единый обработчик для публичной страницы) */
+/* Escape — закрывает все активные модалки */
 document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     document.querySelectorAll('.modal.active').forEach(m => {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = fileInput?.files?.[0];
 
         if (!name || !contact || !message || !file) {
-            setStatus('⚠️ Пожалуйста, заполните все поля и прикрепите файл.', '#ef5350');
+            setStatus('❌ Ошибка отправки. Напишите админу сайта напрямую в Telegram @GeekLS (https://t.me/GeekLS)', '#ef5350');
             return;
         }
 
@@ -128,7 +128,7 @@ const PHASES = [
 
 function getMoonPhaseInfo(date = new Date()) {
     const phase = getMoonPhase(date);
-    if (phase >= 0.9375) return PHASES[0]; // [0.9375, 1) — та же "new"
+    if (phase >= 0.9375) return PHASES[0];
     return PHASES.find(p => phase >= p.range[0] && phase < p.range[1]) || PHASES[0];
 }
 
@@ -182,6 +182,5 @@ function initScrollButton() {
 document.addEventListener('DOMContentLoaded', () => {
     applyMoonPhase();
     initScrollButton();
-    // Фаза меняется ~раз в 7 дней — обновляем раз в 6 часов
     setInterval(applyMoonPhase, 6 * 60 * 60 * 1000);
 });

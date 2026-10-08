@@ -1,5 +1,5 @@
 /* ============================================
-   ОТЗЫВЫ КЛИЕНТОВ
+   ОТЗЫВЫ пользователей
    ============================================ */
 .reviews-section {
   padding: 60px 0 40px;
@@ -20,35 +20,15 @@
   padding: 0 50px;
 }
 
+/* Сетка отзывов (grid) */
 .reviews-carousel {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
   padding: 10px 4px 20px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-dark) transparent;
-}
-
-.reviews-carousel::-webkit-scrollbar {
-  height: 6px;
-}
-
-.reviews-carousel::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.reviews-carousel::-webkit-scrollbar-thumb {
-  background: var(--accent-dark);
-  border-radius: 3px;
 }
 
 .review-card {
-  flex: 0 0 320px;
-  max-width: 320px;
-  scroll-snap-align: start;
   background: var(--bg-card);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
@@ -60,6 +40,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
 }
 
 .review-card:hover {
@@ -111,6 +92,8 @@
   font-size: 14px;
   line-height: 1.6;
   position: relative;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .review-text.collapsed {
@@ -152,46 +135,12 @@
   font-size: 14px;
   padding: 40px 20px;
   font-style: italic;
+  grid-column: 1 / -1;
 }
 
-/* Кнопки навигации карусели */
+/* Кнопки навигации карусели (не используются в grid, но оставим) */
 .carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  color: var(--accent-light);
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 5;
-}
-
-.carousel-btn:hover {
-  background: rgba(192, 128, 129, 0.2);
-  border-color: var(--accent);
-  transform: translateY(-50%) scale(1.08);
-}
-
-.carousel-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.carousel-btn.prev {
-  left: 0;
-}
-
-.carousel-btn.next {
-  right: 0;
+  display: none;
 }
 
 /* Кнопка "Оставить отзыв" */
@@ -304,6 +253,8 @@
   color: var(--text-muted);
   line-height: 1.5;
   margin-bottom: 4px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .review-admin-date {
@@ -398,52 +349,9 @@
   background: rgba(192, 128, 129, 0.3);
 }
 
-/* Адаптивность */
-@media (max-width: 600px) {
-  .reviews-carousel-wrap {
-    padding: 0 40px;
-  }
-
-  .review-card {
-    flex: 0 0 280px;
-    max-width: 280px;
-    padding: 20px;
-  }
-
-  .carousel-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
-
-  .review-admin-item {
-    flex-direction: column;
-  }
-
-  .review-admin-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-}
-
 /* ============================================
    ПАГИНАЦИЯ ОТЗЫВОВ
    ============================================ */
-.reviews-carousel {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  overflow: visible;
-  padding: 0;
-  scroll-snap-type: none;
-}
-
-.reviews-carousel .review-card {
-  flex: none;
-  max-width: none;
-  width: 100%;
-}
-
 .reviews-pagination,
 .reviews-admin-pagination {
   display: flex;
@@ -496,14 +404,31 @@
   outline-offset: 2px;
 }
 
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
 @media (max-width: 600px) {
   .reviews-carousel {
     grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .review-card {
+    padding: 20px;
   }
 
   .page-btn {
     min-width: 36px;
     height: 36px;
     font-size: 13px;
+  }
+
+  .review-admin-item {
+    flex-direction: column;
+  }
+
+  .review-admin-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 }

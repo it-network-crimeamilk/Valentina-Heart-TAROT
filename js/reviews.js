@@ -43,6 +43,7 @@
     if (!dateStr) return '';
     try {
       const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
       return d.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
     } catch (e) { return dateStr; }
   }
@@ -55,15 +56,6 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
-  }
-
-  function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
   }
 
   /* =====================================================
@@ -154,7 +146,9 @@
     container.querySelectorAll('.review-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
         const card = btn.closest('.review-card');
+        if (!card) return;
         const textEl = card.querySelector('.review-text');
+        if (!textEl) return;
         const expanded = textEl.dataset.expanded === 'true';
         if (expanded) {
           textEl.textContent = textEl.dataset.short;
@@ -183,9 +177,7 @@
   }
 
   /* =====================================================
-     ФОРМА "ОСТАВИТЬ ОТЗЫВ" — отправка на сервер
-     Новый отзыв создаётся со статусом visible: false,
-     чтобы администратор мог его промодерировать в админке.
+     ФОРМА "ОСТАВИТЬ ОТЗЫВ"
      ===================================================== */
   function setupReviewForm() {
     const form = document.getElementById('reviewForm');
@@ -221,7 +213,7 @@
         fd.append('action', 'create');
         fd.append('name', name);
         fd.append('text', text);
-        fd.append('visible', 'false'); // отзыв уйдёт на модерацию
+        fd.append('visible', 'false');
         if (file) fd.append('avatar', file);
 
         const res = await fetch(API_URL, { method: 'POST', body: fd });

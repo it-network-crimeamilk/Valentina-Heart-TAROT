@@ -19,7 +19,6 @@
             panel.classList.toggle(ACTIVE_CLASS, isTarget);
         });
 
-        // Если такой панели нет — выходим, ничего не меняем
         if (!found) return;
 
         buttons.forEach(btn => {
@@ -35,7 +34,6 @@
         const buttons = document.querySelectorAll(TAB_BTN_SELECTOR);
         if (!buttons.length) return;
 
-        // Делегированный обработчик кликов
         const nav = document.getElementById('adminTabs') || document;
         nav.addEventListener('click', e => {
             const btn = e.target.closest(TAB_BTN_SELECTOR);
@@ -45,7 +43,6 @@
             if (tabId) switchAdminTab(tabId);
         });
 
-        // Клавиатурная навигация (стрелки влево/вправо)
         nav.addEventListener('keydown', e => {
             if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
             const btn = e.target.closest(TAB_BTN_SELECTOR);
@@ -61,7 +58,6 @@
             if (next.dataset.tab) switchAdminTab(next.dataset.tab);
         });
 
-        // Восстанавливаем последнюю открытую вкладку, иначе — первую
         let initial = null;
         try { initial = localStorage.getItem(STORAGE_KEY); } catch (e) { /* ignore */ }
 
@@ -73,12 +69,8 @@
         if (initial) switchAdminTab(initial);
     }
 
-    // Экспорт для вызова из консоли
     window.switchAdminTab = switchAdminTab;
 
-    // Инициализация при загрузке DOM.
-    // Панель adminPanel скрыта до логина, но кнопки и панели уже в DOM,
-    // поэтому навешиваем обработчики сразу.
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initTabs);
     } else {

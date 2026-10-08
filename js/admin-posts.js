@@ -54,7 +54,6 @@ function copyToClipboard(id) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done).catch(fail);
     } else {
-        // Fallback для http / старых браузеров
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.position = 'fixed';
@@ -67,7 +66,6 @@ function copyToClipboard(id) {
     }
 }
 
-/* Обработчики кнопок */
 document.addEventListener('DOMContentLoaded', () => {
     const genBtn = document.getElementById('generatePostsBtn');
     if (genBtn) genBtn.addEventListener('click', generatePosts);

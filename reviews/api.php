@@ -5,8 +5,7 @@ declare(strict_types=1);
 // --- Настройки ---
 const REVIEWS_FILE = __DIR__ . '/reviews.json';
 const AVATARS_DIR  = __DIR__ . '/avatars';
-const AVATARS_URL  = 'reviews/avatars'; // относительный путь для браузера
-
+const AVATARS_URL  = 'reviews/avatars';
 const ADMIN_HASH = 'SGVzb3lhbTE2MDcr';
 
 // Разрешённые расширения и MIME для аватарок
@@ -32,13 +31,12 @@ function fail(string $msg, int $code = 400): void {
 }
 
 function isAdmin(): bool {
-    // 1) Заголовок X-Admin-Pass (для fetch)
     $hdr = $_SERVER['HTTP_X_ADMIN_PASS'] ?? '';
-    if ($hdr === ADMIN_HASH) return true;
+    if ($hdr !== '' && hash_equals(ADMIN_HASH, $hdr)) return true;
 
-    // 2) Резерв: POST-поле _admin_pass (для multipart-запросов с файлом)
-    if (isset($_POST['_admin_pass']) && $_POST['_admin_pass'] === ADMIN_HASH) return true;
-
+    if (isset($_POST['_admin_pass']) && is_string($_POST['_admin_pass'])) {
+        if (hash_equals(ADMIN_HASH, $_POST['_admin_pass'])) return true;
+    }
     return false;
 }
 
@@ -64,7 +62,6 @@ function saveReviews(array $data): void {
     $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     if ($json === false) fail('Не удалось сериализовать JSON', 500);
 
-    // Атомарная запись через временный файл
     $tmp = REVIEWS_FILE . '.tmp.' . bin2hex(random_bytes(4));
     if (file_put_contents($tmp, $json, LOCK_EX) === false) {
         fail('Не удалось записать временный файл', 500);
@@ -85,43 +82,68 @@ function nextId(array $reviews): int {
     return $max + 1;
 }
 
+/**
+ * Безопасная очистка текста.
+ * Убираем управляющие символы без флага /u (чтобы не падать на невалидном UTF-8),
+ * затем корректно обрезаем по mb_substr с явной кодировкой.
+ */
 function sanitizeText(string $s, int $max = 1000): string {
     $s = trim($s);
-    // удаляем управляющие символы, кроме \n и \t
-    $s = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $s);
-    if (mb_strlen($s) > $max) $s = mb_substr($s, 0, $max);
+    // Удаляем управляющие символы (без /u — безопасно для любой бинарной строки)
+    $s = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $s);
+    // Нормализуем кодировку, если пришёл невалидный UTF-8
+    if (!mb_check_encoding($s, 'UTF-8')) {
+        $s = mb_convert_encoding($s, 'UTF-8', 'UTF-8');
+    }
+    if (mb_strlen($s, 'UTF-8') > $max) {
+        $s = mb_substr($s, 0, $max, 'UTF-8');
+    }
     return $s;
 }
 
 /**
- * Принимает либо загруженный файл ($_FILES['avatar']), либо data URL в $_POST['avatar_data'].
- * Возвращает относительный URL сохранённого файла или null.
+ * Обработка загрузки аватарки.
+ * Возвращает относительный URL сохранённого файла или null, если файл не передан.
  */
 function handleAvatarUpload(): ?string {
     // Вариант 1: обычная загрузка файла (multipart)
     if (!empty($_FILES['avatar']) && is_array($_FILES['avatar'])) {
         $f = $_FILES['avatar'];
-        if (($f['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) return null;
+        $err = $f['error'] ?? UPLOAD_ERR_NO_FILE;
+        if ($err === UPLOAD_ERR_NO_FILE) return null;
+        if ($err !== UPLOAD_ERR_OK) {
+            fail('Ошибка загрузки файла (код ' . $err . ')', 400);
+        }
         if (($f['size'] ?? 0) > MAX_AVATAR_BYTES) {
             fail('Файл аватарки больше 2 МБ', 413);
         }
+
         $mime = null;
         if (function_exists('finfo_open')) {
             $fi = finfo_open(FILEINFO_MIME_TYPE);
-            if ($fi) { $mime = finfo_file($fi, $f['tmp_name']); finfo_close($fi); }
+            if ($fi) {
+                $mime = finfo_file($fi, $f['tmp_name']);
+                finfo_close($fi);
+            }
         }
-        if (!$mime) $mime = mime_content_type($f['tmp_name']) ?: '';
+        if (!$mime) {
+            $mime = mime_content_type($f['tmp_name']) ?: '';
+        }
         if (!in_array($mime, ALLOWED_MIME, true)) {
             fail('Недопустимый тип файла (только изображения)', 415);
         }
+
         $ext = strtolower(pathinfo($f['name'] ?? '', PATHINFO_EXTENSION));
         if (!in_array($ext, ALLOWED_EXT, true)) {
-            $ext = $mime === 'image/png' ? 'png' : ($mime === 'image/webp' ? 'webp' : 'jpg');
+            if ($mime === 'image/png') $ext = 'png';
+            elseif ($mime === 'image/webp') $ext = 'webp';
+            elseif ($mime === 'image/gif') $ext = 'gif';
+            else $ext = 'jpg';
         }
-        return storeAvatarFile($f['tmp_name'], $ext);
+        return storeAvatarFromUpload($f['tmp_name'], $ext);
     }
 
-    // Вариант 2: data URL (base64), удобно для fetch с фронта
+    // Вариант 2: data URL (base64) — например, из canvas
     if (!empty($_POST['avatar_data']) && is_string($_POST['avatar_data'])) {
         $data = $_POST['avatar_data'];
         if (!preg_match('#^data:image/([a-zA-Z0-9.+-]+);base64,(.+)$#', $data, $m)) {
@@ -135,34 +157,53 @@ function handleAvatarUpload(): ?string {
         $ext = $subtype === 'jpeg' ? 'jpg' : preg_replace('/[^a-z0-9]/', '', $subtype);
         if (!in_array($ext, ALLOWED_EXT, true)) $ext = 'jpg';
 
-        $tmp = tempnam(sys_get_temp_dir(), 'avt');
-        if ($tmp === false || file_put_contents($tmp, $bin) === false) {
-            fail('Не удалось сохранить временный файл', 500);
-        }
-        $res = storeAvatarFile($tmp, $ext);
-        @unlink($tmp);
-        return $res;
+        return storeAvatarFromBinary($bin, $ext);
     }
 
     return null;
 }
 
-function storeAvatarFile(string $tmpPath, string $ext): string {
-    if (!is_dir(AVATARS_DIR)) {
-        if (!mkdir(AVATARS_DIR, 0755, true) && !is_dir(AVATARS_DIR)) {
-            fail('Не удалось создать папку аватарок', 500);
-        }
-    }
-    $name = 'avatar_' . date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
-    $dest = AVATARS_DIR . '/' . $name;
+/**
+ * Сохранение файла, полученного через обычную загрузку (move_uploaded_file).
+ */
+function storeAvatarFromUpload(string $tmpPath, string $ext): string {
+    ensureAvatarsDir();
+    $dest = buildAvatarPath($ext);
     if (!move_uploaded_file($tmpPath, $dest)) {
-        // move_uploaded_file работает только для $_FILES, для tempnam используем rename/copy
+        // Fallback: если move_uploaded_file не сработал (например, файл не загружен через HTTP),
+        // пробуем обычное копирование/переименование.
         if (!@rename($tmpPath, $dest) && !@copy($tmpPath, $dest)) {
             fail('Не удалось сохранить аватарку', 500);
         }
     }
     @chmod($dest, 0644);
-    return AVATARS_URL . '/' . $name;
+    return AVATARS_URL . '/' . basename($dest);
+}
+
+/**
+ * Сохранение бинарных данных (из base64) — без move_uploaded_file.
+ */
+function storeAvatarFromBinary(string $bin, string $ext): string {
+    ensureAvatarsDir();
+    $dest = buildAvatarPath($ext);
+    if (file_put_contents($dest, $bin) === false) {
+        fail('Не удалось сохранить аватарку', 500);
+    }
+    @chmod($dest, 0644);
+    return AVATARS_URL . '/' . basename($dest);
+}
+
+function ensureAvatarsDir(): void {
+    if (!is_dir(AVATARS_DIR)) {
+        if (!mkdir(AVATARS_DIR, 0755, true) && !is_dir(AVATARS_DIR)) {
+            fail('Не удалось создать папку аватарок', 500);
+        }
+    }
+}
+
+function buildAvatarPath(string $ext): string {
+    $name = 'avatar_' . date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+    return AVATARS_DIR . '/' . $name;
 }
 
 // =====================================================
@@ -184,10 +225,6 @@ $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 switch ($action) {
 
-    // ---- Создать отзыв ----
-    // Публичная форма может создавать отзыв БЕЗ авторизации,
-    // но visible принудительно = false (модерация).
-    // Админ может создать сразу видимый отзыв.
     case 'create': {
         $admin = isAdmin();
 
@@ -225,7 +262,6 @@ switch ($action) {
         respond(['success' => true, 'review' => $new]);
     }
 
-    // ---- Обновить отзыв (только админ) ----
     case 'update': {
         requireAdmin();
 
@@ -256,7 +292,6 @@ switch ($action) {
         respond(['success' => true]);
     }
 
-    // ---- Удалить отзыв (только админ) ----
     case 'delete': {
         requireAdmin();
 
