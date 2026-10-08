@@ -8,7 +8,9 @@
     <link rel="icon" href="./images/logo.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./style/base.css">
     <link rel="stylesheet" href="./style/moon.css">
     <link rel="stylesheet" href="./style/header.css">
@@ -49,164 +51,212 @@
                 </div>
             </div>
 
-            <!-- Генератор постов -->
-            <div class="admin-block">
-                <h2 class="admin-block-title">📝 Генератор постов для видео</h2>
-                <label class="admin-label">
-                    Тема видео (заголовок):
-                    <input type="text" id="postTitle" placeholder="Например: Расклад на любовь">
-                </label>
-                <label class="admin-label">
-                    Ссылка на YouTube:
-                    <input type="text" id="ytUrl" placeholder="https://youtube.com/...">
-                </label>
-                <label class="admin-label">
-                    Ссылка на VkVideo:
-                    <input type="text" id="vkUrl" placeholder="https://vkvideo.ru/...">
-                </label>
-                <button class="btn btn-primary" id="generatePostsBtn">Сгенерировать посты</button>
+            <!-- Табы админки -->
+            <nav class="admin-tabs" id="adminTabs" role="tablist" aria-label="Разделы админ-панели">
+                <button type="button" class="admin-tab active" role="tab" data-tab="tab-posts" aria-selected="true"
+                    aria-controls="tab-posts" id="tabBtnPosts">
+                    📝 Генератор постов
+                </button>
+                <button type="button" class="admin-tab" role="tab" data-tab="tab-cover" aria-selected="false"
+                    aria-controls="tab-cover" id="tabBtnCover">
+                    🖼️ Обложка
+                </button>
+                <button type="button" class="admin-tab" role="tab" data-tab="tab-reviews" aria-selected="false"
+                    aria-controls="tab-reviews" id="tabBtnReviews">
+                    💬 Управление отзывами
+                </button>
+                <button type="button" class="admin-tab" role="tab" data-tab="tab-checklist" aria-selected="false"
+                    aria-controls="tab-checklist" id="tabBtnChecklist">
+                    📚 Инструкция
+                </button>
+            </nav>
 
-                <div class="admin-results" id="resultsArea" style="display:none;">
-                    <div class="admin-result-block">
-                        <h3>📱 Для Telegram:</h3>
-                        <pre id="tgPost"></pre>
-                        <button class="btn btn-secondary" data-copy-target="tgPost">Копировать для Telegram</button>
+            <!-- ===== ТАБ 1: ГЕНЕРАТОР ПОСТОВ ===== -->
+            <section class="admin-tab-panel active" id="tab-posts" role="tabpanel" aria-labelledby="tabBtnPosts">
+                <div class="admin-block">
+                    <h2 class="admin-block-title">📝 Генератор постов для видео</h2>
+                    <label class="admin-label">
+                        Тема видео (заголовок):
+                        <input type="text" id="postTitle" placeholder="Например: Расклад на любовь">
+                    </label>
+                    <label class="admin-label">
+                        Ссылка на YouTube:
+                        <input type="text" id="ytUrl" placeholder="https://youtube.com/...">
+                    </label>
+                    <label class="admin-label">
+                        Ссылка на VkVideo:
+                        <input type="text" id="vkUrl" placeholder="https://vkvideo.ru/...">
+                    </label>
+                    <button class="btn btn-primary" id="generatePostsBtn">Сгенерировать посты</button>
+
+                    <div class="admin-results" id="resultsArea" style="display:none;">
+                        <div class="admin-result-block">
+                            <h3>📱 Для Telegram:</h3>
+                            <pre id="tgPost"></pre>
+                            <button class="btn btn-secondary" data-copy-target="tgPost">Копировать для Telegram</button>
+                        </div>
+                        <div class="admin-result-block">
+                            <h3>🌐 Для ВКонтакте:</h3>
+                            <p class="admin-hint">⚠️ Сначала вставьте ссылку на видео в ВК вручную, дождитесь обработки,
+                                затем вставьте этот текст ниже.</p>
+                            <pre id="vkPost"></pre>
+                            <button class="btn btn-secondary" data-copy-target="vkPost">Копировать текст для ВК</button>
+                        </div>
                     </div>
-                    <div class="admin-result-block">
-                        <h3>🌐 Для ВКонтакте:</h3>
-                        <p class="admin-hint">⚠️ Сначала вставьте ссылку на видео в ВК вручную, дождитесь обработки,
-                            затем вставьте этот текст ниже.</p>
-                        <pre id="vkPost"></pre>
-                        <button class="btn btn-secondary" data-copy-target="vkPost">Копировать текст для ВК</button>
+                </div>
+            </section>
+
+            <!-- ===== ТАБ 2: ОБЛОЖКА ===== -->
+            <section class="admin-tab-panel" id="tab-cover" role="tabpanel" aria-labelledby="tabBtnCover" hidden>
+                <div class="admin-block">
+                    <h2 class="admin-block-title">🖼️ Обложка для постов и роликов</h2>
+                    <p class="admin-hint">Универсальная обложка. Нажмите «Открыть редактор», чтобы добавить текст,
+                        перетащить его в нужное место и скачать готовую картинку.</p>
+                    <div class="editor-actions">
+                        <button class="btn btn-primary" id="openEditorBtn">✏️ Открыть редактор</button>
+                        <button class="btn btn-secondary" id="openFullviewBtn">🔍 На весь экран</button>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Обложка -->
-            <div class="admin-block">
-                <h2 class="admin-block-title">🖼️ Обложка для постов и роликов</h2>
-                <p class="admin-hint">Универсальная обложка. Нажмите «Открыть редактор», чтобы добавить текст,
-                    перетащить его в нужное место и скачать готовую картинку.</p>
-                <div class="editor-actions">
-                    <button class="btn btn-primary" id="openEditorBtn">✏️ Открыть редактор</button>
-                    <button class="btn btn-secondary" id="openFullviewBtn">🔍 На весь экран</button>
+            <!-- ===== ТАБ 3: УПРАВЛЕНИЕ ОТЗЫВАМИ ===== -->
+            <section class="admin-tab-panel" id="tab-reviews" role="tabpanel" aria-labelledby="tabBtnReviews" hidden>
+                <div class="admin-block">
+                    <h2 class="admin-block-title">💬 Управление отзывами</h2>
+                    <p class="admin-hint">Добавляйте, редактируйте, скрывайте и удаляйте отзывы клиентов.</p>
+
+                    <form id="adminAddReviewForm" class="review-form" novalidate>
+                        <label>
+                            Имя *
+                            <input type="text" name="adminReviewName" required maxlength="60" placeholder="Имя клиента">
+                        </label>
+                        <label>
+                            Текст отзыва *
+                            <textarea name="adminReviewText" required maxlength="1000"
+                                placeholder="Текст отзыва..."></textarea>
+                        </label>
+                        <label>
+                            Дата
+                            <input type="date" name="adminReviewDate">
+                        </label>
+                        <label>
+                            Аватар (необязательно)
+                            <input type="file" name="adminReviewAvatar" accept="image/*">
+                            <span class="file-hint">JPG, PNG — до 2 МБ</span>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; flex-direction:row;">
+                            <input type="checkbox" name="adminReviewVisible" checked>
+                            Показывать на сайте
+                        </label>
+                        <button type="submit" class="btn btn-primary">➕ Добавить отзыв</button>
+                        <div class="form-status" id="adminReviewStatus"></div>
+                    </form>
+
+                    <h3 class="admin-block-title" style="font-size:18px; margin-top:24px;">Все отзывы</h3>
+                    <div class="reviews-admin-list" id="adminReviewsList"></div>
+                    <div class="reviews-admin-pagination" id="adminReviewsPagination" role="navigation"
+                        aria-label="Пагинация отзывов"></div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Управление отзывами -->
-            <div class="admin-block">
-                <h2 class="admin-block-title">💬 Управление отзывами</h2>
-                <p class="admin-hint">Добавляйте, редактируйте, скрывайте и удаляйте отзывы клиентов.</p>
+            <!-- ===== ТАБ 4: ИНСТРУКЦИЯ ===== -->
+            <section class="admin-tab-panel" id="tab-checklist" role="tabpanel" aria-labelledby="tabBtnChecklist"
+                hidden>
+                <div class="admin-block">
+                    <h2 class="admin-block-title">📚 Инструкция по публикации</h2>
+                    <p class="admin-hint">Отмечайте выполненные шаги — состояние сохраняется автоматически.</p>
+                    <div class="checklist" id="publishChecklist">
 
-                <form id="adminAddReviewForm" class="review-form" novalidate>
-                    <label>
-                        Имя *
-                        <input type="text" name="adminReviewName" required maxlength="60" placeholder="Имя клиента">
-                    </label>
-                    <label>
-                        Текст отзыва *
-                        <textarea name="adminReviewText" required maxlength="1000"
-                            placeholder="Текст отзыва..."></textarea>
-                    </label>
-                    <label>
-                        Дата
-                        <input type="date" name="adminReviewDate">
-                    </label>
-                    <label>
-                        Аватар (необязательно)
-                        <input type="file" name="adminReviewAvatar" accept="image/*">
-                        <span class="file-hint">JPG, PNG — до 2 МБ</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; flex-direction:row;">
-                        <input type="checkbox" name="adminReviewVisible" checked>
-                        Показывать на сайте
-                    </label>
-                    <button type="submit" class="btn btn-primary">➕ Добавить отзыв</button>
-                    <div class="form-status" id="adminReviewStatus"></div>
-                </form>
-
-                <h3 class="admin-block-title" style="font-size:18px; margin-top:24px;">Все отзывы</h3>
-                <div class="reviews-admin-list" id="adminReviewsList"></div>
-                <div class="reviews-admin-pagination" id="adminReviewsPagination" role="navigation"
-                    aria-label="Пагинация отзывов"></div>
-            </div>
-
-            <!-- Чек-лист -->
-            <div class="admin-block">
-                <h2 class="admin-block-title">📚 Инструкция по публикации</h2>
-                <p class="admin-hint">Отмечайте выполненные шаги — состояние сохраняется автоматически.</p>
-                <div class="checklist" id="publishChecklist">
-
-                    <div><strong>Подготовка</strong></div>
-                    <label class="checklist-item"><input type="checkbox" data-key="prep"> Подготовить ролик для загрузки
-                        в vkVideo и YouTube. Заснять и сохранить его в папку, сразу переименовать под тему
-                        ролика.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="prep"> Подготовить постер/обложку на
-                        этой странице. Уже заложена обложка в редактор, тема автоматически прокидывается в шаблон
-                        макета постера/обложки, нужно только сохранить. Тема ролика указывается в названии
-                        файла/видеофайла.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="prep"> Проверяем наш ролик и постер,
-                        название к нему: всё ли указано корректно.</label>
-                    <div><strong>Шаг 1: Загрузить видео на площадку «ВКвидео»</strong></div>
-                    <label class="checklist-item"><input type="checkbox" data-key="vk"> Перейти в <a
-                            href="https://vkvideo.ru/@club240360498" target="_blank">канал</a> и добавить ролик.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vk"> Во вкладке "Информация" указать
-                        название ролика, описание (можно скопировать описание выше в сгенерированных постах «🌐 Для
-                        ВКонтакте:»), закрепить подготовленную обложку.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vk"> Во вкладке "Публикация"
-                        поставить тогл на «Создать пост с видео в сообществе» и указать дату и время публикации.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vk"> Дождаться завершения загрузки
-                        ролика, нажать «Запланировать публикацию».</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vk"> Проверяем наш ролик: всё ли
-                        указано и выложено корректно.</label>
-                    <div><strong>Шаг 2: Пост ВКонтакте</strong></div>
-                    <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Перейти на <a
-                            href="https://vk.ru/id851128139" target="_blank">стену</a>, создать пост, через кнопку «+
-                        Создать пост».</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Сначала нужно вставить
-                        ссылку на загруженный ролик в ВКвидео (пример:
-                        https://vkvideo.ru/video-111111111_111111111).</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vkpost"> После того как ссылка
-                        исчезнет и появится ролик во вложении поста, вставляем сгенерированный текст поста через «🌐 Для
-                        ВКонтакте:», который указан выше на этом сайте. Нажимаем «Далее»</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vkpost"> В настройках поста выбираем
-                        «Запланировать» и указываем нужную нам дату и время. Нажимаем «Добавить в очередь».</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Проверяем наш
-                        запланированный пост на стене ВК: всё ли указано и выложено корректно.</label>
-                    <div><strong>Шаг 3: Загрузить видео на площадку «YouTube»</strong></div>
-                    <label class="checklist-item"><input type="checkbox" data-key="yt"> Перейти на <a
-                            href="https://www.youtube.com/" target="_blank">YouTube</a> и добавить ролик.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="yt"> Во вкладке «Информация» указать
-                        название ролика, описание (заполняется автоматически), закрепить подготовленную обложку.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="yt"> Во вкладке «Доступ» в разделе
-                        «Запланировать публикацию» указать дату и время публикации и выставить часовой пояс
-                        (GMT+03:00).</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="yt"> Дождаться завершения загрузки
-                        ролика, нажать «Запланировать публикацию».</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="yt"> Проверяем наш ролик: всё ли
-                        указано и выложено корректно.</label>
-                    <div><strong>Шаг 4: Telegram</strong></div>
-                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Можно скопировать пост выше в
-                        сгенерированных постах «📱 Для Telegram:». Предварительно заполнить нужные поля выше — «📝
-                        Генератор постов для видео».</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Перейти в ТГ-канал <a
-                            href="https://t.me/ValentinaSerdceTarot" target="_blank">«Сердце Таро 🌹»</a> и вставить
-                        подготовленный пост.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Закрепить подготовленный
-                        постер/обложку на этой странице — «🖼️ Обложка для постов и роликов». В редактор уже заложена
-                        обложка, тема автоматически прокидывается в шаблон макета постера/обложки, нужно только
-                        сохранить. Тема ролика указывается в названии файла/видеофайла.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Переходим в ТГ-канал <a
-                            href="https://t.me/ValentinaSerdceTarot" target="_blank">«Сердце Таро 🌹»</a> и закрепляем
-                        обложку вместе с текстом поста.</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Кликнуть правой кнопкой мыши по
-                        кнопке «Отправить», выбрать «Отправить позже», в открывшемся окне ввести нужную дату и время.
-                        Нажать «Запланировать».</label>
-                    <label class="checklist-item"><input type="checkbox" data-key="tg"> Проверяем наш пост: всё ли
-                        указано и выложено корректно.</label>
+                        <div><strong>Подготовка</strong></div>
+                        <label class="checklist-item"><input type="checkbox" data-key="prep"> Подготовить ролик для
+                            загрузки
+                            в vkVideo и YouTube. Заснять и сохранить его в папку, сразу переименовать под тему
+                            ролика.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="prep"> Подготовить постер/обложку
+                            на
+                            этой странице. Уже заложена обложка в редактор, тема автоматически прокидывается в шаблон
+                            макета постера/обложки, нужно только сохранить. Тема ролика указывается в названии
+                            файла/видеофайла.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="prep"> Проверяем наш ролик и
+                            постер,
+                            название к нему: всё ли указано корректно.</label>
+                        <div><strong>Шаг 1: Загрузить видео на площадку «ВКвидео»</strong></div>
+                        <label class="checklist-item"><input type="checkbox" data-key="vk"> Перейти в <a
+                                href="https://vkvideo.ru/@club240360498" target="_blank">канал</a> и добавить
+                            ролик.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vk"> Во вкладке "Информация"
+                            указать
+                            название ролика, описание (можно скопировать описание выше в сгенерированных постах «🌐 Для
+                            ВКонтакте:»), закрепить подготовленную обложку.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vk"> Во вкладке "Публикация"
+                            поставить тогл на «Создать пост с видео в сообществе» и указать дату и время
+                            публикации.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vk"> Дождаться завершения
+                            загрузки
+                            ролика, нажать «Запланировать публикацию».</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vk"> Проверяем наш ролик: всё ли
+                            указано и выложено корректно.</label>
+                        <div><strong>Шаг 2: Пост ВКонтакте</strong></div>
+                        <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Перейти на <a
+                                href="https://vk.ru/id851128139" target="_blank">стену</a>, создать пост, через кнопку
+                            «+
+                            Создать пост».</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Сначала нужно вставить
+                            ссылку на загруженный ролик в ВКвидео (пример:
+                            https://vkvideo.ru/video-111111111_111111111).</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vkpost"> После того как ссылка
+                            исчезнет и появится ролик во вложении поста, вставляем сгенерированный текст поста через «🌐
+                            Для
+                            ВКонтакте:», который указан выше на этом сайте. Нажимаем «Далее»</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vkpost"> В настройках поста
+                            выбираем
+                            «Запланировать» и указываем нужную нам дату и время. Нажимаем «Добавить в очередь».</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="vkpost"> Проверяем наш
+                            запланированный пост на стене ВК: всё ли указано и выложено корректно.</label>
+                        <div><strong>Шаг 3: Загрузить видео на площадку «YouTube»</strong></div>
+                        <label class="checklist-item"><input type="checkbox" data-key="yt"> Перейти на <a
+                                href="https://www.youtube.com/" target="_blank">YouTube</a> и добавить ролик.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="yt"> Во вкладке «Информация»
+                            указать
+                            название ролика, описание (заполняется автоматически), закрепить подготовленную
+                            обложку.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="yt"> Во вкладке «Доступ» в
+                            разделе
+                            «Запланировать публикацию» указать дату и время публикации и выставить часовой пояс
+                            (GMT+03:00).</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="yt"> Дождаться завершения
+                            загрузки
+                            ролика, нажать «Запланировать публикацию».</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="yt"> Проверяем наш ролик: всё ли
+                            указано и выложено корректно.</label>
+                        <div><strong>Шаг 4: Telegram</strong></div>
+                        <label class="checklist-item"><input type="checkbox" data-key="tg"> Можно скопировать пост выше
+                            в
+                            сгенерированных постах «📱 Для Telegram:». Предварительно заполнить нужные поля выше — «📝
+                            Генератор постов для видео».</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="tg"> Перейти в ТГ-канал <a
+                                href="https://t.me/ValentinaSerdceTarot" target="_blank">«Сердце Таро 🌹»</a> и вставить
+                            подготовленный пост.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="tg"> Закрепить подготовленный
+                            постер/обложку на этой странице — «🖼️ Обложка для постов и роликов». В редактор уже
+                            заложена
+                            обложка, тема автоматически прокидывается в шаблон макета постера/обложки, нужно только
+                            сохранить. Тема ролика указывается в названии файла/видеофайла.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="tg"> Переходим в ТГ-канал <a
+                                href="https://t.me/ValentinaSerdceTarot" target="_blank">«Сердце Таро 🌹»</a> и
+                            закрепляем
+                            обложку вместе с текстом поста.</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="tg"> Кликнуть правой кнопкой мыши
+                            по
+                            кнопке «Отправить», выбрать «Отправить позже», в открывшемся окне ввести нужную дату и
+                            время.
+                            Нажать «Запланировать».</label>
+                        <label class="checklist-item"><input type="checkbox" data-key="tg"> Проверяем наш пост: всё ли
+                            указано и выложено корректно.</label>
+                    </div>
+                    <button class="btn btn-secondary" id="resetChecklistBtn">🔄 Сбросить все отметки</button>
                 </div>
-                <button class="btn btn-secondary" id="resetChecklistBtn">🔄 Сбросить все отметки</button>
-            </div>
+            </section>
         </div>
     </div>
 
@@ -275,6 +325,7 @@
     <script src="./js/admin-auth.js"></script>
     <script src="./js/admin.js"></script>
     <script src="./js/admin-reviews.js"></script>
+    <script src="./js/admin-tabs.js"></script>
 </body>
 
 </html>
