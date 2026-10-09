@@ -77,3 +77,31 @@
     border-color: var(--accent);
     background: rgba(192, 128, 129, 0.1);
 }
+
+/* Обёртка для правой части шапки */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Компактная кнопка очистки кеша в шапке */
+.btn-cache-header {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+    .header-actions {
+        gap: 8px;
+    }
+
+    .btn-cache-header {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

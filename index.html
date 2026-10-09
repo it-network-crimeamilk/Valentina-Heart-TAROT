@@ -29,7 +29,11 @@
                     onerror="this.style.display='none'">
                 <span class="logo">Valentina Heart TAROT</span>
             </a>
-            <a href="admin.html" class="admin-link">Вход</a>
+            <div class="header-actions">
+                <button class="btn btn-secondary btn-cache-header" id="clearCacheBtn" type="button" data-admin-only="1"
+                    style="display:none;">🧹 Кеш</button>
+                <a href="admin.html" class="admin-link">Вход</a>
+            </div>
         </div>
     </header>
 
@@ -534,6 +538,7 @@
     <script src="./js/legal.js"></script>
     <script src="./js/reviews.js"></script>
     <script src="./js/fortune.js"></script>
+    <script src="./js/cache-cleaner.js"></script>
 </body>
 
 </html>

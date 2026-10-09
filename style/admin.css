@@ -561,3 +561,14 @@ a.order-attachment-pdf {
     min-height: 70px;
     resize: vertical;
 }
+
+/* Кнопка очистки кеша в админ-панели */
+#clearCacheBtn {
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    #clearCacheBtn {
+        width: 100%;
+    }
+}
