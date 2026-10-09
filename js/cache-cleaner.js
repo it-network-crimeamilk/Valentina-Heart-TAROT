@@ -68,20 +68,32 @@
         }
     }
 
-    function clearAll() {
+    /**
+     * Тихая очистка без alert и без reload.
+     * По завершении вызывает callback (если передан).
+     */
+    function clearAllSilent(callback) {
         clearLocalStorage();
         clearSessionStorage();
         clearCookies();
 
         Promise.all([clearCacheStorage(), clearServiceWorkers()])
             .then(function () {
-                alert('✅ Кеш очищен. Страница будет перезагружена.');
-                reloadPage();
+                if (typeof callback === 'function') callback();
             })
             .catch(function () {
-                alert('✅ Кеш очищен (частично). Страница будет перезагружена.');
-                reloadPage();
+                if (typeof callback === 'function') callback();
             });
+    }
+
+    /**
+     * Полная очистка с уведомлением и перезагрузкой страницы.
+     */
+    function clearAll() {
+        clearAllSilent(function () {
+            alert('✅ Кеш очищен. Страница будет перезагружена.');
+            reloadPage();
+        });
     }
 
     function bindButton() {
@@ -119,5 +131,7 @@
         showHeaderButtonIfAdmin();
     });
 
+    // Публичное API
     window.clearAllCache = clearAll;
+    window.clearAllCacheSilent = clearAllSilent;
 })();
